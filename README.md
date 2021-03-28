@@ -3,11 +3,11 @@
 
 ## Team Members
 - Selahaddin Şentop
-- Buğra Elmas
-- Akif Faruk Nane
-- Muhammet Çavuş
-- Güney İzol
-- Gökhan Uysal
+- [İbrahim Buğra Elmas](https://github.com/bounswe/2021SpringGroup8/wiki/%C4%B0brahim-Bu%C4%9Fra-Elmas)
+- [Akif Faruk Nane](https://github.com/bounswe/2021SpringGroup8/wiki/Akif-Faruk-NANE)
+- [Muhammet Çavuş](https://github.com/bounswe/2021SpringGroup8/wiki/Muhammet-%C3%87avu%C5%9F)
+- [Güney İzol](https://github.com/bounswe/2021SpringGroup8/wiki/Güney-İzol)
+- [Gökhan Uysal](https://github.com/bounswe/2021SpringGroup8/wiki/G%C3%B6khan-UYSAL)
 - Mustafa Can Aydın
-- Ezgi Batı
+- [Ezgi Batı](https://github.com/bounswe/2021SpringGroup8/wiki/Ezgi-Bat%C4%B1)
 - Utku Alhan
