@@ -8,6 +8,6 @@
 - [Muhammet Çavuş](https://github.com/bounswe/2021SpringGroup8/wiki/Muhammet-%C3%87avu%C5%9F)
 - [Güney İzol](https://github.com/bounswe/2021SpringGroup8/wiki/Güney-İzol)
 - [Gökhan Uysal](https://github.com/bounswe/2021SpringGroup8/wiki/G%C3%B6khan-UYSAL)
-- Mustafa Can Aydın
+- [Mustafa Can Aydın](https://github.com/bounswe/2021SpringGroup8/wiki/Mustafa-Can-AYDIN)
 - [Ezgi Batı](https://github.com/bounswe/2021SpringGroup8/wiki/Ezgi-Bat%C4%B1)
 - Utku Alhan
