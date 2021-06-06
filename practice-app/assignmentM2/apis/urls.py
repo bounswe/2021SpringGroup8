@@ -4,5 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    path("examplepage", views.examplepage, name="examplepage")
+    path("examplepage", views.examplepage, name="examplepage"),
+    path("getflag", views.getflag, name="getflag"),
+    path("getcurrencies", views.getcurrencies, name="getcurrencies"),
 ]
