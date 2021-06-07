@@ -2,12 +2,14 @@ from typing import List
 from django.http.request import HttpRequest
 from django.shortcuts import render
 from django.http import HttpResponse
+import json
 
 # Create your views here.
 import urllib
 
 def examplepage(request):
     return HttpResponse("<h1>API Example Page!<h1>")
+
 
 def getflag(request:HttpRequest):
     if request.method == "GET" and "country" in request.GET:
@@ -16,6 +18,7 @@ def getflag(request:HttpRequest):
         return HttpResponse("<img src=\"https://www.countryflags.io/" + request.POST["country"] + "/flat/64.png\">")
 
     return HttpResponse("""<img src="https://www.countryflags.io/be/flat/64.png">""")
+
 
 def getcurrencies(request:HttpRequest):
     url = "https://free.currconv.com/api/v7/convert?q=TRY_USD&compact=ultra&apiKey=55d560f06e174022b414"
@@ -30,3 +33,22 @@ def getcurrencies(request:HttpRequest):
         page = response.read().decode("utf8")
         num = (page[page.find(":")+1:-1])
         return HttpResponse(num)
+
+
+def getmealrecipe(request:HttpRequest):
+    url = "https://www.themealdb.com/api/json/v1/1/random.php"
+
+    req = urllib.request.Request(url)
+    with urllib.request.urlopen(req) as response:
+        page = response.read().decode("utf8")
+        data = json.loads(json.loads(json.dumps(page)))
+
+        meal_name = data['meals'][0]['strMeal']
+        meal_category = data['meals'][0]['strCategory']
+        meal_area = data['meals'][0]['strArea']
+        meal_recipe = data['meals'][0]['strInstructions']
+
+        context = ['meal_name: ', meal_name, '<br>meal_category: ', meal_category,
+                   '<br>meal_area: ', meal_area, '<br>meal_recipe: ', meal_recipe]
+
+        return HttpResponse(context)
