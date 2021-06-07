@@ -15,10 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from apis.views import event_create_view
 
 urlpatterns = [
-    path('create/', event_create_view),
     path('admin/', admin.site.urls),
     path('apis/', include("apis.urls")),
     path('', include("ui.urls")),

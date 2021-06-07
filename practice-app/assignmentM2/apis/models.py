@@ -1,5 +1,4 @@
 from django.db import models
-from django.urls import reverse
 
 
 class Event(models.Model):
@@ -7,9 +6,8 @@ class Event(models.Model):
     description = models.CharField(max_length=200)
     city_name = models.CharField(max_length=20, default='Istanbul')
 
-    def get_absolute_url(self):
-        return reverse("events:event-detail", kwargs={"id": self.id})
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 <<<<<<< HEAD
@@ -25,3 +23,7 @@ class Meal(models.Model):
 >>>>>>> first commit
 =======
 >>>>>>> second commit
+=======
+
+# Create your models here.
+>>>>>>> second draft for weather api
