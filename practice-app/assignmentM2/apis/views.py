@@ -2,7 +2,9 @@ from typing import List
 from django.http.request import HttpRequest
 from django.shortcuts import render
 from django.http import HttpResponse
+import json
 import numpy as np
+
 # Create your views here.
 import urllib
 import io
@@ -26,6 +28,7 @@ def gethtmlimage(url):
 def examplepage(request):
     return HttpResponse("<h1>API Example Page!<h1>")
 
+
 def getflag(request:HttpRequest):
     if request.method == "GET" and "country" in request.GET:
         return HttpResponse(gethtmlimage("https://www.countryflags.io/" + request.GET["country"] + "/flat/64.png"))
@@ -33,6 +36,7 @@ def getflag(request:HttpRequest):
         return HttpResponse(gethtmlimage("https://www.countryflags.io/" + request.POST["country"] + "/flat/64.png"))
 
     return HttpResponse(gethtmlimage("https://www.countryflags.io/be/flat/64.png"))
+
 
 def getcurrencies(request:HttpRequest):
     url = "https://free.currconv.com/api/v7/convert?q=TRY_USD&compact=ultra&apiKey=55d560f06e174022b414"
@@ -45,5 +49,57 @@ def getcurrencies(request:HttpRequest):
     req = urllib.request.Request(url)
     with urllib.request.urlopen(req) as response:
         page = response.read().decode("utf8")
-       
         return HttpResponse(page)
+
+
+def getrandommealrecipe(request:HttpRequest):
+    url = "https://www.themealdb.com/api/json/v1/1/random.php"
+
+    req = urllib.request.Request(url)
+    with urllib.request.urlopen(req) as response:
+        page = response.read().decode("utf8")
+        data = json.loads(json.loads(json.dumps(page)))
+
+        meal_name = data['meals'][0]['strMeal']
+        meal_category = data['meals'][0]['strCategory']
+        meal_area = data['meals'][0]['strArea']
+        meal_recipe = data['meals'][0]['strInstructions']
+
+        context = ['meal_name: ', meal_name, '<br>meal_category: ', meal_category,
+                   '<br>meal_area: ', meal_area, '<br>meal_recipe: ', meal_recipe]
+
+        return HttpResponse(context)
+
+
+def getmealrecipebyname(request: HttpRequest):
+    url = "https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata"
+
+    if request.method == "GET" and "s" in request.GET:
+        url = "https://www.themealdb.com/api/json/v1/1/search.php?s=" + request.GET["s"]
+    elif request.method == "POST" and "s" in request.POST:
+        url = "https://www.themealdb.com/api/json/v1/1/search.php?s=" + request.POST["s"]
+
+    req = urllib.request.Request(url)
+    with urllib.request.urlopen(req) as response:
+        page = response.read().decode("utf8")
+        data = json.loads(json.loads(json.dumps(page)))
+        data = data['meals']
+        context = []
+        if type(data) is list:
+            for x in data:
+                meal_name = x['strMeal']
+                meal_category = x['strCategory']
+                meal_area = x['strArea']
+                meal_recipe = x['strInstructions']
+                temp = ['meal_name: ', meal_name, '<br>meal_category: ', meal_category,
+                       '<br>meal_area: ', meal_area, '<br>meal_recipe: ', meal_recipe]
+                context.extend(temp)
+                context.append('<br><br>')
+        else:
+            return HttpResponse("null")
+
+        return HttpResponse(context)
+
+       
+       
+
