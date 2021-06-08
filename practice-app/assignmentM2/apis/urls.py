@@ -7,5 +7,6 @@ urlpatterns = [
     path("examplepage", views.examplepage, name="examplepage"),
     path("getflag", views.getflag, name="getflag"),
     path("getcurrencies", views.getcurrencies, name="getcurrencies"),
-    path("getmealrecipe", views.getmealrecipe, name="getmealrecipe"),
+    path("getrandommealrecipe", views.getrandommealrecipe, name="getrandommealrecipe"),
+    path("getmealrecipebyname", views.getmealrecipebyname, name="getmealrecipebyname"),
 ]
