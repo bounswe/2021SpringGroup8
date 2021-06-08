@@ -3,21 +3,8 @@
 <h1>Create an Event</h1>
 
 <form action="." method="POST"> {% csrf_token %}
-    <!--
-    <p>   Title of Event :
-        <input type="text" name="title" placeholder="Your title"/>
-    </p>
-    <p>   Description of Event :
-        <input type="text" name="description" placeholder="Your description"/>
-    </p><p>   City of Event :
-        <input type="text" name="city_name" placeholder="Your city"/>
-    </p>
-    -->
     {{ form.as_p }}
-       <input type="submit" value="Save"/>
-
-
-
+    <input type="submit" value="Save"/>
 </form>
 
 
@@ -31,7 +18,7 @@
     <p>
     Event City : {{ data.city_name }}
     </p>
-     {% if weather == -1 %}
+     {% if weather == None %}
          <p> Not known weather forecast for your city!</p>
          {% else %}
          <p> Weather is going to be {{ weather }}! </p>

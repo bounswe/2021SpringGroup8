@@ -1,10 +1,12 @@
 from django.db import models
 
+# Create your models here.
 
 class Event(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
     city_name = models.CharField(max_length=20, default='Istanbul')
+<<<<<<< HEAD
 
 
 <<<<<<< HEAD
@@ -27,3 +29,5 @@ class Meal(models.Model):
 
 # Create your models here.
 >>>>>>> second draft for weather api
+=======
+>>>>>>> I add url path and write unittest for weather api
