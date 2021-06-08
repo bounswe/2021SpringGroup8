@@ -8,6 +8,7 @@ import numpy as np
 import urllib
 import io
 import base64
+from math import sin, cos, sqrt, atan2, radians
 
 def gethtmlimage(url):
     from PIL import Image
@@ -110,4 +111,47 @@ def getmealrecipebyname(request: HttpRequest):
 
        
        
+def finddistance(request:HttpRequest):
+    url = "https://api.opencagedata.com/geocode/v1/json?key=2a41d6ab37f44a2cb85b254b57123393&q="
+    
+    if request.method == "GET" and "country_from" in request.GET and "city_from" in request.GET and "county_from" in request.GET and "country_to" in request.GET and "city_to" in request.GET and "county_to" in request.GET:
+        url1 = url + request.GET["county_from"] + '%2C+' + request.GET["city_from"] + '%2C+' + request.GET["country_from"] + '&pretty=1'
+        url2 = url + request.GET["county_to"] + '%2C+' + request.GET["city_to"] + '%2C+' + request.GET["country_to"] + '&pretty=1'
+        with urllib.request.urlopen(url1) as response1:
+            string = response1.read().decode('utf-8')
+            res1 = json.loads(string)
+            lat1 = res1["results"][0]["geometry"]["lat"]
+            lng1 = res1["results"][0]["geometry"]["lng"]
+        with urllib.request.urlopen(url2) as response2:
+            string = response2.read().decode('utf-8')
+            res2 = json.loads(string)
+            lat2 = res2["results"][0]["geometry"]["lat"]
+            lng2 = res2["results"][0]["geometry"]["lng"]
+    elif request.method == "POST" and "country_from" in request.POST and "city_from" in request.POST and "county_from" in request.POST and "country_to" in request.POST and "city_to" in request.POST and "county_to" in request.POST:
+        url1 = url + request.POST["county_from"] + '%2C+' + request.POST["city_from"] + '%2C+' + request.POST["country_from"] + '&pretty=1'
+        url2 = url + request.POST["county_to"] + '%2C+' + request.POST["city_to"] + '%2C+' + request.POST["country_to"] + '&pretty=1'
+        with urllib.request.urlopen(url1) as response1:
+            string = response1.read().decode('utf-8')
+            res1 = json.loads(string)
+            lat1 = res1["results"][0]["geometry"]["lat"]
+            lng1 = res1["results"][0]["geometry"]["lng"]
+        with urllib.request.urlopen(url2) as response2:
+            string = response2.read().decode('utf-8')
+            res2 = json.loads(string)
+            lat2 = res2["results"][0]["geometry"]["lat"]
+            lng2 = res2["results"][0]["geometry"]["lng"]
 
+    rlat1 = radians(lat1)
+    rlon1 = radians(lng1)
+    rlat2 = radians(lat2)
+    rlon2 = radians(lng2)
+
+    dlon = rlon2 - rlon1
+    dlat = rlat2 - rlat1
+
+    a = sin(dlat / 2)**2 + cos(rlat1) * cos(rlat2) * sin(dlon / 2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    distance = 6373.0*c
+    
+
+    return HttpResponse(str(distance))
