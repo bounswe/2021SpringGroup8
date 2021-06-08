@@ -1,5 +1,8 @@
 from django.apps import AppConfig
 
+from pymongo import MongoClient
+client = pymongo.MongoClient('connection_string')
+db = client['db_name']
 
 class ApisConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
