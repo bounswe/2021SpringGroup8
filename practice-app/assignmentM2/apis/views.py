@@ -67,6 +67,7 @@ def getcurrencies(request:HttpRequest):
     req = urllib.request.Request(url)
     with urllib.request.urlopen(req) as response:
         page = response.read().decode("utf8")
+<<<<<<< HEAD
         num = (page[page.find(":")+1:-1])
         return HttpResponse(num)
 
@@ -118,3 +119,7 @@ def getmealrecipebyname(request: HttpRequest):
             return HttpResponse("null")
 
         return HttpResponse(context)
+=======
+       
+        return HttpResponse(page)
+>>>>>>> Update views.py
