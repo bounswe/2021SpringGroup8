@@ -2,7 +2,7 @@ from typing import List
 from django.http.request import HttpRequest
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from . import apps
 # Create your views here.
 import urllib
 
@@ -16,6 +16,15 @@ def getflag(request:HttpRequest):
         return HttpResponse("<img src=\"https://www.countryflags.io/" + request.POST["country"] + "/flat/64.png\">")
 
     return HttpResponse("""<img src="https://www.countryflags.io/be/flat/64.png">""")
+
+
+
+def registeruser(username, password):
+     return apps.collection_name.insert_one({"username" : username, "password":password})
+
+
+def searchuser(username):
+    return apps.collection_name.find_one({"username":username})
 
 def getcurrencies(request:HttpRequest):
     url = "https://free.currconv.com/api/v7/convert?q=TRY_USD&compact=ultra&apiKey=55d560f06e174022b414"
