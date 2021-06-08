@@ -45,5 +45,5 @@ def getcurrencies(request:HttpRequest):
     req = urllib.request.Request(url)
     with urllib.request.urlopen(req) as response:
         page = response.read().decode("utf8")
-        num = (page[page.find(":")+1:-1])
-        return HttpResponse(num)
+       
+        return HttpResponse(page)
