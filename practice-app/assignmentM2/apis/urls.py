@@ -10,4 +10,6 @@ urlpatterns = [
     path("getrandommealrecipe", views.getrandommealrecipe, name="getrandommealrecipe"),
     path("getmealrecipebyname", views.getmealrecipebyname, name="getmealrecipebyname"),
     path("finddistance", views.finddistance, name="finddistance"),
+    path('create-event/', views.create_event, name='create-event')
+
 ]

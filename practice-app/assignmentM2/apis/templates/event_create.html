@@ -1,0 +1,28 @@
+<title> Create Event </title>
+
+<h1>Create an Event</h1>
+
+<form action="." method="POST"> {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save"/>
+</form>
+
+
+{% if data %}
+    <h2>Your last event created succesfully.</h2>
+    <h3> Event Title : {{ data.title }} </h3>
+    </p>
+    <p>
+    Event Description : {{ data.description }}
+    </p>
+    <p>
+    Event City : {{ data.city_name }}
+    </p>
+     {% if weather == None %}
+         <p> Not known weather forecast for your city!</p>
+         {% else %}
+         <p> Weather is going to be {{ weather }}! </p>
+{% endif %}
+{% endif %}
+
+<button onclick="location.href = '/examplepage'">Go to Home Page</button>
