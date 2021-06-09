@@ -9,10 +9,14 @@ import urllib
 import io
 import base64
 from math import sin, cos, sqrt, atan2, radians
+from .forms import EventCreateForm
+from .models import Event
+import requests
+
 
 def gethtmlimage(url):
     from PIL import Image
-    req = urllib.request.Request(url,headers={
+    req = urllib.request.Request(url, headers={
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
     })
 
@@ -21,21 +25,25 @@ def gethtmlimage(url):
     im.save(rawBytes, "PNG")
     rawBytes.seek(0)  # return to the start of the file
     basestr = base64.b64encode(rawBytes.read()).decode("utf-8")
-    #print(base64.b64encode(rawBytes.read()), "|||", basestr)
+    # print(base64.b64encode(rawBytes.read()), "|||", basestr)
     ss = """<img src="data:image/png;base64, """ + basestr + """" />"""
     return ss
+
 
 def examplepage(request):
     return HttpResponse("<h1>API Example Page!<h1>")
 
 
+
 def getflag(request:HttpRequest):
+
     if request.method == "GET" and "country" in request.GET:
         return HttpResponse(gethtmlimage("https://www.countryflags.io/" + request.GET["country"] + "/flat/64.png"))
     elif request.method == "POST" and "country" in request.POST:
         return HttpResponse(gethtmlimage("https://www.countryflags.io/" + request.POST["country"] + "/flat/64.png"))
 
     return HttpResponse(gethtmlimage("https://www.countryflags.io/be/flat/64.png"))
+
 
 
 
@@ -54,7 +62,7 @@ def getcurrencies(request:HttpRequest):
         url = "https://free.currconv.com/api/v7/convert?q=" + request.GET["from"] + "_" + request.GET["to"] + "&compact=ultra&apiKey=55d560f06e174022b414"
     elif request.method == "POST" and "from" in request.POST and "to" in request.POST:
         url = "https://free.currconv.com/api/v7/convert?q=" + request.POST["from"] + "_" + request.POST["to"] + "&compact=ultra&apiKey=55d560f06e174022b414"
-    
+
     req = urllib.request.Request(url)
     with urllib.request.urlopen(req) as response:
         page = response.read().decode("utf8")
@@ -101,13 +109,15 @@ def getmealrecipebyname(request: HttpRequest):
                 meal_area = x['strArea']
                 meal_recipe = x['strInstructions']
                 temp = ['meal_name: ', meal_name, '<br>meal_category: ', meal_category,
-                       '<br>meal_area: ', meal_area, '<br>meal_recipe: ', meal_recipe]
+                        '<br>meal_area: ', meal_area, '<br>meal_recipe: ', meal_recipe]
+
                 context.extend(temp)
                 context.append('<br><br>')
         else:
             return HttpResponse("null")
 
         return HttpResponse(context)
+
 
        
        
@@ -128,6 +138,7 @@ def finddistance(request:HttpRequest):
             lat2 = res2["results"][0]["geometry"]["lat"]
             lng2 = res2["results"][0]["geometry"]["lng"]
     elif request.method == "POST" and "country_from" in request.POST and "city_from" in request.POST and "county_from" in request.POST and "country_to" in request.POST and "city_to" in request.POST and "county_to" in request.POST:
+
         url1 = url + request.POST["county_from"] + '%2C+' + request.POST["city_from"] + '%2C+' + request.POST["country_from"] + '&pretty=1'
         url2 = url + request.POST["county_to"] + '%2C+' + request.POST["city_to"] + '%2C+' + request.POST["country_to"] + '&pretty=1'
         with urllib.request.urlopen(url1) as response1:
@@ -148,10 +159,43 @@ def finddistance(request:HttpRequest):
 
     dlon = rlon2 - rlon1
     dlat = rlat2 - rlat1
-
-    a = sin(dlat / 2)**2 + cos(rlat1) * cos(rlat2) * sin(dlon / 2)**2
+    a = sin(dlat / 2) ** 2 + cos(rlat1) * cos(rlat2) * sin(dlon / 2) ** 2
     c = 2 * atan2(sqrt(a), sqrt(1 - a))
-    distance = 6373.0*c
-    
+    distance = 6373.0 * c
 
     return HttpResponse(str(distance))
+
+
+def create_event(request):
+    weather = None
+    form = EventCreateForm()
+    full_data = ''
+    if request.method == 'POST':
+        form = EventCreateForm(request.POST)
+        if form.is_valid():
+            full_data = form.cleaned_data
+            weather = getWeather(full_data['city_name'])
+            Event.objects.create(**full_data)
+            form = EventCreateForm()
+
+    context = {
+        'weather': weather,
+        'form': form,
+        'data': full_data
+    }
+    return render(request, 'event_create.html', context)
+
+
+def getWeather(city_name):
+    weather = None
+    url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city_name + '&APPID=a37330855b4d53528b42c62007788711'
+    response = ''
+    try:
+        response = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        pass
+    if response.ok:
+        data = response.json()
+        weather = data['weather'][0]['main']
+    return weather
+
