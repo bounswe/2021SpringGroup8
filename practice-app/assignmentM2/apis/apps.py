@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 from pymongo import MongoClient
-client = pymongo.MongoClient('connection_string')
+client = MongoClient('connection_string')
 db = client['db_name']
 
 class ApisConfig(AppConfig):
