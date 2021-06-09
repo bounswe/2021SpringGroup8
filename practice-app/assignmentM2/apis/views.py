@@ -420,6 +420,10 @@ from .forms import EventCreateForm
 from .models import Event,User
 import requests
 from PIL import Image
+from decouple import config #pip install python-decouple
+
+CURRENCY_API_KEY=config('CURRENCY_API_KEY')
+DISTANCE_API_KEY=config('DISTANCE_API_KEY')
 
 def gethtmlimage(url):
     req = urllib.request.Request(url, headers={
@@ -470,12 +474,12 @@ def searchuser(request:HttpRequest, un):
 
 
 def getcurrencies(request:HttpRequest):
-    url = "https://free.currconv.com/api/v7/convert?q=TRY_USD&compact=ultra&apiKey=55d560f06e174022b414"
+    url = "https://free.currconv.com/api/v7/convert?q=TRY_USD&compact=ultra&apiKey="+CURRENCY_API_KEY
    
     if request.method == "GET" and "from" in request.GET and "to" in request.GET:
-        url = "https://free.currconv.com/api/v7/convert?q=" + request.GET["from"] + "_" + request.GET["to"] + "&compact=ultra&apiKey=55d560f06e174022b414"
+        url = "https://free.currconv.com/api/v7/convert?q=" + request.GET["from"] + "_" + request.GET["to"] + "&compact=ultra&apiKey=" +CURRENCY_API_KEY
     elif request.method == "POST" and "from" in request.POST and "to" in request.POST:
-        url = "https://free.currconv.com/api/v7/convert?q=" + request.POST["from"] + "_" + request.POST["to"] + "&compact=ultra&apiKey=55d560f06e174022b414"
+        url = "https://free.currconv.com/api/v7/convert?q=" + request.POST["from"] + "_" + request.POST["to"] + "&compact=ultra&apiKey=" + CURRENCY_API_KEY
 
     req = urllib.request.Request(url)
     with urllib.request.urlopen(req) as response:
@@ -539,7 +543,7 @@ def getmealrecipebyname(request: HttpRequest):
        
        
 def finddistance(request:HttpRequest):
-    url = "https://api.opencagedata.com/geocode/v1/json?key=2a41d6ab37f44a2cb85b254b57123393&q="
+    url = "https://api.opencagedata.com/geocode/v1/json?key="+DISTANCE_API_KEY
     
     if request.method == "GET" and "country_from" in request.GET and "city_from" in request.GET and "county_from" in request.GET and "country_to" in request.GET and "city_to" in request.GET and "county_to" in request.GET:
         url1 = url + request.GET["county_from"] + '%2C+' + request.GET["city_from"] + '%2C+' + request.GET["country_from"] + '&pretty=1'
