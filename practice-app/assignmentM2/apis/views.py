@@ -13,10 +13,9 @@ from math import sin, cos, sqrt, atan2, radians
 from .forms import EventCreateForm
 from .models import Event
 import requests
-
+from PIL import Image
 
 def gethtmlimage(url):
-    from PIL import Image
     req = urllib.request.Request(url, headers={
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
     })
@@ -46,7 +45,7 @@ def getflag(request:HttpRequest):
     return HttpResponse(gethtmlimage("https://www.countryflags.io/be/flat/64.png"))
 
 
-r
+
 def registeruser(username, password):
      return apps.collection_name.insert_one({"username" : username, "password":password})
 

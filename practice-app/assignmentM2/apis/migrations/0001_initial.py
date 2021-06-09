@@ -20,6 +20,7 @@ class Migration(migrations.Migration):
                 ('area', models.CharField(max_length=50)),
                 ('recipe', models.TextField()),
             ]
+        ),
         migrations.CreateModel(
             name='Event',
             fields=[
@@ -27,6 +28,6 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=50)),
                 ('description', models.CharField(max_length=200)),
                 ('city_name', models.CharField(default='Istanbul', max_length=20)),
-            ],
-        ),
+            ]
+        )
     ]
