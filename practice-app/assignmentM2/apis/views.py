@@ -3,6 +3,7 @@ from django.http.request import HttpRequest
 from django.shortcuts import render
 from django.http import HttpResponse
 from . import apps
+from .models import Meal
 import json
 import numpy as np
 import urllib
@@ -45,15 +46,14 @@ def getflag(request:HttpRequest):
     return HttpResponse(gethtmlimage("https://www.countryflags.io/be/flat/64.png"))
 
 
-
-
-
+r
 def registeruser(username, password):
      return apps.collection_name.insert_one({"username" : username, "password":password})
 
 
 def searchuser(username):
     return apps.collection_name.find_one({"username":username})
+
 
 def getcurrencies(request:HttpRequest):
     url = "https://free.currconv.com/api/v7/convert?q=TRY_USD&compact=ultra&apiKey=55d560f06e174022b414"
@@ -77,13 +77,14 @@ def getrandommealrecipe(request:HttpRequest):
         page = response.read().decode("utf8")
         data = json.loads(json.loads(json.dumps(page)))
 
-        meal_name = data['meals'][0]['strMeal']
-        meal_category = data['meals'][0]['strCategory']
-        meal_area = data['meals'][0]['strArea']
-        meal_recipe = data['meals'][0]['strInstructions']
+        meal = Meal()
+        meal.name = data['meals'][0]['strMeal']
+        meal.category = data['meals'][0]['strCategory']
+        meal.area = data['meals'][0]['strArea']
+        meal.recipe = data['meals'][0]['strInstructions']
 
-        context = ['meal_name: ', meal_name, '<br>meal_category: ', meal_category,
-                   '<br>meal_area: ', meal_area, '<br>meal_recipe: ', meal_recipe]
+        context = ['meal_name: ', meal.name, '<br>meal_category: ', meal.category,
+                   '<br>meal_area: ', meal.area, '<br>meal_recipe: ', meal.recipe]
 
         return HttpResponse(context)
 
@@ -104,12 +105,14 @@ def getmealrecipebyname(request: HttpRequest):
         context = []
         if type(data) is list:
             for x in data:
-                meal_name = x['strMeal']
-                meal_category = x['strCategory']
-                meal_area = x['strArea']
-                meal_recipe = x['strInstructions']
-                temp = ['meal_name: ', meal_name, '<br>meal_category: ', meal_category,
-                        '<br>meal_area: ', meal_area, '<br>meal_recipe: ', meal_recipe]
+                meal = Meal()
+                meal.name = x['strMeal']
+                meal.category = x['strCategory']
+                meal.area = x['strArea']
+                meal.recipe = x['strInstructions']
+                meal.save()
+                temp = ['meal_name: ', meal.name, '<br>meal_category: ', meal.category,
+                       '<br>meal_area: ', meal.area, '<br>meal_recipe: ', meal.recipe]
 
                 context.extend(temp)
                 context.append('<br><br>')
@@ -162,6 +165,7 @@ def finddistance(request:HttpRequest):
     a = sin(dlat / 2) ** 2 + cos(rlat1) * cos(rlat2) * sin(dlon / 2) ** 2
     c = 2 * atan2(sqrt(a), sqrt(1 - a))
     distance = 6373.0 * c
+
 
     return HttpResponse(str(distance))
 
