@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+    Home 
+
+{%  endblock %}
+
+{% block content %}
+<h1>
+    Welcome to Home Page
+</h1>
+<h2>
+    Navigate below
+</h2><br/>
+<h3>
+    Communities
+</h3>
+<button onclick="location.href = '/economy'">Economy</button>
+<button onclick="location.href = '/cooking'">Cooking</button><br/><br/>
+
+<h3>
+    Events
+</h3>
+<button onclick="location.href = '/apis/create-event'">Create Event</button><br/>
+<button onclick="location.href = '/distance'">Find Event Distance</button><br/><br/><br/><br/>
+
+<h4>
+    Select your Country:
+</h4>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+{%  endblock %}
