@@ -93,3 +93,14 @@ class WeatherTest(unittest):
     def test_empty_city(self):
         returned = views.getWeather(self.city_name3)
         self.assertEqual(returned, None)
+
+
+
+
+
+
+
+
+
+
+
