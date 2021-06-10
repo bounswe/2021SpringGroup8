@@ -17,7 +17,3 @@ class DistanceForm(forms.Form):
 
 class MealForm(forms.Form):
     meal_name = forms.CharField(label="meal name", max_length=50)
-
-class QuoteForm(forms.Form):
-    first_name = forms.CharField(label="first name", max_length=50)
-    last_name = forms.CharField(label="last name", max_length=50)
