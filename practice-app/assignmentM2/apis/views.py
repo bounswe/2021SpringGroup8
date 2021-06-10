@@ -215,3 +215,16 @@ def getWeather(city_name):
         weather = data['weather'][0]['main']
     return weather
 
+
+def getquote(request:HttpRequest):
+   
+    if request.method == "GET" and "first_name" in request.GET and "last_name" in request.GET:
+        url = "https://quotable.io/quotes?author=" + request.GET["first_name"] + "-" + request.GET["last_name"]
+    elif request.method == "POST" and "first_name" in request.POST and "last_name" in request.POST:
+        url = "https://quotable.io/quotes?author=" + request.GET["first_name"] + "-" + request.GET["last_name"]
+    
+    req = urllib.request.Request(url)
+    with urllib.request.urlopen(req) as response:
+        page = response.read().decode("utf8")
+        return HttpResponse(page)
+
