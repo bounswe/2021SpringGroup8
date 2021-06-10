@@ -41,11 +41,16 @@ urlpatterns = [
     path("finddistance", views.finddistance, name="finddistance"),
     path('create-event/', views.create_event, name='create-event'),
     path('getquote/', views.getquote, name='getquote'),
+<<<<<<< HEAD
     path('registeruser/', views.registeruser, name='registeruser')
 
 <<<<<<< HEAD
 ]
 >>>>>>> added ui
 =======
+=======
+    path('registeruser/', views.registeruser, name='registeruser'),
+    path('searchuser', views.searchuser, name='searchuser')
+>>>>>>> Register and SearchUser functions are reimplemented
 ]
 >>>>>>> quote-api is controlled, registeruser api updated with url path

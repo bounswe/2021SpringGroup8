@@ -419,7 +419,6 @@ from math import sin, cos, sqrt, atan2, radians
 from .forms import EventCreateForm
 from .models import Event,User
 import requests
-from PIL import Image
 from decouple import config #pip install python-decouple
 
 CURRENCY_API_KEY=config('CURRENCY_API_KEY')
@@ -458,18 +457,32 @@ def getflag(request:HttpRequest):
 
 def registeruser(request:HttpRequest):
     if request.method == "POST":
-        name = request.POST['name']
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        id= apps.collection_name.insert_one({"name" : name,"username" : username,"email" : email, "password":password})
-        return HttpResponse("User registered with id "+ id)
-
-
-def searchuser(request:HttpRequest, un):
+        user = User()
+        user.name = request.POST['name']
+        user.username = request.POST['username']
+        user.email = request.POST['email']
+        user.password = request.POST['password']
+        user.save()
+        return HttpResponse("User registered")
     if request.method == "GET":
-        user_name = User.objects.get(username=un)
-        response = json.dumps([{'Name': user_name.name, 'Username': user_name.username, 'Active User': user_name.isActive, 'Email':user_name.email}])
+        user = User()
+        user.name = request.GET['name']
+        user.username = request.GET['username']
+        user.email = request.GET['email']
+        user.password = request.GET['password']
+        user.save()
+        return HttpResponse("User registered")
+    return HttpResponse("Error method type")
+
+
+def searchuser(request:HttpRequest):
+    if request.method == "GET":
+        un = request.GET['user_name']
+        try:
+            user_name = User.objects.get(username=un)
+            response = json.dumps([{'Name': user_name.name, 'Username': user_name.username, 'Active User': user_name.isActive, 'Email':user_name.email}])
+        except Exception as e:
+            return HttpResponse(str(e))
     return HttpResponse(response, content_type='text/json')
 
 
@@ -500,7 +513,7 @@ def getrandommealrecipe(request:HttpRequest):
         meal.category = data['meals'][0]['strCategory']
         meal.area = data['meals'][0]['strArea']
         meal.recipe = data['meals'][0]['strInstructions']
-
+        meal.save()
         context = ['meal_name: ', meal.name, '<br>meal_category: ', meal.category,
                    '<br>meal_area: ', meal.area, '<br>meal_recipe: ', meal.recipe]
 
