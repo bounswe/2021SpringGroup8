@@ -41,16 +41,6 @@ class MealRecipeByName(TestCase):
 # initialize the APIClient app
 
 
-class RegistrationTests(TestCase):
-    def setUp(self):
-        self.registeruser_url = reverse('registeruser')
-
-    def test_default_connection(self):
-        response = self.client.get(self.registeruser_url)
-        self.assertEqual(response.status_code,200)
-        self.assertTemplateUsed(response,'registeruser.html')
-
-
 class CurrencyTests(TestCase):
 
     def setUp(self):
