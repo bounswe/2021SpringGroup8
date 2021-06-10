@@ -48,6 +48,7 @@ class Event(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
     city_name = models.CharField(max_length=20, default='Istanbul')
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 >>>>>>> added ui
@@ -59,3 +60,5 @@ class User(models.Model):
     isActive = models.BooleanField(default=True)
     password = models.CharField(max_length=30)
 >>>>>>> model-test-view-regarding-user-registration-updated
+=======
+>>>>>>> Committing files of quote-api
