@@ -62,17 +62,3 @@ def cooking(request):
         form = MealForm()
 
     return render(request, 'cooking.html', {'form': form})
-
-def quote(request):
-    if request.method == 'POST':
-        
-        form = QuoteForm(request.POST)
-        
-        if form.is_valid():
-
-            new_url = 'https://quotable.io/quotes?author=' + form.cleaned_data['first_name'] + '-' + form.cleaned_data['last_name']
-            return HttpResponseRedirect(new_url)
-    else:
-        form = QuoteForm()
-
-    return render(request, 'quote.html', {'form': form})

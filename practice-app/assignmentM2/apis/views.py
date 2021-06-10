@@ -417,9 +417,13 @@ import io
 import base64
 from math import sin, cos, sqrt, atan2, radians
 from .forms import EventCreateForm
-from .models import Event
+from .models import Event,User
 import requests
 from PIL import Image
+from decouple import config #pip install python-decouple
+
+CURRENCY_API_KEY=config('CURRENCY_API_KEY')
+DISTANCE_API_KEY=config('DISTANCE_API_KEY')
 
 def gethtmlimage(url):
     req = urllib.request.Request(url, headers={
@@ -452,21 +456,30 @@ def getflag(request:HttpRequest):
 
 
 
-def registeruser(username, password):
-     return apps.collection_name.insert_one({"username" : username, "password":password})
+def registeruser(request:HttpRequest):
+    if request.method == "POST":
+        name = request.POST['name']
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        id= apps.collection_name.insert_one({"name" : name,"username" : username,"email" : email, "password":password})
+        return HttpResponse("User registered with id "+ id)
 
 
-def searchuser(username):
-    return apps.collection_name.find_one({"username":username})
+def searchuser(request:HttpRequest, un):
+    if request.method == "GET":
+        user_name = User.objects.get(username=un)
+        response = json.dumps([{'Name': user_name.name, 'Username': user_name.username, 'Active User': user_name.isActive, 'Email':user_name.email}])
+    return HttpResponse(response, content_type='text/json')
 
 
 def getcurrencies(request:HttpRequest):
-    url = "https://free.currconv.com/api/v7/convert?q=TRY_USD&compact=ultra&apiKey=55d560f06e174022b414"
+    url = "https://free.currconv.com/api/v7/convert?q=TRY_USD&compact=ultra&apiKey="+CURRENCY_API_KEY
    
     if request.method == "GET" and "from" in request.GET and "to" in request.GET:
-        url = "https://free.currconv.com/api/v7/convert?q=" + request.GET["from"] + "_" + request.GET["to"] + "&compact=ultra&apiKey=55d560f06e174022b414"
+        url = "https://free.currconv.com/api/v7/convert?q=" + request.GET["from"] + "_" + request.GET["to"] + "&compact=ultra&apiKey=" +CURRENCY_API_KEY
     elif request.method == "POST" and "from" in request.POST and "to" in request.POST:
-        url = "https://free.currconv.com/api/v7/convert?q=" + request.POST["from"] + "_" + request.POST["to"] + "&compact=ultra&apiKey=55d560f06e174022b414"
+        url = "https://free.currconv.com/api/v7/convert?q=" + request.POST["from"] + "_" + request.POST["to"] + "&compact=ultra&apiKey=" + CURRENCY_API_KEY
 
     req = urllib.request.Request(url)
     with urllib.request.urlopen(req) as response:
@@ -530,7 +543,7 @@ def getmealrecipebyname(request: HttpRequest):
        
        
 def finddistance(request:HttpRequest):
-    url = "https://api.opencagedata.com/geocode/v1/json?key=2a41d6ab37f44a2cb85b254b57123393&q="
+    url = "https://api.opencagedata.com/geocode/v1/json?key="+DISTANCE_API_KEY
     
     if request.method == "GET" and "country_from" in request.GET and "city_from" in request.GET and "county_from" in request.GET and "country_to" in request.GET and "city_to" in request.GET and "county_to" in request.GET:
         url1 = url + request.GET["county_from"] + '%2C+' + request.GET["city_from"] + '%2C+' + request.GET["country_from"] + '&pretty=1'
@@ -609,6 +622,7 @@ def getWeather(city_name):
     return weather
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> added ui
 =======
 def getquote(request:HttpRequest):
@@ -623,3 +637,5 @@ def getquote(request:HttpRequest):
         page = response.read().decode("utf8")
         return HttpResponse(page)
 >>>>>>> Committing files of quote-api
+=======
+>>>>>>> Revert "new branch created"
