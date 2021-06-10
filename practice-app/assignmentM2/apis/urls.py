@@ -39,6 +39,7 @@ urlpatterns = [
     path("getrandommealrecipe", views.getrandommealrecipe, name="getrandommealrecipe"),
     path("getmealrecipebyname", views.getmealrecipebyname, name="getmealrecipebyname"),
     path("finddistance", views.finddistance, name="finddistance"),
+<<<<<<< HEAD
     path('create-event/', views.create_event, name='create-event'),
     path('getquote/', views.getquote, name='getquote'),
 <<<<<<< HEAD
@@ -50,6 +51,11 @@ urlpatterns = [
 =======
 =======
     path('registeruser/', views.registeruser, name='registeruser'),
+=======
+    path('create-event', views.create_event, name='create-event'),
+    path('getquote', views.getquote, name='getquote'),
+    path('registeruser', views.registeruser, name='registeruser'),
+>>>>>>> Final version
     path('searchuser', views.searchuser, name='searchuser')
 >>>>>>> Register and SearchUser functions are reimplemented
 ]

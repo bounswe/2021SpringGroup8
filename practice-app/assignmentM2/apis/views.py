@@ -409,7 +409,6 @@ from django.http.request import HttpRequest
 from django.shortcuts import render
 from django.http import HttpResponse
 from . import apps
-from .models import Meal
 import json
 import numpy as np
 import urllib
@@ -417,7 +416,7 @@ import io
 import base64
 from math import sin, cos, sqrt, atan2, radians
 from .forms import EventCreateForm
-from .models import Event,User
+from .models import *
 import requests
 from decouple import config #pip install python-decouple
 
@@ -610,7 +609,7 @@ def create_event(request):
         if form.is_valid():
             full_data = form.cleaned_data
             weather = getWeather(full_data['city_name'])
-            Event.objects.create(**full_data)
+            Event3.objects.create(**full_data)
             form = EventCreateForm()
 
     context = {

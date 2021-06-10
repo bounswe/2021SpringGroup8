@@ -62,3 +62,21 @@ def cooking(request):
         form = MealForm()
 
     return render(request, 'cooking.html', {'form': form})
+
+
+def literature(request):
+    if request.method == 'POST':
+
+        form = LiteratureForm(request.POST)
+
+        if form.is_valid():
+            new_url = '/apis/getquote?first_name=' + form.cleaned_data['first_name'] + '&last_name=' + form.cleaned_data['last_name']
+            return HttpResponseRedirect(new_url)
+    else:
+        form = LiteratureForm()
+
+    return render(request, 'literature.html', {'form': form})
+
+
+def registeruser(request):
+    return render(request, 'registration-form.html')

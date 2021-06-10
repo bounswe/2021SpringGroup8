@@ -38,12 +38,13 @@
 <body>
 <div class="registration-form">
     <h1>Registration Form</h1>
-    <form action="registeruser" method="POST">
+    <form action="apis/registeruser" method="POST">
+        {% csrf_token %}
         <input type="text" name="name" placeholder="Name" required>
         <input type="text" name="username" placeholder="Username" required>
         <input type="text" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Password" required>
-        <input type="submit">
+        <button type="submit">Register User</button>
     </form>
 </div>
 </body>

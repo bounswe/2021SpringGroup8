@@ -44,7 +44,7 @@ class Meal(models.Model):
     area = models.CharField(max_length=50)
     recipe = models.TextField()
 
-class Event(models.Model):
+class Event3(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
     city_name = models.CharField(max_length=20, default='Istanbul')
