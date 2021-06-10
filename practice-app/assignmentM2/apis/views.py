@@ -12,10 +12,9 @@ from math import sin, cos, sqrt, atan2, radians
 from .forms import EventCreateForm
 from .models import *
 import requests
-from decouple import config #pip install python-decouple
 
-CURRENCY_API_KEY=config('CURRENCY_API_KEY')
-DISTANCE_API_KEY=config('DISTANCE_API_KEY')
+CURRENCY_API_KEY="55d560f06e174022b414"
+DISTANCE_API_KEY="2a41d6ab37f44a2cb85b254b57123393&q="
 
 def gethtmlimage(url):
     req = urllib.request.Request(url, headers={
