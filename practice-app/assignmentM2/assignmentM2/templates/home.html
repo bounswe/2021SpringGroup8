@@ -14,9 +14,18 @@
     Navigate below
 </h2><br/>
 <h3>
+    User
+</h3>
+<button onclick="location.href = '/registeruser'">Register</button>
+<form method="GET" action="apis/searchuser">
+    <input type="text" name="user_name" placeholder="Username" required>
+    <button type="submit">Search User</button>
+</form>
+<h3>
     Communities
 </h3>
 <button onclick="location.href = '/economy'">Economy</button>
+<button onclick="location.href = '/literature'">Literature</button>
 <button onclick="location.href = '/cooking'">Cooking</button><br/><br/>
 
 <h3>

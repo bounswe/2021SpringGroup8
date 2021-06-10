@@ -2,7 +2,7 @@
 
 <h1>Create an Event</h1>
 
-<form action="." method="POST"> {% csrf_token %}
+<form action="./create-event" method="POST"> {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save"/>
 </form>
