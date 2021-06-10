@@ -12,6 +12,6 @@ urlpatterns = [
     path("finddistance", views.finddistance, name="finddistance"),
     path('create-event/', views.create_event, name='create-event'),
     path('getquote/', views.getquote, name='getquote'),
-    path('registeruser/', views.registeruser, name='registeruser')
-
+    path('registeruser/', views.registeruser, name='registeruser'),
+    path('searchuser', views.searchuser, name='searchuser')
 ]
