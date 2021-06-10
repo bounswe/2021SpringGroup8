@@ -49,4 +49,13 @@ class Event(models.Model):
     description = models.CharField(max_length=200)
     city_name = models.CharField(max_length=20, default='Istanbul')
 
+<<<<<<< HEAD
 >>>>>>> added ui
+=======
+class User(models.Model):
+    name= models.CharField(max_length=30)
+    username = models.CharField(max_length=30)
+    email = models.CharField(max_length=250)
+    isActive = models.BooleanField(default=True)
+    password = models.CharField(max_length=30)
+>>>>>>> model-test-view-regarding-user-registration-updated
