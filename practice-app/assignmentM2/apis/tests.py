@@ -41,16 +41,6 @@ class MealRecipeByName(TestCase):
 # initialize the APIClient app
 
 
-class RegistrationTests(TestCase):
-    def setUp(self):
-        self.registeruser_url = reverse('registeruser')
-
-    def test_default_connection(self):
-        response = self.client.get(self.registeruser_url)
-        self.assertEqual(response.status_code,200)
-        self.assertTemplateUsed(response,'registeruser.html')
-
-
 class CurrencyTests(TestCase):
 
     def setUp(self):
@@ -103,6 +93,23 @@ class WeatherTest(unittest):
     def test_empty_city(self):
         returned = views.getWeather(self.city_name3)
         self.assertEqual(returned, None)
+    
+class QuoteTest(unittest):
+
+    def setUp(self):
+        pass
+
+    def test_default_connection(self):
+        response: HttpResponse = client.get(reverse('getquote'), {'first_name': 'Albert'}, {'last_name': 'Einstein'})
+        content = response.content.decode()
+        print(type(content))
+        self.assertGreaterEqual(len(content), 84)
+
+    def test_null_result(self):
+        response: HttpResponse = client.get(reverse('getquote'), {'first_name': 'Einstein'}, {'last_name': 'Albert'})
+        content = response.content.decode()
+        print(type(content))
+        self.assertEqual(len(content), 84)
 
 
 
