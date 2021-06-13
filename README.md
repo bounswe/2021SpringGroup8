@@ -10,3 +10,8 @@
 - [Gökhan Uysal](https://github.com/bounswe/2021SpringGroup8/wiki/G%C3%B6khan-UYSAL)
 - [Mustafa Can Aydın](https://github.com/bounswe/2021SpringGroup8/wiki/Mustafa-Can-AYDIN)
 - [Ezgi Batı](https://github.com/bounswe/2021SpringGroup8/wiki/Ezgi-Bat%C4%B1)
+
+
+## Practice-App
+
+Practice app can be found in http://52.15.179.49:8000 . 
