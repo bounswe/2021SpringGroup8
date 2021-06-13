@@ -12,6 +12,9 @@ ENV PYTHONUNBUFFERED=1
 # Install pip requirements
 COPY requirements.txt .
 RUN python -m pip install -r requirements.txt
+ENV SECRET_KEY django-insecure-hjpwmczb)+#nm0l_$jka+#m6y!v%wdbph!dk-jmip393^@s%ru
+ENV CURRENCY_API_KEY 55d560f06e174022b414
+ENV DISTANCE_API_KEY 2a41d6ab37f44a2cb85b254b57123393&q=
 
 WORKDIR /app
 COPY . /app

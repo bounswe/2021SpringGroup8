@@ -20,6 +20,30 @@ class RandomMealRecipeTests(TestCase):
         self.assertGreaterEqual(len(content), 10)
 
 
+class RegistrationTests(TestCase):
+     def setUp(self):
+         self.registeruser_url = reverse('registeruser')
+
+     def test_default_connection(self):
+         response = self.client.get(self.registeruser_url)
+         self.assertEqual(response.status_code,200)
+         self.assertTemplateUsed(response,'registeruser.html')
+
+class SearchTest(TestCase):
+    def setUp(self):
+        pass
+    def test_default_connection(self):
+        response: HttpResponse = client.get(reverse('searchuser'), {'user_name': 'demo'})
+        content = response.content
+        self.assertGreaterEqual(len(content), 10)
+    def test_null_result(self):
+        response: HttpResponse = client.get(reverse('searchuser'), {'user_name': '.'})
+        content = response.content
+        self.assertGreaterEqual(len(content), 10)
+
+
+
+
 class MealRecipeByName(TestCase):
 
     def setUp(self):

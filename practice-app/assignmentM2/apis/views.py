@@ -13,9 +13,17 @@ from .forms import EventCreateForm
 from .models import *
 import requests
 from PIL import Image
+import os
+import os.path
+import environ
+env = environ.Env()
+environ.Env.read_env()
 
-CURRENCY_API_KEY="55d560f06e174022b414"
-DISTANCE_API_KEY="2a41d6ab37f44a2cb85b254b57123393&q="
+
+
+CURRENCY_API_KEY=env('CURRENCY_API_KEY')
+DISTANCE_API_KEY=env('DISTANCE_API_KEY')
+
 
 def gethtmlimage(url):
     req = urllib.request.Request(url, headers={
