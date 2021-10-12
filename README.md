@@ -1,5 +1,5 @@
-# CmpE 352 Group 8 (2021 Spring)
-- We are currently 8 students from Fundamentals of Software Engineering Course (CmpE 352.01). You can check out our [wiki](https://github.com/bounswe/2021SpringGroup8/wiki) for the project details.
+# CmpE 451 Group 8 (2021 Fall)
+- We are currently 8 students from Fundamentals of Software Engineering Course (CmpE451.02). You can check out our [wiki](https://github.com/bounswe/2021SpringGroup8/wiki) for the project details.
 
 ## Team Members
 - [Mehmet Selahaddin Şentop (Communicator)](https://github.com/bounswe/2021SpringGroup8/wiki/Mehmet-Selahaddin-Şentop)
@@ -9,9 +9,10 @@
 - [Güney İzol](https://github.com/bounswe/2021SpringGroup8/wiki/Güney-İzol)
 - [Gökhan Uysal](https://github.com/bounswe/2021SpringGroup8/wiki/G%C3%B6khan-UYSAL)
 - [Mustafa Can Aydın](https://github.com/bounswe/2021SpringGroup8/wiki/Mustafa-Can-AYDIN)
-- [Ezgi Batı](https://github.com/bounswe/2021SpringGroup8/wiki/Ezgi-Bat%C4%B1)
+- [Mehmet Temizel]()
+- []()
 
 
 ## Practice-App
 
-Practice app can be found in http://52.15.179.49:8000 . 
+
