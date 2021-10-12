@@ -9,7 +9,7 @@
 - [Güney İzol](https://github.com/bounswe/2021SpringGroup8/wiki/Güney-İzol)
 - [Gökhan Uysal](https://github.com/bounswe/2021SpringGroup8/wiki/G%C3%B6khan-UYSAL)
 - [Mustafa Can Aydın](https://github.com/bounswe/2021SpringGroup8/wiki/Mustafa-Can-AYDIN)
-- [Mehmet Temizel]()
+- [Mehmet Temizel](https://github.com/bounswe/bounswe2020group7/wiki/Mehmet-TEM%C4%B0ZEL)
 - []()
 
 
