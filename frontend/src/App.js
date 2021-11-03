@@ -4,6 +4,8 @@ import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Login from "./public-content/pages/login";
 import ValidatingSignUpForm from "./public-content/pages/ValidatingSignUpForm";
+import Post from "./components/post"
+import PostListComponent from "./components/posts";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +31,8 @@ class App extends Component {
           <div>
             <>
               <Switch>
+                <Route exact path={"/posts"} component={PostListComponent} />
+                <Route path="/post/:id" component={Post} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path={"/signup"} component={ValidatingSignUpForm} />
               </Switch>
