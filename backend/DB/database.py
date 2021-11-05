@@ -4,3 +4,6 @@ client = pymongo.MongoClient("mongodb+srv://admin:admin@cmpe451db.zec58.mongodb.
 db = client["CommunityDB"]
 print(db)
 print(client.list_database_names())
+
+
+
