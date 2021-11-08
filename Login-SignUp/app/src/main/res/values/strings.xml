@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">SimpleLogin</string>
+    <string name="purposeful_community">Purposeful Community</string>
+    <string name="sign_in">Sign In</string>
+    <string name="hi_there_nice_to_see_you_again">Hi there! Nice to see you again.</string>
+    <string name="email">Email:</string>
+    <string name="enter_your_email">enter your email</string>
+    <string name="enter_your_password">enter your password</string>
+    <string name="password">Password:</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="username">Username:</string>
+    <string name="enter_your_user_name">enter your user name</string>
+    <string name="have_an_account">Have an account?</string>
+</resources>
