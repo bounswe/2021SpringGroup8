@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Purposeful Community</string>
+    <string name="forgot">Forgot Password?</string>
+    <string name="signUp">Sign Up</string>
+    <string name="projectName">FaceSpace</string>
+    <string name="email">Email:</string>
+    <string name="enterPassword">enter your password</string>
+    <string name="enterEmail">enter your email</string>
+    <string name="password">Password:</string>
+    <string name="signIn">Sign In</string>
+    <string name="welcome">Hi there! Nice to see you again.</string>
+    <string name="username">Username:</string>
+    <string name="enterUsername">enter username</string>
+    <string name="KVKK">I have read and accept everything.</string>
+    <string name="alreadyHaveAccount">Have an account?</string>
+</resources>
