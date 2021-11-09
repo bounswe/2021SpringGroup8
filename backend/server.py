@@ -4,6 +4,7 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from socketserver import ThreadingMixIn
 import urllib.parse
 import Endpoints
+from Management import Management 
 
 USE_HTTPS = False
 
@@ -32,8 +33,13 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         if self.path == "/login":
-            Endpoints.User.Login(self)
+            Endpoints.User.Login(self, manager)
             return
+        elif self.path == "/signup":
+            Endpoints.User.SignUp(self, manager)
+            return
+        else:
+            self.wfile.write("Wrong endpoint!")
 
 
 
@@ -46,6 +52,9 @@ def run():
         import ssl
         server.socket = ssl.wrap_socket(server.socket, keyfile='./key.pem', certfile='./cer.pem', server_side=True)
     server.serve_forever()
+
+
+manager = Management()
 
 run()
 
