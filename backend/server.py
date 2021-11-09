@@ -3,7 +3,7 @@ import DB
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from socketserver import ThreadingMixIn
 import urllib.parse
-import Response
+import Endpoints
 
 USE_HTTPS = False
 
@@ -32,7 +32,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         if self.path == "/login":
-            Response.User.Login(self)
+            Endpoints.User.Login(self)
             return
 
 
