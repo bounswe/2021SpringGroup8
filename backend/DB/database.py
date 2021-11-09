@@ -18,7 +18,7 @@ class DatabaseManager:
         if mydoc == None:
                 x = self.userCollection.insert_one(user_dict)
                 user = self.userCollection.find_one(myquery)
-                user_return_dict = {"username" : username, "id": user["_id"], "email": user["email"]}
+                user_return_dict = {"username" : username, "id": str(user["_id"]), "email": user["email"]}
                 return user_return_dict
         else:
             return False
@@ -30,7 +30,7 @@ class DatabaseManager:
         if user == None :
             return False
         else:
-            user_return_dict = {"username" : user["username"], "id": user["_id"], "email": user["email"]}
+            user_return_dict = {"username" : user["username"], "id": str(user["_id"]), "email": user["email"]}
             return user_return_dict
 
 if __name__== "__main__":

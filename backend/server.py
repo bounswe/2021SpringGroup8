@@ -1,10 +1,12 @@
 import pymongo
+from pymongo import database
 import DB
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from socketserver import ThreadingMixIn
 import urllib.parse
+from DB.database import DatabaseManager
 import Endpoints
-from Management import Management 
+from ServerManager import ServerManager 
 
 USE_HTTPS = False
 
@@ -18,18 +20,35 @@ class Handler(BaseHTTPRequestHandler):
         print("path:", self.path)
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(b"""
-<html>
-<form action="/login" method="POST">
-  <label for="fname">First name:</label><br>
-  <input type="text" id="fname" name="fname"><br>
-  <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" name="lname">
-  <input type="submit" value="Submit">
-</form>
 
-</html>
-        """)
+        if self.path == "/login":
+            self.wfile.write(b"""
+    <html>
+    <form action="/login" method="POST">
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username"><br>
+    <label for="password">Password:</label><br>
+    <input type="text" id="password" name="password">
+    <input type="submit" value="Submit">
+    </form>
+
+    </html>
+            """)
+        elif self.path == "/signup":
+            self.wfile.write(b"""
+    <html>
+    <form action="/signup" method="POST">
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username"><br>
+    <label for="email">Email Address:</label><br>
+    <input type="text" id="email" name="email"><br>
+    <label for="password">Password:</label><br>
+    <input type="text" id="password" name="password">
+    <input type="submit" value="Submit">
+    </form>
+
+    </html>
+            """)
 
     def do_POST(self):
         if self.path == "/login":
@@ -54,7 +73,8 @@ def run():
     server.serve_forever()
 
 
-manager = Management()
+databasemanager = DatabaseManager()
+manager = ServerManager(databasemanager)
 
 run()
 
