@@ -6,6 +6,8 @@ from ServerManager import ServerManager
 import json
 import string
 import unicodedata
+import html
+
 
 def WriteJSON(self, response):
     self.wfile.write(json.dumps(response).encode('utf8'))
@@ -13,6 +15,8 @@ def WriteJSON(self, response):
 def ParsePostBody(self):
     res = self.rfile.read(int(self.headers["Content-Length"]))
     res = res.decode("utf8")
+    res = urllib.parse.unquote(res, encoding='ANSI')
+    res = html.unescape(res)
     res = urllib.parse.parse_qs(res, encoding='utf8')
     return res
 
@@ -84,3 +88,5 @@ def SignUp(self : BaseHTTPRequestHandler, manager : ServerManager):
         response["@return"] = dbresult
 
     WriteJSON(self, response)
+
+#todo check token if it s new son 1 gun
