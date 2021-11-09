@@ -6,6 +6,7 @@ import Login from "./public-content/pages/login";
 import ValidatingSignUpForm from "./public-content/pages/ValidatingSignUpForm";
 import Post from "./components/post"
 import PostListComponent from "./components/posts";
+import HomePage from "./public-content/pages/HomePage";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -31,6 +32,7 @@ class App extends Component {
           <div>
             <>
               <Switch>
+                <Route exact path={"/home"} component={HomePage}/>
                 <Route exact path={"/posts"} component={PostListComponent} />
                 <Route path="/post/:id" component={Post} />
                 <Route exact path="/login" component={Login} />
