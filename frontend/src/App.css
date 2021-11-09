@@ -30,3 +30,49 @@ label {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+.btn-sec {
+
+  display: inline-block;
+  text-decoration: none;
+  letter-spacing: var(--mainSpacing);
+  color: var(--mainWhite);
+  background: #9155A7;
+  padding: 0.4rem 0.9rem;
+  border: 3px solid var(--primaryColor);
+  transition: var(--mainTransition);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.btn-sec:hover {
+  background: transparent;
+  color: var(--darkShadow);
+}
+
+.btn-primary {
+  display: inline-block;
+  text-decoration: none;
+  letter-spacing: var(--mainSpacing);
+  color: var(--mainBlack);
+  background: var(--primaryColor);
+  padding: 0.4rem 0.9rem;
+  border: 3px solid var(--primaryColor);
+  transition: var(--mainTransition);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: transparent;
+  color: var(--primaryColor);
+}
+:root {
+  --primaryColor: #0ca1fe ;
+  --mainWhite: #fff;
+  --offWhite: #ffffff;
+  --mainBlack: #222;
+  --mainGrey: #a39d9d;
+  --darkGrey: #999595;
+  --mainTransition: all 0.3s linear;
+  --mainSpacing: 3px;
+  --lightShadow: 2px 5px 3px 0px rgba(0, 0, 0, 0.5);
+  --darkShadow: 4px 10px 5px 0px rgba(0, 0, 0, 0.5);
+}
