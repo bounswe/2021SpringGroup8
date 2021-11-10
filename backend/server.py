@@ -7,6 +7,7 @@ import urllib.parse
 from DB.database import DatabaseManager
 import Endpoints
 from ServerManager import ServerManager 
+import ProcessRequests
 
 USE_HTTPS = False
 
@@ -51,15 +52,7 @@ class Handler(BaseHTTPRequestHandler):
             """)
 
     def do_POST(self):
-        if self.path == "/login":
-            Endpoints.User.Login(self, manager)
-            return
-        elif self.path == "/signup":
-            Endpoints.User.SignUp(self, manager)
-            return
-        else:
-            self.wfile.write("Wrong endpoint!")
-
+        ProcessRequests.ProcessRequest(self, manager)
 
 
 class ThreadingSimpleServer(ThreadingMixIn, HTTPServer):
@@ -77,13 +70,6 @@ databasemanager = DatabaseManager()
 manager = ServerManager(databasemanager)
 
 run()
-
-
-# 1 signup
-# 1 login -> Token (kaç saat aktif)
-
-# Signup(d) d["username"] d["password"] # True veya False
-# Login(d) d["username"] d["password"] returns d["userid"]
 
 # Token
 # Activity Streams

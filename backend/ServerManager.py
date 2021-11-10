@@ -14,8 +14,10 @@ class ServerManager:
         self.DatabaseManager = databasemanager
 
     def ClearOldTokens(self):
-        #todo implement 
-        pass
+
+        for key in self.Tokens:
+            if not self.ValidToken(key):
+                del self.Tokens[key]
 
     def RegisterToken(self, user_dict):
         self.ClearOldTokens()
@@ -31,12 +33,20 @@ class ServerManager:
 
         self.Tokens[newtoken] = d
 
-        self.UpdateToken(newtoken)
+        self.RefreshToken(newtoken)
+        
+        return newtoken
 
 
-    def UpdateToken(self, token):
+    def ValidToken(self, token):
         if token in self.Tokens:
-            self.Tokens[token]["LastAccessTime"]= time.time()
+            if time.time() - self.Tokens[token]["LastAccessTime"] <= 24*60*60:
+                return True
+        return False
+
+    def RefreshToken(self, token):
+        if token in self.Tokens:
+            self.Tokens[token]["LastAccessTime"] = time.time()
 
 
     def GetUserId(self, token):
