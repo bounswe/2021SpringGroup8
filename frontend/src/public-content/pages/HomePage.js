@@ -8,7 +8,7 @@ function HomePage() {
     return (
         <div className="home_page">
             <Sidebar/>
-            <Feed/>
+            {/*<Feed/>*/}
 
         </div>
     );
