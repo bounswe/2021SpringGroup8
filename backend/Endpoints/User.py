@@ -8,6 +8,12 @@ import string
 import unicodedata
 import html
 
+import re
+ 
+EmailRegex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+ 
+def CheckEmail(email):
+    return re.fullmatch(EmailRegex, email)
 
 def Login(self : BaseHTTPRequestHandler, manager : ServerManager, params):
     response = {}
@@ -54,6 +60,12 @@ def SignUp(self : BaseHTTPRequestHandler, manager : ServerManager, params):
         response["@success"] = "False"
         response["@error"] = "Password must contain at least 1 upper case letter!"
         return response
+
+    if not CheckEmail(email):
+        response["@success"] = "False"
+        response["@error"] = "Email is not valid!"
+        return response
+
 
     dbresult = manager.DatabaseManager.signup(
         {
