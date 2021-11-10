@@ -7,13 +7,16 @@ import json
 import string
 import unicodedata
 import html
-
+import hashlib
 import re
  
 EmailRegex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
  
 def CheckEmail(email):
     return re.fullmatch(EmailRegex, email)
+
+def Hash(password):
+    return hashlib.sha256(password.encode('utf-8')).hexdigest()
 
 def Login(self : BaseHTTPRequestHandler, manager : ServerManager, params):
     response = {}
@@ -22,18 +25,20 @@ def Login(self : BaseHTTPRequestHandler, manager : ServerManager, params):
 
     username = params["username"][0]
     password = params["password"][0]
+    hashedpassword = Hash(password)
 
     dbresult = manager.DatabaseManager.signin(
         {
             "username": username,
-            "password": password
+            "password": hashedpassword
         }
     )
     
-    response["@success"] = "False" if dbresult == False else "True"
     if dbresult == False:
-        response["@error"] = "User not found!"
+        response["@success"] = "False"
+        response["@error"] = "User not found or password don't match!"
     else:
+        response["@success"] = "True"
         dbresult["@type"] = "User.Object"
         response["@return"] = dbresult
         response["@usertoken"] = manager.RegisterToken(dbresult)
@@ -50,7 +55,9 @@ def SignUp(self : BaseHTTPRequestHandler, manager : ServerManager, params):
     username = params["username"][0]
     email = params["email"][0]
     password = params["password"][0]
-
+    hashedpassword = Hash(password)
+    print(hashedpassword)
+    
     if not (len(password) >= 8 and len(password) <= 16):
         response["@success"] = "False"
         response["@error"] = "Password Length must be >= 8, <= 16!"
@@ -71,7 +78,7 @@ def SignUp(self : BaseHTTPRequestHandler, manager : ServerManager, params):
         {
             "username": username,
             "email":email,
-            "password": password
+            "password": hashedpassword
         }
     )
     
