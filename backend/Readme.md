@@ -8,7 +8,7 @@ python3 server.py
 ```
 
 ## Server
-Implemented with python internal http request handlers! No need for specific installation.
+Implemented with python internal http request handlers! No need for specific installation. Runs at http port 80.
 
 ## Database
 Used mongoDB framework! Database is online and there is no need for specific installation.
