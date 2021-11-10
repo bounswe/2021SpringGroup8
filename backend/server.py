@@ -59,7 +59,7 @@ class ThreadingSimpleServer(ThreadingMixIn, HTTPServer):
         pass
 
 def run():
-    server = ThreadingSimpleServer(('0.0.0.0', 80), Handler)
+    server = ThreadingSimpleServer(('0.0.0.0', 8080), Handler)
     if USE_HTTPS:
         import ssl
         server.socket = ssl.wrap_socket(server.socket, keyfile='./key.pem', certfile='./cer.pem', server_side=True)
