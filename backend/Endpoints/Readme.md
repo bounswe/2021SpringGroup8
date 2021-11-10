@@ -1,6 +1,6 @@
 # User Functionalities
 ## Sign Up
-- Url: /signup
+- Url: http://localhost:8080/signup
 - Method: POST
 - Request:
     - Header:
@@ -28,7 +28,7 @@
         ```
 
 ## Login
-- Url: /login
+- Url: http://localhost:8080/login
 - Method: POST
 - Request:
     - Header:
