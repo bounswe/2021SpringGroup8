@@ -1,5 +1,6 @@
 # User Functionalities
 ## Sign Up
+- Url: /signup
 - Method: POST
 - Request:
     - Header:
@@ -27,6 +28,7 @@
         ```
 
 ## Login
+- Url: /login
 - Method: POST
 - Request:
     - Header:
