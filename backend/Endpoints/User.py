@@ -18,7 +18,7 @@ def CheckEmail(email):
 def Hash(password):
     return hashlib.sha256(password.encode('utf-8')).hexdigest()
 
-def Login(self : BaseHTTPRequestHandler, manager : ServerManager, params):
+def Login(manager : ServerManager, params):
     response = {}
     response["@context"] = "https://www.w3.org/ns/activitystreams"
     response["@type"] = "User.Login"
@@ -33,7 +33,7 @@ def Login(self : BaseHTTPRequestHandler, manager : ServerManager, params):
             "password": hashedpassword
         }
     )
-    
+
     if dbresult == False:
         response["@success"] = "False"
         response["@error"] = "User not found or password don't match!"
@@ -46,7 +46,7 @@ def Login(self : BaseHTTPRequestHandler, manager : ServerManager, params):
     return response
 
 
-def SignUp(self : BaseHTTPRequestHandler, manager : ServerManager, params):
+def SignUp(manager : ServerManager, params):
 
     response = {}
     response["@context"] = "https://www.w3.org/ns/activitystreams"
@@ -92,5 +92,3 @@ def SignUp(self : BaseHTTPRequestHandler, manager : ServerManager, params):
         response["@return"] = dbresult
 
     return response 
-
-#todo check token if it s new son 1 gun

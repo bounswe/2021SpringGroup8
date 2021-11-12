@@ -34,16 +34,37 @@ def ProcessRequest(self, manager):
 def ProcessNonTokenRequests(self, manager):
     if self.path == "/login":
         params = ParsePostBody(self)
-        response = Endpoints.User.Login(self, manager, params)
+        response = Endpoints.User.Login(manager, params)
         WriteJSON(self, response)
         return True
     elif self.path == "/signup":
         params = ParsePostBody(self)
-        response = Endpoints.User.SignUp(self, manager, params)
+        response = Endpoints.User.SignUp(manager, params)
         WriteJSON(self, response)
         return True
     else:
         return False
 
-def ProcessTokenRequests(self, manager):
-    return False
+def ProcessTokenRequests(self, manager : ServerManager):
+    if self.path == "/createcommunity":
+        params = ParsePostBody(self)
+        usertoken = params["@usertoken"][0]
+
+        if manager.ValidToken(usertoken):
+            manager.RefreshToken(usertoken)
+            userid = manager.GetUserId(usertoken)
+            response = Endpoints.Community.CreateCommunity(manager, userid, params)
+            WriteJSON(self, response)
+        else:
+            WriteJSON(self, 
+                {
+                    "@context": "https://www.w3.org/ns/activitystreams",
+                    "@type": "Community.Create",
+                    "@success": "False",
+                    "@error":  "Invalid UserToken!",
+                }
+            )
+            
+        return True
+    else:
+        return False
