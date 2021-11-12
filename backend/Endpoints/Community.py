@@ -16,6 +16,8 @@ def CreateCommunity(manager : ServerManager, userid, params):
     response["@context"] = "https://www.w3.org/ns/activitystreams"
     response["@type"] = "Community.Create"
     
+    userobject = manager.DatabaseManager.find_user(userid)
+    
     dbresult = manager.DatabaseManager.create_community(
         {
             "communityTitle": params["communityTitle"][0],
@@ -24,7 +26,7 @@ def CreateCommunity(manager : ServerManager, userid, params):
         },
         {
             "id": userid,
-            "username": "todo",
+            "username": userobject["username"],
         }
     )
 
