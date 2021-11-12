@@ -45,6 +45,7 @@ class ServerManager:
         return False
 
     def RefreshToken(self, token):
+        self.ClearOldTokens()
         if token in self.Tokens:
             self.Tokens[token]["LastAccessTime"] = time.time()
 
