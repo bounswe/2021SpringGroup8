@@ -10,9 +10,10 @@ import html
 import Endpoints
 
 
-
 def WriteJSON(self, response):
-    self.wfile.write(json.dumps(response).encode('utf8'))
+    bbb = json.dumps(response).encode('utf8')
+    self.headers["Content-Length"] = str(len(bbb))
+    self.wfile.write(bbb)
 
 def ParsePostBody(self):
     res = self.rfile.read(int(self.headers["Content-Length"]))
