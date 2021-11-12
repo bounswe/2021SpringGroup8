@@ -88,8 +88,8 @@
 - Request:
     - Header:
     - Body:
-        - "usertoken": str
-        - "communityTitle: str,
+        - "@usertoken": str
+        - "communityTitle": str,
         - "communityDescription": str,
 
 - Response:

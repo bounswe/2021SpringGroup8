@@ -8,8 +8,14 @@ from DB.database import DatabaseManager
 import Endpoints
 from ServerManager import ServerManager 
 import ProcessRequests
+import traceback
 
 USE_HTTPS = False
+
+def PrintTraceback(e):
+    print('------Start--------')
+    print(''.join(traceback.format_exception(type(e), e, e.__traceback__)))
+    print('------End--------')
 
 class Handler(BaseHTTPRequestHandler):
     
@@ -50,12 +56,27 @@ class Handler(BaseHTTPRequestHandler):
 
     </html>
             """)
+        elif self.path == "/createcommunity":
+            self.wfile.write(b"""
+    <html>
+        <form action="/createcommunity" method="POST">
+        <label for="@usertoken">@usertoken:</label><br>
+        <input type="text" id="@usertoken" name="@usertoken"><br>
+        <label for="communityTitle">communityTitle:</label><br>
+        <input type="text" id="communityTitle" name="communityTitle"><br>
+        <label for="communityDescription">communityDescription:</label><br>
+        <input type="text" id="communityDescription" name="communityDescription">
+        <input type="submit" value="Submit">
+        </form>
+    </html>
+            """)
 
     def do_POST(self):
         try:
             ProcessRequests.ProcessRequest(self, manager)
             self.send_response(200)
-        except:
+        except Exception as e:
+            PrintTraceback(e)
             self.send_response(404)
 
 class ThreadingSimpleServer(ThreadingMixIn, HTTPServer):
@@ -74,6 +95,7 @@ manager = ServerManager(databasemanager)
 
 run()
 
+#sdA12323
 # Token
 # Activity Streams
 

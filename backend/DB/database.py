@@ -54,7 +54,7 @@ class DatabaseManager:
     def subscribe_community(self, userId, communityId):
         community = self.communityCollection.find_one({"_id": ObjectId(communityId)})
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
-        if (community != None) & (user != None):
+        if (community != None) and (user != None):
             self.userCollection.update_one( 
             { "_id" : user["_id"] },
             { "$push": { "subscribers": communityId}}
@@ -83,10 +83,10 @@ class DatabaseManager:
             community = self.communityCollection.find_one(myquery)
             community_preview = {"communityTitle" : community_title, "id": str(community["_id"])}
             self.userCollection.update_one( 
-            { "_id" : ObjectId(user["userId"]) },
+            { "_id" : ObjectId(user["id"]) },
             { "$push": { "createdCommunities": community_preview}}
             )
-            myquery = {"_id": ObjectId(user["userId"])}
+            myquery = {"_id": ObjectId(user["id"])}
             user_object = self.userCollection.find_one(myquery)
             community_return_dict = {"communityTitle": community_title, "id": str(community["_id"]),
              "description": community["description"], "creationTime": community["creationTime"], "createdBy": user}
@@ -136,7 +136,7 @@ if __name__== "__main__":
     dbm.postCollection.drop()
     user = dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"})
     community = dbm.create_community({"communityTitle": "community1", "description": "new Community here",
-                            "creationTime": "12.11.2021"}, {"userId": user["id"], "userName": user["username"]})
+                            "creationTime": "12.11.2021"}, {"id": user["id"], "userName": user["username"]})
 #    user = dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"})
 #    print(dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"}))
 #    print(dbm.signin({"username": "abaf", "password" : "12345"}))

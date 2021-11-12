@@ -32,8 +32,7 @@ class ServerManager:
         }
 
         self.Tokens[newtoken] = d
-
-        self.RefreshToken(newtoken)
+        self.Tokens[newtoken]["LastAccessTime"] = time.time()
         
         return newtoken
 
