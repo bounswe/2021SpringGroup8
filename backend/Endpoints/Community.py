@@ -43,6 +43,10 @@ def CreateCommunity(manager : ServerManager, userid, params):
     response["@success"] = "True"
     dbresult["@type"] = "Community.Object"
     dbresult["creationTime"] = dbresult["creationTime"].isoformat()
+    dbresult["createdBy"]["@type"] = "User.Preview"
+    for sub in dbresult["subscribes"]:
+        sub["@type"] = "User.Preview"
+        
     response["@return"] = dbresult
 
     return response
