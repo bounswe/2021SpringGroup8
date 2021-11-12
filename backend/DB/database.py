@@ -129,6 +129,11 @@ class DatabaseManager:
         community = self.communityCollection.find_one({"_id": ObjectId([communityId])})
         return_dict = community_dict = {"CommunityTitle": community["communityTitle"], "id": str(community["_id"]),
             "creationTime": community["creationTime"], "createdBy": community["createdBy"]}
+        return return_dict
+
+    def get_specific_community(self, communityId):
+        community = self.communityCollection.find_one({"_id": ObjectId([communityId])})
+        pass
 
     def create_post(self, post_dict):
         post_title = post_dict["postTitle"]
