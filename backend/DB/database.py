@@ -37,11 +37,22 @@ class DatabaseManager:
 
     def find_user(self, userId):
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
-        user_return_dict = {"username" : user["username"], "id": str(user["_id"]),
-         "email": user["email"], "subscribers": user.get("subscribers"), "createdCommunities": user.get("createdCommunities")}
-        user_return_dict["subscribers"] = user_return_dict["subscribers"] if user_return_dict["subscribers"] is not None else []
-        user_return_dict["createdCommunities"] = user_return_dict["createdCommunities"] if user_return_dict["createdCommunities"] is not None else []
-        return user_return_dict
+        if user is not None:
+            user_return_dict = {"username" : user["username"], "id": str(user["_id"]),
+            "email": user["email"], "subscribers": user.get("subscribers"), "createdCommunities": user.get("createdCommunities")}
+            user_return_dict["subscribers"] = user_return_dict["subscribers"] if user_return_dict["subscribers"] is not None else []
+            user_return_dict["createdCommunities"] = user_return_dict["createdCommunities"] if user_return_dict["createdCommunities"] is not None else []
+            return user_return_dict
+        else:
+            return False
+    
+    def get_user_preview(self, userId):
+        user = self.userCollection.find_one({"_id": ObjectId(userId)})
+        if user is not None:
+            user_return_dict = {"username" : user["username"], "id": str(user["_id"])}
+            return user_return_dict
+        else:
+            return False
 
     def find_subscribes_of_user(self, userId):
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
@@ -127,13 +138,23 @@ class DatabaseManager:
 
     def get_community_preview(self, communityId):
         community = self.communityCollection.find_one({"_id": ObjectId([communityId])})
-        return_dict = community_dict = {"CommunityTitle": community["communityTitle"], "id": str(community["_id"]),
-            "creationTime": community["creationTime"], "createdBy": community["createdBy"]}
-        return return_dict
+        if community is not None:
+            return_dict = community_dict = {"CommunityTitle": community["communityTitle"], "id": str(community["_id"]),
+                "creationTime": community["creationTime"], "createdBy": community["createdBy"]}
+            return return_dict
+        else:
+            return False
 
     def get_specific_community(self, communityId):
         community = self.communityCollection.find_one({"_id": ObjectId([communityId])})
-        pass
+        if community is not None:
+            community_return_dict = {"communityTitle": community["communityTitle"], "id": str(community["_id"]),
+                "description": community["description"], "creationTime": community["creationTime"], "createdBy": user,
+                "subscribers": community.get("subscribers")}
+            community_return_dict["subscribers"] = community_return_dict["subscribers"] if community_return_dict["subscribers"] is not None else []
+            return community_return_dict
+        else:
+            return False
 
     def create_post(self, post_dict):
         post_title = post_dict["postTitle"]
@@ -155,6 +176,16 @@ class DatabaseManager:
             return post_return_dict
         else:
             return False
+
+    def get_post_preview(self, postId):
+        post = self.communityCollection.find_one({"_id": ObjectId(postId)})
+        if post is not None:
+            post_return_dict = {"postTitle": post["postTitle"], "id": str(post["_id"]),
+            "postedBy": post["postedBy"], "creationTime": post["creationTime"]}
+            return post_return_dict
+        else:
+            return False
+
 
 
 
