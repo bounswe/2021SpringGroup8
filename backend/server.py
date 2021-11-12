@@ -52,14 +52,17 @@ class Handler(BaseHTTPRequestHandler):
             """)
 
     def do_POST(self):
-        ProcessRequests.ProcessRequest(self, manager)
-
+        try:
+            ProcessRequests.ProcessRequest(self, manager)
+            self.send_response(200)
+        except:
+            self.send_response(404)
 
 class ThreadingSimpleServer(ThreadingMixIn, HTTPServer):
         pass
 
 def run():
-    server = ThreadingSimpleServer(('0.0.0.0', 8080), Handler)
+    server = ThreadingSimpleServer(('0.0.0.0', 80), Handler)
     if USE_HTTPS:
         import ssl
         server.socket = ssl.wrap_socket(server.socket, keyfile='./key.pem', certfile='./cer.pem', server_side=True)
