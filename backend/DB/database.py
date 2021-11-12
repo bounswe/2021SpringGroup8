@@ -60,16 +60,20 @@ class DatabaseManager:
             return False
 
 
-    def create_community(self, community_dict):
+    def create_community(self, community_dict, user):
         community_title = community_dict["communityTitle"]
         myquery = {"communityTitle": community_title}
         mydoc = self.communityCollection.find_one(myquery)
         if mydoc == None:
             x = self.communityCollection.insert_one(community_dict)
             community = self.communityCollection.find_one(myquery)
+            self.communityCollection.update_one( 
+            { "_id" : community["_id"] },
+            { "$set": { "createdBy": user}}
+            )
+            community = self.communityCollection.find_one(myquery)
             community_return_dict = {"communityTitle": community_title, "id": str(community["_id"]),
-             "description": community["description"], "subscribers": community["subscribers"], "posts": community["posts"],
-             "creationTime": community["creationTime"], "createdBy": community["createdBy"]}
+             "description": community["description"], "creationTime": community["creationTime"], "createdBy": user}
             return community_return_dict
         else:
             return False
@@ -112,14 +116,15 @@ if __name__== "__main__":
     dbm.communityCollection.drop()
     dbm.userCollection.drop()
     dbm.postCollection.drop()
-    community = dbm.create_community({"communityTitle": "community1", "description": "new Community here",
-                            "subscribers": "", "posts": "", "creationTime": "12.11.2021", "createdBy": "123"})
     user = dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"})
+    community = dbm.create_community({"communityTitle": "community1", "description": "new Community here",
+                            "creationTime": "12.11.2021"}, {"userId": user["id"], "userName": user["username"]})
+#    user = dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"})
 #    print(dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"}))
 #    print(dbm.signin({"username": "abaf", "password" : "12345"}))
-    print(user)
-    print(community)
-    print(dbm.subscribe_community(user["id"], community["id"]))
+#    print(user)
+#    print(community)
+#    print(dbm.subscribe_community(user["id"], community["id"]))
 #    print(dbm.create_post({"postTitle": "post1", "description": "new post1 here",
 #            "creationTime": "12.11.2021", "postedBy": "new user1", "communityId": x["id"]}))
     print(dbm.delete_community(community["id"]))
