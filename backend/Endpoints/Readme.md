@@ -90,7 +90,7 @@
     - Body:
         - "@usertoken": str
         - "communityTitle": str,
-        - "communityDescription": str,
+        - "description": str,
 
 - Response:
 
@@ -105,13 +105,13 @@
             {
                 "@type": "Community.Object",
                 "id": str,
-                "title": str,
+                "communityTitle": str,
                 "description": str,
                 "moderators": [list of User.Preview],
                 "subscribers": [list of User.Preview],
                 "posts": [list of Post.Preview],
-                "createtime": date time,
-                "createdby": User.Preview,
+                "creationTime": str ("2021-11-12T22:57:25.918000" => ISO FORMAT),
+                "createdBy": User.Preview,
 
             } => if @success is "True",
             "@error": str => if @success is "False",

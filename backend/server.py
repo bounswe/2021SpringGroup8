@@ -64,8 +64,8 @@ class Handler(BaseHTTPRequestHandler):
         <input type="text" id="@usertoken" name="@usertoken"><br>
         <label for="communityTitle">communityTitle:</label><br>
         <input type="text" id="communityTitle" name="communityTitle"><br>
-        <label for="communityDescription">communityDescription:</label><br>
-        <input type="text" id="communityDescription" name="communityDescription">
+        <label for="description">description:</label><br>
+        <input type="text" id="description" name="description">
         <input type="submit" value="Submit">
         </form>
     </html>

@@ -18,10 +18,15 @@ def CreateCommunity(manager : ServerManager, userid, params):
     
     userobject = manager.DatabaseManager.find_user(userid)
     
+    if userobject == False:
+        response["@success"] = "False"
+        response["@error"] = "User is not found!"
+        return response
+
     dbresult = manager.DatabaseManager.create_community(
         {
             "communityTitle": params["communityTitle"][0],
-            "description": params["communityTitle"][0],
+            "description": params["description"][0],
             "creationTime": datetime.now(),
         },
         {
@@ -29,5 +34,15 @@ def CreateCommunity(manager : ServerManager, userid, params):
             "username": userobject["username"],
         }
     )
+    
+    if dbresult == False:
+        response["@success"] = "False"
+        response["@error"] = "Couldn't create a community!"
+        return response
+
+    response["@success"] = "True"
+    dbresult["@type"] = "Community.Object"
+    dbresult["creationTime"] = dbresult["creationTime"].isoformat()
+    response["@return"] = dbresult
 
     return response
