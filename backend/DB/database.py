@@ -1,5 +1,5 @@
 import pymongo
-
+from bson import ObjectId
 
 class DatabaseManager:
     
@@ -7,6 +7,7 @@ class DatabaseManager:
         self.client = pymongo.MongoClient("mongodb+srv://admin:admin@cmpe451db.zec58.mongodb.net/Cmpe451DB?retryWrites=true&w=majority")
         self.db = self.client["CommunityDB"]
         self.userCollection = self.db["users"]
+        self.communityCollection = self.db["communities"]
         self.usercount = 1
 
 
@@ -33,9 +34,40 @@ class DatabaseManager:
             user_return_dict = {"username" : user["username"], "id": str(user["_id"]), "email": user["email"]}
             return user_return_dict
 
+    def create_community(self, community_dict):
+        community_title = community_dict["communityTitle"]
+        myquery = {"communityTitle": community_title}
+        mydoc = self.communityCollection.find_one(myquery)
+        if mydoc == None:
+            x = self.communityCollection.insert_one(community_dict)
+            community = self.communityCollection.find_one(myquery)
+            community_return_dict = {"communityTitle": community_title, "id": str(community["_id"]),
+             "description": community["description"], "subscribers": community["subscribers"], "posts": community["posts"],
+             "creationTime": community["creationTime"], "createdBy": community["createdBy"]}
+            return community_return_dict
+        else:
+            return False
+        
+    def delete_community(self, community_id):
+        id = ObjectId(community_id)
+        myquerry = {"_id": id}
+        mydoc = self.communityCollection.find_one(myquerry)
+        if mydoc != None:
+            self.communityCollection.delete_one({"_id": ObjectId(community_id)})
+            return True
+        else:
+            return False
+
+
+
 if __name__== "__main__":
     dbm = DatabaseManager()
-    print(dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"}))
-    print(dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"}))
-    print(dbm.signin({"username": "abaf", "password" : "12345"}))
+    dbm.communityCollection.drop()
+    x = dbm.create_community({"communityTitle": "community1", "description": "new Community here",
+                            "subscribers": "", "posts": "", "creationTime": "12.11.2021", "createdBy": "123"})
+#    print(dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"}))
+#    print(dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"}))
+#    print(dbm.signin({"username": "abaf", "password" : "12345"}))
+    print(x)
+    print(dbm.delete_community(x["id"]))
     dbm.userCollection.drop()
