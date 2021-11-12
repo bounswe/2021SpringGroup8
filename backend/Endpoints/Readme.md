@@ -106,6 +106,16 @@
 # Community Functionalities
 
 ## View Definitions
+### Community.Preview
+```
+    {
+        "@type": "Community.Preview",
+        "id": str,
+        "title": str, 
+        "creationTime": date time,
+        "createdBy": User.Preview,
+    }
+```
 ### Post.Preview
 ```
     {
@@ -113,7 +123,7 @@
         "id": str,
         "title": str, 
         "postedy": str,
-        "createtime": date time,
+        "createtime": date time => ISO FORMAT,
     }
 ```
 
@@ -144,7 +154,7 @@
                 "moderators": [list of User.Preview],
                 "subscribers": [list of User.Preview],
                 "posts": [list of Post.Preview],
-                "creationTime": str ("2021-11-12T22:57:25.918000" => ISO FORMAT),
+                "creationTime": date time ("2021-11-12T22:57:25.918000" => ISO FORMAT),
                 "createdBy": User.Preview,
 
             } => if @success is "True",
