@@ -56,7 +56,6 @@ def SignUp(manager : ServerManager, params):
     email = params["email"][0]
     password = params["password"][0]
     hashedpassword = Hash(password)
-    print(hashedpassword)
     
     if not (len(password) >= 8 and len(password) <= 16):
         response["@success"] = "False"
