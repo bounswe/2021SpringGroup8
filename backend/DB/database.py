@@ -51,13 +51,13 @@ class DatabaseManager:
         else:
             return subscribes
 
-    def subscribe_community(self, userId, communityId):
-        community = self.communityCollection.find_one({"_id": ObjectId(communityId)})
+    def subscribe_community(self, userId, community_preview):
+        community = self.communityCollection.find_one({"_id": ObjectId(community_preview["id"])})
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
         if (community != None) and (user != None):
             self.userCollection.update_one( 
             { "_id" : user["_id"] },
-            { "$push": { "subscribers": communityId}}
+            { "$push": { "subscribers": community_preview}}
             )
 
             self.communityCollection.update_one( 
@@ -89,7 +89,10 @@ class DatabaseManager:
             myquery = {"_id": ObjectId(user["id"])}
             user_object = self.userCollection.find_one(myquery)
             community_return_dict = {"communityTitle": community_title, "id": str(community["_id"]),
-             "description": community["description"], "creationTime": community["creationTime"], "createdBy": user}
+             "description": community["description"], "creationTime": community["creationTime"], "createdBy": user,
+             "subscribers": community.get("subscribers")}
+            community_return_dict["subscribers"] = community_return_dict["subscribers"] if community_return_dict["subscribers"] is not None else []
+
             return community_return_dict
         else:
             return False
@@ -100,7 +103,11 @@ class DatabaseManager:
         community = self.communityCollection.find_one(myquerry)
         if community != None:
             for user in community["subscribers"]:
-                pass
+                self.userCollection.updateOne( 
+                { "_id" : ObjectId(user["id"]) },
+                { "$pull": { "subscribers": { "id": user["id"] } } }
+                )
+                user = self.userCollection.find_one({"_id": ObjectId(user["id"])})
             self.communityCollection.delete_one({"_id": ObjectId(community_id)})
             return True
         else:
@@ -143,7 +150,7 @@ if __name__== "__main__":
 #    print(user)
 #    print(community)
     print(dbm.find_user(user["id"]))
-    print(dbm.subscribe_community(user["id"], community["id"]))
+    print(dbm.subscribe_community(user["id"], {"id": community["id"], "communityTitle": community["communityTitle"]}))
     
 #    print(dbm.create_post({"postTitle": "post1", "description": "new post1 here",
 #            "creationTime": "12.11.2021", "postedBy": "new user1", "communityId": x["id"]}))
