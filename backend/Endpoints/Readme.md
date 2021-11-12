@@ -34,6 +34,7 @@
                     "username": str,
                     "email": str,
                 } => if @success is "True",
+                "@error": str => if @success is "False",
 
             }
         ```
@@ -62,6 +63,7 @@
                     "username": str,
                     "email": str,
                 } => if @success is "True",
+                "@error": str => if @success is "False",
 
             }
         ```
