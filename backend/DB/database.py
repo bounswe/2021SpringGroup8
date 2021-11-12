@@ -73,7 +73,7 @@ class DatabaseManager:
 
             self.communityCollection.update_one( 
             { "_id" : community["_id"] },
-            { "$push": { "subscribers": userId}}
+            { "$push": { "subscribers": self.get_user_preview(userId)}}
             )
             return True
         else:
