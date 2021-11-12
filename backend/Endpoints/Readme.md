@@ -111,7 +111,7 @@
     {
         "@type": "Community.Preview",
         "id": str,
-        "title": str, 
+        "communityTitle": str, 
         "creationTime": date time,
         "createdBy": User.Preview,
     }
