@@ -125,6 +125,11 @@ class DatabaseManager:
             list.append(community_dict)
         return list
 
+    def get_community_preview(self, communityId):
+        community = self.communityCollection.find_one({"_id": ObjectId([communityId])})
+        return_dict = community_dict = {"CommunityTitle": community["communityTitle"], "id": str(community["_id"]),
+            "creationTime": community["creationTime"], "createdBy": community["createdBy"]}
+
     def create_post(self, post_dict):
         post_title = post_dict["postTitle"]
         communityId = post_dict["communityId"]
