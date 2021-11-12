@@ -38,6 +38,23 @@
 
             }
         ```
+        <details>
+        <summary>Looking for an example?</summary>
+        <br>
+        <pre>
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "User.SignUp",
+            "@success": "True",
+            "@return": {
+                "username": "sdA12323",
+                "id": "618ec90b00bed43ef2daf589",
+                "email": "asdasd@asda.com",
+                "@type": "User.Object"
+            }
+        }
+        <pre>
+        </details>
 
 ## Login
 - Url: http://localhost:8080/login
@@ -67,6 +84,24 @@
 
             }
         ```
+        <details>
+        <summary>Looking for an example?</summary>
+        <br>
+        <pre>
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "User.Login",
+            "@success": "True",
+            "@return": {
+                "username": "sdA12323",
+                "id": "618ec90b00bed43ef2daf589",
+                "email": "asdasd@asda.com",
+                "@type": "User.Object"
+            },
+            "@usertoken": "ghiitmxtelzhzjow"
+        }
+        <pre>
+        </details>
 
 # Community Functionalities
 
@@ -93,7 +128,6 @@
         - "description": str,
 
 - Response:
-
     - Header:
     - Body:
         ```
@@ -117,4 +151,28 @@
             "@error": str => if @success is "False",
         }
         ```
-        
+        <details>
+        <summary>Looking for an example?</summary>
+        <br>
+        <pre>
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "Community.Create",
+            "@success": "True",
+            "@return": {
+                "communityTitle": "sdasd213123",
+                "id": "618ec91800bed43ef2daf58a",
+                "description": "asdasd",
+                "creationTime": "2021-11-12T23:05:44.524000",
+                "createdBy": {
+                    "id": "618ec90b00bed43ef2daf589",
+                    "username": "sdA12323",
+                    "@type": "User.Preview"
+                },
+                "subscribers": [],
+                "@type": "Community.Object"
+            }
+        }
+        <pre>
+        </details>
+
