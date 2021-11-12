@@ -50,3 +50,27 @@ def CreateCommunity(manager : ServerManager, userid, params):
     response["@return"] = dbresult
 
     return response
+
+def SubscribeToCommunity(manager : ServerManager, userid, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "Community.SubscribeTo"
+    
+
+    communityId = params["communityId"][0]
+    communityPreview = manager.DatabaseManager.get_community_preview(communityId)
+
+    if communityPreview == False:
+        response["@success"] = "False"
+        response["@error"] = "Couldn't find the community!"
+        return response
+
+    dbresult = manager.DatabaseManager.subscribe_community(userid, communityPreview)
+    
+    if dbresult == False:
+        response["@success"] = "False"
+        response["@error"] = "Couldn't Subscribe!"
+        return response
+    
+    response["@success"] = "True"
+    return response

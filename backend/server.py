@@ -73,7 +73,7 @@ class Handler(BaseHTTPRequestHandler):
         elif self.path == "/subscribetocommunity":
             self.wfile.write(b"""
     <html>
-        <form action="/createcommunity" method="POST">
+        <form action="/subscribetocommunity" method="POST">
         <label for="@usertoken">@usertoken:</label><br>
         <input type="text" id="@usertoken" name="@usertoken"><br>
         <label for="communityId">communityId:</label><br>

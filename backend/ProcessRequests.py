@@ -67,5 +67,25 @@ def ProcessTokenRequests(self, manager : ServerManager):
             )
             
         return True
-    else:
+    elif self.path == "/subscribetocommunity":
+        params = ParsePostBody(self)
+        usertoken = params["@usertoken"][0]
+
+        if manager.ValidToken(usertoken):
+            manager.RefreshToken(usertoken)
+            userid = manager.GetUserId(usertoken)
+            response = Endpoints.Community.SubscribeToCommunity(manager, userid, params)
+            WriteJSON(self, response)
+        else:
+            WriteJSON(self, 
+                {
+                    "@context": "https://www.w3.org/ns/activitystreams",
+                    "@type": "Community.SubscribeTo",
+                    "@success": "False",
+                    "@error":  "Invalid UserToken!",
+                }
+            )
+            
+        return True
+    else: 
         return False
