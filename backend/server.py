@@ -70,6 +70,18 @@ class Handler(BaseHTTPRequestHandler):
         </form>
     </html>
             """)
+        elif self.path == "/subscribetocommunity":
+            self.wfile.write(b"""
+    <html>
+        <form action="/createcommunity" method="POST">
+        <label for="@usertoken">@usertoken:</label><br>
+        <input type="text" id="@usertoken" name="@usertoken"><br>
+        <label for="communityId">communityId:</label><br>
+        <input type="text" id="communityId" name="communityId"><br>
+        <input type="submit" value="Submit">
+        </form>
+    </html>
+            """)
 
     def do_POST(self):
         try:
