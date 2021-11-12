@@ -101,8 +101,9 @@ class DatabaseManager:
             user_object = self.userCollection.find_one(myquery)
             community_return_dict = {"communityTitle": community_title, "id": str(community["_id"]),
              "description": community["description"], "creationTime": community["creationTime"], "createdBy": user,
-             "subscribers": community.get("subscribers")}
+             "subscribers": community.get("subscribers"), "posts": community.get("posts")}
             community_return_dict["subscribers"] = community_return_dict["subscribers"] if community_return_dict["subscribers"] is not None else []
+            community_return_dict["posts"] = community_return_dict["posts"] if community_return_dict["posts"] is not None else []
 
             return community_return_dict
         else:
@@ -146,12 +147,13 @@ class DatabaseManager:
             return False
 
     def get_specific_community(self, communityId):
-        community = self.communityCollection.find_one({"_id": ObjectId([communityId])})
+        community = self.communityCollection.find_one({"_id": ObjectId(communityId)})
         if community is not None:
             community_return_dict = {"communityTitle": community["communityTitle"], "id": str(community["_id"]),
                 "description": community["description"], "creationTime": community["creationTime"], "createdBy": user,
-                "subscribers": community.get("subscribers")}
+                "subscribers": community.get("subscribers"), "posts": community.get("posts")}
             community_return_dict["subscribers"] = community_return_dict["subscribers"] if community_return_dict["subscribers"] is not None else []
+            community_return_dict["posts"] = community_return_dict["posts"] if community_return_dict["posts"] is not None else []
             return community_return_dict
         else:
             return False
@@ -166,13 +168,27 @@ class DatabaseManager:
             post = self.postCollection.find_one(myquery)
             post_return_dict = {"postTitle": post_title, "id": str(post["_id"]), "description": post["description"],
             "creationTime": post["creationTime"], "postedBy": post["postedBy"], "communityId": post["communityId"]}
-            community_posts = community.get("posts")
-            if community_posts == "":
-                community_posts = str(post["_id"])
-            else:
-                community_posts += ";" + str(post["_id"])
-            newvalues = { "$set": {"posts": community_posts}}
-            self.communityCollection.update_one({"_id": ObjectId(communityId)}, newvalues)
+            self.communityCollection.update_one( 
+            { "_id" : community["_id"] },
+            { "$push": { "posts": self.get_post_preview}}
+            )
+            return post_return_dict
+        else:
+            return False
+
+    def get_posts(self):
+        list = []
+        for post in self.postCollection.find():
+            post_return_dict = {"postTitle": post["postTitle"], "id": str(post["_id"]),
+            "postedBy": post["postedBy"], "creationTime": post["creationTime"]}
+            list.append(post_return_dict)
+        return list
+
+    def get_specific_post(self, postId):
+        post = self.communityCollection.find_one({"_id": ObjectId(postId)})
+        if post is not None:
+            post_return_dict = {"postTitle": post["postTitle"], "id": str(post["_id"]), "description": post["description"],
+            "creationTime": post["creationTime"], "postedBy": post["postedBy"], "communityId": post["communityId"]}
             return post_return_dict
         else:
             return False
