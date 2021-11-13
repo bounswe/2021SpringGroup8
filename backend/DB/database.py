@@ -153,7 +153,7 @@ class DatabaseManager:
         community = self.communityCollection.find_one({"_id": ObjectId(communityId)})
         if community is not None:
             community_return_dict = {"communityTitle": community["communityTitle"], "id": str(community["_id"]),
-                "description": community["description"], "creationTime": community["creationTime"], "createdBy": user,
+                "description": community["description"], "creationTime": community["creationTime"], "createdBy": community["createdBy"],
                 "subscribers": community.get("subscribers"), "posts": community.get("posts")}
             community_return_dict["subscribers"] = community_return_dict["subscribers"] if community_return_dict["subscribers"] is not None else []
             community_return_dict["posts"] = community_return_dict["posts"] if community_return_dict["posts"] is not None else []
@@ -222,26 +222,27 @@ class DatabaseManager:
 
 if __name__== "__main__":
     dbm = DatabaseManager()
-    dbm.communityCollection.drop()
-    dbm.userCollection.drop()
-    dbm.postCollection.drop()
-    user = dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"})
-    community = dbm.create_community({"communityTitle": "community1", "description": "new Community here",
-                            "creationTime": "12.11.2021"}, {"id": user["id"], "userName": user["username"]})
-    community2 = dbm.create_community({"communityTitle": "community2", "description": "new Community here",
-                            "creationTime": "12.11.2021"}, {"id": user["id"], "userName": user["username"]})
-    community3 = dbm.create_community({"communityTitle": "community3", "description": "new Community here",
-                            "creationTime": "12.11.2021"}, {"id": user["id"], "userName": user["username"]})
+    print(dbm.get_specific_community("618f801d4e94474249f54a75"))
+#    dbm.communityCollection.drop()
+#    dbm.userCollection.drop()
+#    dbm.postCollection.drop()
+#    user = dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"})
+#    community = dbm.create_community({"communityTitle": "community1", "description": "new Community here",
+#                            "creationTime": "12.11.2021"}, {"id": user["id"], "userName": user["username"]})
+#    community2 = dbm.create_community({"communityTitle": "community2", "description": "new Community here",
+#                            "creationTime": "12.11.2021"}, {"id": user["id"], "userName": user["username"]})
+#    community3 = dbm.create_community({"communityTitle": "community3", "description": "new Community here",
+#                            "creationTime": "12.11.2021"}, {"id": user["id"], "userName": user["username"]})
 #    user = dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"})
 #    print(dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"}))
 #    print(dbm.signin({"username": "abaf", "password" : "12345"}))
 #    print(user)
 #    print(community)
-    print(dbm.get_communuties())
-    print(dbm.find_user(user["id"]))
-    print(dbm.subscribe_community(user["id"], {"id": community["id"], "communityTitle": community["communityTitle"]}))
+#    print(dbm.get_communuties())
+#    print(dbm.find_user(user["id"]))
+#    print(dbm.subscribe_community(user["id"], {"id": community["id"], "communityTitle": community["communityTitle"]}))
     
 #    print(dbm.create_post({"postTitle": "post1", "description": "new post1 here",
 #            "creationTime": "12.11.2021", "postedBy": "new user1", "communityId": x["id"]}))
-    print(dbm.delete_community(community["id"]))
+#    print(dbm.delete_community(community["id"]))
     
