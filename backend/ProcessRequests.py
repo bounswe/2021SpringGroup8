@@ -65,6 +65,11 @@ def ProcessNonTokenRequests(self, manager):
         response = Endpoints.Community.GetCommunity(manager, params)
         WriteJSON(self, response)
         return True
+    elif self.path == "/getuserpreview":
+        params = ParsePostBody(self)
+        response = Endpoints.User.GetUserPreview(manager, params)
+        WriteJSON(self, response)
+        return True
     else:
         return False
 
@@ -109,6 +114,7 @@ def ProcessTokenRequests(self, manager : ServerManager):
             )
             
         return True
+
     elif self.path == "/deletecommunity":
         params = ParsePostBody(self)
         usertoken = params["@usertoken"][0]
@@ -129,5 +135,48 @@ def ProcessTokenRequests(self, manager : ServerManager):
             )
             
         return True
+    elif self.path == "/getmyprofile":
+        params = ParsePostBody(self)
+        usertoken = params["@usertoken"][0]
+
+        if manager.ValidToken(usertoken):
+            manager.RefreshToken(usertoken)
+            userid = manager.GetUserId(usertoken)
+            response = Endpoints.User.GetMyProfile(manager, userid, params)
+            WriteJSON(self, response)
+        else:
+            WriteJSON(self, 
+                {
+                    "@context": "https://www.w3.org/ns/activitystreams",
+                    "@type": "User.GetMyProfile",
+                    "@success": "False",
+                    "@error":  "Invalid UserToken!",
+                }
+            )
+            
+        return True
+    elif self.path == "/submitpost":
+        params = ParsePostBody(self)
+        usertoken = params["@usertoken"][0]
+
+        if manager.ValidToken(usertoken):
+            manager.RefreshToken(usertoken)
+            userid = manager.GetUserId(usertoken)
+            response = Endpoints.Post.Submit(manager, userid, params)
+            WriteJSON(self, response)
+        else:
+            WriteJSON(self, 
+                {
+                    "@context": "https://www.w3.org/ns/activitystreams",
+                    "@type": "Post.Submit",
+                    "@success": "False",
+                    "@error":  "Invalid UserToken!",
+                }
+            )
+            
+        return True
     else: 
         return False
+
+
+

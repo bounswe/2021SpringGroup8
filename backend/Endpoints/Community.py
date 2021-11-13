@@ -121,14 +121,14 @@ def DeleteCommunity(manager : ServerManager, userid, params):
     
     communityId = params["communityId"][0]
     
-    communityoject = manager.DatabaseManager.get_specific_community(communityId)
+    communityobject = manager.DatabaseManager.get_specific_community(communityId)
 
-    if communityoject == False:
+    if communityobject == False:
         response["@success"] = "False"
         response["@error"] = "Can't find the community!"
         return response
 
-    if communityoject["createdBy"]["id"] != userid:
+    if communityobject["createdBy"]["id"] != userid:
         response["@success"] = "False"
         response["@error"] = "Community can only be deleted by the user who created the community!"
         return response

@@ -37,17 +37,17 @@ def Login(manager : ServerManager, params):
     if dbresult == False:
         response["@success"] = "False"
         response["@error"] = "User not found or password don't match!"
-    else:
-        response["@success"] = "True"
-        dbresult["@type"] = "User.Object"
-        response["@return"] = dbresult
-        response["@usertoken"] = manager.RegisterToken(dbresult)
+        return response
+
+    response["@success"] = "True"
+    dbresult["@type"] = "User.Object"
+    response["@return"] = dbresult
+    response["@usertoken"] = manager.RegisterToken(dbresult)
 
     return response
 
 
 def SignUp(manager : ServerManager, params):
-
     response = {}
     response["@context"] = "https://www.w3.org/ns/activitystreams"
     response["@type"] = "User.SignUp"
@@ -85,9 +85,52 @@ def SignUp(manager : ServerManager, params):
     if dbresult == False:
         response["@success"] = "False"
         response["@error"] = "User already exists!"
-    else:
-        response["@success"] = "True"
-        dbresult["@type"] = "User.Object"
-        response["@return"] = dbresult
+        return response 
+    
+
+    response["@success"] = "True"
+    dbresult["@type"] = "User.Object"
+    response["@return"] = dbresult
 
     return response 
+
+
+
+def GetMyProfile(manager : ServerManager, userid, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "User.GetMyProfile"
+
+    dbresult = manager.DatabaseManager.find_user(userid)
+
+    if dbresult == False:
+        response["@success"] = "False"
+        response["@error"] = "User doesn't exist!"
+        return response 
+    
+    response["@success"] = "True"
+    dbresult["@type"] = "User.Object"
+    response["@return"] = dbresult
+
+    return response
+
+def GetUserPreview(manager : ServerManager, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "User.GetPreview"
+
+    userid = params["userid"][0]
+    dbresult = manager.DatabaseManager.get_user_preview(userid)
+
+    if dbresult == False:
+        response["@success"] = "False"
+        response["@error"] = "User doesn't exist!"
+        return response 
+    
+    response["@success"] = "True"
+    dbresult["@type"] = "User.Preview"
+    response["@return"] = dbresult
+
+    return response
+
+

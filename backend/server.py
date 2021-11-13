@@ -114,6 +114,50 @@ class Handler(BaseHTTPRequestHandler):
     </html>
             """)
 
+        
+        elif self.path == "/getmyprofile":
+            self.wfile.write(b"""
+    <html>
+        <form action="/getmyprofile" method="POST">
+        <label for="@usertoken">@usertoken:</label><br>
+        <input type="text" id="@usertoken" name="@usertoken"><br>
+        <input type="submit" value="Submit">
+        </form>
+    </html>
+            """)
+        
+        elif self.path == "/getuserpreview":
+            self.wfile.write(b"""
+    <html>
+        <form action="/getuserpreview" method="POST">
+        <label for="userid">userid:</label><br>
+        <input type="text" id="userid" name="userid"><br>
+        <input type="submit" value="Submit">
+        </form>
+    </html>
+            """)
+        elif self.path == "/submitpost":
+            self.wfile.write(b"""
+    <html>
+        <form action="/submitpost" method="POST">
+        
+        <label for="@usertoken">@usertoken:</label><br>
+        <input type="text" id="@usertoken" name="@usertoken"><br>
+
+        <label for="communityId">communityId:</label><br>
+        <input type="text" id="communityId" name="communityId"><br>
+        
+        <label for="title">title:</label><br>
+        <input type="text" id="title" name="title"><br>
+
+        <label for="description">description:</label><br>
+        <input type="text" id="description" name="description"><br>
+
+        <input type="submit" value="Submit">
+        </form>
+    </html>
+            """)
+
     def do_POST(self):
         try:
             ProcessRequests.ProcessRequest(self, manager)
