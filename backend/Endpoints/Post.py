@@ -58,3 +58,52 @@ def Submit(manager : ServerManager, userid, params):
     response["@return"] = dbres
     return response
 
+def View(manager : ServerManager, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "Post.View"
+
+    postid = params["postId"][0]
+
+    dbres = manager.DatabaseManager.get_specific_post(postid)
+
+    if dbres == False:
+        return SetError(response, "Couldn't find the post!")
+
+    dbres["@type"] = "Post.Object"
+
+    response["success"] = "True"
+    response["@return"] = dbres
+    return response
+
+
+def Delete(manager : ServerManager, userid, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "Post.Delete"
+
+    postid = params["postId"][0]
+    postobject = manager.DatabaseManager.get_specific_post(postid)
+
+    if postobject == False:
+        return SetError(response, "Couldn't find the post!")
+
+    if postobject["postedBy"]["id"] != userid:
+        return SetError(response, "No permission!")
+
+    res = manager.DatabaseManager.delete_post(postid)
+    
+    if res == False:
+        return SetError(response, "Couldn't delete post!")
+    
+    response["success"] = "True"
+    return response
+
+
+
+
+
+
+
+
+

@@ -145,3 +145,28 @@ def DeleteCommunity(manager : ServerManager, userid, params):
 
     
 
+def SetError(response, err):
+    response["@success"] = "False"
+    response["@error"] = err
+    return response
+
+def Unsubscribe(manager : ServerManager, userid, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "Community.Unsubscribe"
+    
+    communityId = params["communityId"][0]
+
+    communitypreview = manager.DatabaseManager.get_community_preview(communityId)
+    
+    if communitypreview == False:
+        return SetError(response, "Can't find the community!")
+    
+    dbres = manager.DatabaseManager.unsubscribe_community(userid, communitypreview)
+
+    if dbres == False:
+        return SetError(response, "Can't unsubscribe the community!")
+
+    response["@success"] = "True"
+    return response
+

@@ -157,6 +157,48 @@ class Handler(BaseHTTPRequestHandler):
         </form>
     </html>
             """)
+        elif self.path == "/viewpost":
+            self.wfile.write(b"""
+    <html>
+        <form action="/viewpost" method="POST">
+    
+        <label for="postId">postId:</label><br>
+        <input type="text" id="postId" name="postId"><br>
+    
+        <input type="submit" value="Submit">
+        </form>
+    </html>
+            """)
+        elif self.path == "/deletepost":
+            self.wfile.write(b"""
+    <html>
+        <form action="/deletepost" method="POST">
+        
+        <label for="@usertoken">@usertoken:</label><br>
+        <input type="text" id="@usertoken" name="@usertoken"><br>
+
+        <label for="postId">postId:</label><br>
+        <input type="text" id="postId" name="postId"><br>
+    
+        <input type="submit" value="Submit">
+        </form>
+    </html>
+            """)
+        elif self.path == "/unsubscribecommunity":
+            self.wfile.write(b"""
+    <html>
+        <form action="/unsubscribecommunity" method="POST">
+        
+        <label for="@usertoken">@usertoken:</label><br>
+        <input type="text" id="@usertoken" name="@usertoken"><br>
+
+        <label for="communityId">communityId:</label><br>
+        <input type="text" id="communityId" name="communityId"><br>
+    
+        <input type="submit" value="Submit">
+        </form>
+    </html>
+            """)
 
     def do_POST(self):
         try:

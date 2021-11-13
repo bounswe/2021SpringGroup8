@@ -70,6 +70,11 @@ def ProcessNonTokenRequests(self, manager):
         response = Endpoints.User.GetUserPreview(manager, params)
         WriteJSON(self, response)
         return True
+    elif self.path == "/viewpost":
+        params = ParsePostBody(self)
+        response = Endpoints.Post.View(manager, params)
+        WriteJSON(self, response)
+        return True
     else:
         return False
 
@@ -169,6 +174,48 @@ def ProcessTokenRequests(self, manager : ServerManager):
                 {
                     "@context": "https://www.w3.org/ns/activitystreams",
                     "@type": "Post.Submit",
+                    "@success": "False",
+                    "@error":  "Invalid UserToken!",
+                }
+            )
+            
+        return True
+        
+    elif self.path == "/deletepost":
+        params = ParsePostBody(self)
+        usertoken = params["@usertoken"][0]
+
+        if manager.ValidToken(usertoken):
+            manager.RefreshToken(usertoken)
+            userid = manager.GetUserId(usertoken)
+            response = Endpoints.Post.Delete(manager, userid, params)
+            WriteJSON(self, response)
+        else:
+            WriteJSON(self, 
+                {
+                    "@context": "https://www.w3.org/ns/activitystreams",
+                    "@type": "Post.Delete",
+                    "@success": "False",
+                    "@error":  "Invalid UserToken!",
+                }
+            )
+            
+        return True
+        
+    elif self.path == "/unsubscribecommunity":
+        params = ParsePostBody(self)
+        usertoken = params["@usertoken"][0]
+
+        if manager.ValidToken(usertoken):
+            manager.RefreshToken(usertoken)
+            userid = manager.GetUserId(usertoken)
+            response = Endpoints.Community.Unsubscribe(manager, userid, params)
+            WriteJSON(self, response)
+        else:
+            WriteJSON(self, 
+                {
+                    "@context": "https://www.w3.org/ns/activitystreams",
+                    "@type": "Community.Unsubscribe",
                     "@success": "False",
                     "@error":  "Invalid UserToken!",
                 }
