@@ -178,9 +178,10 @@ class DatabaseManager:
         post_return_dict = {"postTitle": post_title, "id": str(post["_id"]), "description": post["description"],
         "creationTime": post["creationTime"], "postedBy": post["postedBy"], "postedAt": post["postedAt"]}
         self.communityCollection.update_one( 
-        { "_id" : community_preview["id"]},
+        { "_id" : ObjectId(community_preview["id"])},
         { "$push": { "posts": self.get_post_preview(str(post["_id"]))}}
         )
+        
         return post_return_dict
 
     def delete_post(self, postId):
@@ -231,8 +232,9 @@ class DatabaseManager:
 
 if __name__== "__main__":
     dbm = DatabaseManager()
-#    print(dbm.create_post({"postTitle": "post 1 - 1", "description": "post 1-1 here", "creationTime": "13.11.2021"},
-#     dbm.get_user_preview("618f8fa7882b1ed439c85864"), dbm.get_community_preview("618f9c2030ee38a3153d5209")))
+    print(dbm.create_post({"postTitle": "post 1 - 1", "description": "post 1-1 here", "creationTime": "13.11.2021"},
+     dbm.get_user_preview("618fa18c024ad76c4fa4f527"), dbm.get_community_preview("618fa194024ad76c4fa4f528")))
+    print(dbm.get_specific_community("618fa194024ad76c4fa4f528"))
 #   print(dbm.find_user("618f8fa7882b1ed439c85864"))
 #    print(dbm.get_communuties())
 #    print(dbm.create_community({"communityTitle": "community4", "description": "new Community here",
