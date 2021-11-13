@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/2021SpringGroup8.iml" filepath="$PROJECT_DIR$/.idea/2021SpringGroup8.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/practice-app.iml" filepath="$PROJECT_DIR$/.idea/practice-app.iml" />
     </modules>
   </component>
 </project>
