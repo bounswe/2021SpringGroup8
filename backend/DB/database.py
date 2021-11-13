@@ -169,10 +169,11 @@ class DatabaseManager:
         else:
             return False
 
-    def create_post(self, post_dict):
+    def create_post(self, post_dict, user_preview, community_preview):
         post_title = post_dict["postTitle"]
-        communityId = post_dict["communityId"]
-        community = self.communityCollection.find_one({"_id": ObjectId(communityId)})
+        community = self.communityCollection.find_one({"_id": ObjectId(community_preview["id"])})
+        post_dict["postedAt"] = community_preview
+        post_dict["postedBy"] = user_preview
         if community != None:
             myquery = {"postTitle": post_title}
             x = self.postCollection.insert_one(post_dict)
@@ -237,8 +238,9 @@ if __name__== "__main__":
     dbm = DatabaseManager()
 #   print(dbm.find_user("618f8fa7882b1ed439c85864"))
 #    print(dbm.get_communuties())
-#    print(dbm.create_community({"communityTitle": "community4", "description": "new Community here",
-#                            "creationTime": "12.11.2021"}, {"id": "618ed5b261997b98afbac9b3", "userName": "sdA12323"}))
+    print(dbm.create_community({"communityTitle": "community4", "description": "new Community here",
+                            "creationTime": "12.11.2021"}, {"id": "618ed5b261997b98afbac9b3", "userName": "sdA12323"}))
+    
 #    print(dbm.delete_community("618f8c8b81bbfc3fd4a308ad"))
 #    dbm.communityCollection.drop()
 #    dbm.userCollection.drop()
