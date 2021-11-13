@@ -190,7 +190,7 @@ class DatabaseManager:
         return post_return_dict
 
     def delete_post(self, postId):
-        post = self.communityCollection.find_one({"_id": ObjectId(postId)})
+        post = self.postCollection.find_one({"_id": ObjectId(postId)})
         if post is not None:
             user = post["postedBy"]
             self.userCollection.update_one(
@@ -246,9 +246,10 @@ if __name__== "__main__":
 #                            "creationTime": "12.11.2021"}, {"id": "618ed5b261997b98afbac9b3", "userName": "sdA12323"}))
     
 #    print(dbm.delete_community("618f8c8b81bbfc3fd4a308ad"))
-    dbm.communityCollection.drop()
-    dbm.userCollection.drop()
-    dbm.postCollection.drop()
+#    dbm.communityCollection.drop()
+#    dbm.userCollection.drop()
+#    dbm.postCollection.drop()
+    print(dbm.delete_post("618fab341719f0598480b1f7"))
 #    user = dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"})
 #    community = dbm.create_community({"communityTitle": "community1", "description": "new Community here",
 #                            "creationTime": "12.11.2021"}, {"id": user["id"], "userName": user["username"]})
