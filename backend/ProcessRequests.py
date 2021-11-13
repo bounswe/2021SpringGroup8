@@ -44,7 +44,6 @@ def ProcessRequest(self, manager):
     else:
         self.wfile.write("Wrong endpoint!")
 
-
 def ProcessNonTokenRequests(self, manager):
     if self.path == "/login":
         params = ParsePostBody(self)
@@ -104,6 +103,26 @@ def ProcessTokenRequests(self, manager : ServerManager):
                 {
                     "@context": "https://www.w3.org/ns/activitystreams",
                     "@type": "Community.SubscribeTo",
+                    "@success": "False",
+                    "@error":  "Invalid UserToken!",
+                }
+            )
+            
+        return True
+    elif self.path == "/deletecommunity":
+        params = ParsePostBody(self)
+        usertoken = params["@usertoken"][0]
+
+        if manager.ValidToken(usertoken):
+            manager.RefreshToken(usertoken)
+            userid = manager.GetUserId(usertoken)
+            response = Endpoints.Community.DeleteCommunity(manager, userid, params)
+            WriteJSON(self, response)
+        else:
+            WriteJSON(self, 
+                {
+                    "@context": "https://www.w3.org/ns/activitystreams",
+                    "@type": "Community.Delete",
                     "@success": "False",
                     "@error":  "Invalid UserToken!",
                 }

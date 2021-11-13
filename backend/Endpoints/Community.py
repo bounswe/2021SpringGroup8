@@ -105,7 +105,43 @@ def GetAllCommunities(manager : ServerManager, params):
         return response
 
     response["@success"] = "True"
+
+    for x in dbresult:
+        x["@type"] = "Community.Object"
+
     response["@return"] = dbresult
 
     return response
+
+
+def DeleteCommunity(manager : ServerManager, userid, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "Community.Get"
+    
+    communityId = params["communityId"][0]
+    
+    communityoject = manager.DatabaseManager.get_specific_community(communityId)
+
+    if communityoject == False:
+        response["@success"] = "False"
+        response["@error"] = "Can't find the community!"
+        return response
+
+    if communityoject["createdBy"]["id"] != userid:
+        response["@success"] = "False"
+        response["@error"] = "Community can only be deleted by the user who created the community!"
+        return response
+    
+    res = manager.DatabaseManager.delete_community(communityId)
+
+    if res == False:
+        response["@success"] = "False"
+        response["@error"] = "Can't delete the community!"
+        return response
+
+    response["@success"] = "True"
+    return response
+
+    
 
