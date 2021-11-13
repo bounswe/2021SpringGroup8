@@ -78,6 +78,20 @@ class DatabaseManager:
         else:
             return False
 
+    def unsubscribe_community(self, userId, community_preview):
+        user = self.userCollection.find_one({"_id": ObjectId(userId)})
+        if user is not None:
+            self.userCollection.update_one( 
+            { "_id" : ObjectId(userId) },
+            { "$pull": { "subscribes": community_preview}}
+            ) 
+            
+            self.communityCollection.update_one( 
+            { "_id" : ObjectId(community_preview["id"]) },
+            { "$pull": { "subscribers": self.get_user_preview(userId)}}
+            )
+        else:
+            return False
 
     def create_community(self, community_dict, user):
         community_title = community_dict["communityTitle"]
@@ -221,6 +235,8 @@ class DatabaseManager:
 
 if __name__== "__main__":
     dbm = DatabaseManager()
+#   print(dbm.find_user("618f8fa7882b1ed439c85864"))
+#    print(dbm.get_communuties())
 #    print(dbm.create_community({"communityTitle": "community4", "description": "new Community here",
 #                            "creationTime": "12.11.2021"}, {"id": "618ed5b261997b98afbac9b3", "userName": "sdA12323"}))
 #    print(dbm.delete_community("618f8c8b81bbfc3fd4a308ad"))
