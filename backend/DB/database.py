@@ -39,9 +39,11 @@ class DatabaseManager:
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
         if user is not None:
             user_return_dict = {"username" : user["username"], "id": str(user["_id"]),
-            "email": user["email"], "subscribers": user.get("subscribers"), "createdCommunities": user.get("createdCommunities")}
+            "email": user["email"], "subscribers": user.get("subscribers"), "createdCommunities": user.get("createdCommunities"), 
+            "posts": user["posts"]}
             user_return_dict["subscribers"] = user_return_dict["subscribers"] if user_return_dict["subscribers"] is not None else []
             user_return_dict["createdCommunities"] = user_return_dict["createdCommunities"] if user_return_dict["createdCommunities"] is not None else []
+            user_return_dict["posts"] = user_return_dict["posts"] if user_return_dict["posts"] is not None else []
             return user_return_dict
         else:
             return False
@@ -116,14 +118,15 @@ class DatabaseManager:
         if community != None:
             for user in community["subscribers"]:
                 self.userCollection.update_one( 
-                { "_id" : ObjectId(user) },
+                { "_id" : ObjectId(user["id"]) },
                 { "$pull": { "subscribers": { "id": community_id} } }
                 )
                 self.userCollection.update_one( 
-                { "_id" : ObjectId(user) },
+                { "_id" : ObjectId(user["id"]) },
                 { "$pull": { "createdCommunities": { "id": community_id} } }
                 )
-                user = self.userCollection.find_one({"_id": ObjectId(user)})
+            for post in community["posts"]:
+                self.delete_post(post["id"])
             self.communityCollection.delete_one({"_id": ObjectId(community_id)})
             return True
         else:
@@ -167,12 +170,24 @@ class DatabaseManager:
             x = self.postCollection.insert_one(post_dict)
             post = self.postCollection.find_one(myquery)
             post_return_dict = {"postTitle": post_title, "id": str(post["_id"]), "description": post["description"],
-            "creationTime": post["creationTime"], "postedBy": post["postedBy"], "communityId": post["communityId"]}
+            "creationTime": post["creationTime"], "postedBy": post["postedBy"], "postedAt": post["postedAt"]}
             self.communityCollection.update_one( 
             { "_id" : community["_id"] },
-            { "$push": { "posts": self.get_post_preview}}
+            { "$push": { "posts": self.get_post_preview(str(post["_id"]))}}
             )
             return post_return_dict
+        else:
+            return False
+
+    def delete_post(self, postId):
+        post = self.communityCollection.find_one({"_id": ObjectId(postId)})
+        if post is not None:
+            user = post["postedBy"]
+            self.userCollection.update_one(
+            { "_id" : ObjectId(user["id"]) },
+            { "$pull": { "posts": self.get_post_preview(str(post["_id"]))}}
+            )
+            self.postCollection.delete_one({"_id": ObjectId(postId)})
         else:
             return False
 
@@ -188,7 +203,7 @@ class DatabaseManager:
         post = self.communityCollection.find_one({"_id": ObjectId(postId)})
         if post is not None:
             post_return_dict = {"postTitle": post["postTitle"], "id": str(post["_id"]), "description": post["description"],
-            "creationTime": post["creationTime"], "postedBy": post["postedBy"], "communityId": post["communityId"]}
+            "creationTime": post["creationTime"], "postedBy": post["postedBy"], "postedAt": post["postedAt"]}
             return post_return_dict
         else:
             return False
