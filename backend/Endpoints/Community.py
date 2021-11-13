@@ -117,7 +117,7 @@ def GetAllCommunities(manager : ServerManager, params):
 def DeleteCommunity(manager : ServerManager, userid, params):
     response = {}
     response["@context"] = "https://www.w3.org/ns/activitystreams"
-    response["@type"] = "Community.Get"
+    response["@type"] = "Community.Delete"
     
     communityId = params["communityId"][0]
     

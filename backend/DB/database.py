@@ -132,11 +132,13 @@ class DatabaseManager:
                 { "_id" : ObjectId(user["id"]) },
                 { "$pull": { "subscribes": { "id": community_id} } }
                 )
-            for user in community["createdCommunities"]:
-                self.userCollection.update_one( 
-                { "_id" : ObjectId(user["id"]) },
-                { "$pull": { "createdCommunities": { "id": community_id} } }
-                )
+                
+            user = community["createdBy"]
+            self.userCollection.update_one( 
+            { "_id" : ObjectId(user["id"]) },
+            { "$pull": { "createdCommunities": { "id": community_id} } }
+            )
+
             for post in community["posts"]:
                 self.delete_post(post["id"])
             self.communityCollection.delete_one({"_id": ObjectId(community_id)})
