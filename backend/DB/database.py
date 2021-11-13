@@ -132,6 +132,7 @@ class DatabaseManager:
                 { "_id" : ObjectId(user["id"]) },
                 { "$pull": { "subscribes": { "id": community_id} } }
                 )
+            for user in community["createdCommunities"]:
                 self.userCollection.update_one( 
                 { "_id" : ObjectId(user["id"]) },
                 { "$pull": { "createdCommunities": { "id": community_id} } }
@@ -249,7 +250,7 @@ if __name__== "__main__":
 #    dbm.communityCollection.drop()
 #    dbm.userCollection.drop()
 #    dbm.postCollection.drop()
-    print(dbm.delete_post("618fab341719f0598480b1f7"))
+#    print(dbm.delete_community("618fad8e942b76747436aaa6"))
 #    user = dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"})
 #    community = dbm.create_community({"communityTitle": "community1", "description": "new Community here",
 #                            "creationTime": "12.11.2021"}, {"id": user["id"], "userName": user["username"]})
