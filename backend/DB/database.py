@@ -90,6 +90,7 @@ class DatabaseManager:
             { "_id" : ObjectId(community_preview["id"]) },
             { "$pull": { "subscribers": self.get_user_preview(userId)}}
             )
+
         else:
             return False
 
@@ -181,6 +182,10 @@ class DatabaseManager:
         { "_id" : ObjectId(community_preview["id"])},
         { "$push": { "posts": self.get_post_preview(str(post["_id"]))}}
         )
+        self.userCollection.update_one( 
+        { "_id" : ObjectId(user_preview["id"])},
+        { "$push": { "posts": self.get_post_preview(str(post["_id"]))}}
+        )
         
         return post_return_dict
 
@@ -232,18 +237,18 @@ class DatabaseManager:
 
 if __name__== "__main__":
     dbm = DatabaseManager()
-    print(dbm.create_post({"postTitle": "post 1 - 1", "description": "post 1-1 here", "creationTime": "13.11.2021"},
-     dbm.get_user_preview("618fa18c024ad76c4fa4f527"), dbm.get_community_preview("618fa194024ad76c4fa4f528")))
-    print(dbm.get_specific_community("618fa194024ad76c4fa4f528"))
+#    print(dbm.create_post({"postTitle": "post 1 - 1", "description": "post 1-1 here", "creationTime": "13.11.2021"},
+#     dbm.get_user_preview("618fa18c024ad76c4fa4f527"), dbm.get_community_preview("618fa194024ad76c4fa4f528")))
+#    print(dbm.get_specific_community("618fa194024ad76c4fa4f528"))
 #   print(dbm.find_user("618f8fa7882b1ed439c85864"))
 #    print(dbm.get_communuties())
 #    print(dbm.create_community({"communityTitle": "community4", "description": "new Community here",
 #                            "creationTime": "12.11.2021"}, {"id": "618ed5b261997b98afbac9b3", "userName": "sdA12323"}))
     
 #    print(dbm.delete_community("618f8c8b81bbfc3fd4a308ad"))
-#    dbm.communityCollection.drop()
-#    dbm.userCollection.drop()
-#    dbm.postCollection.drop()
+    dbm.communityCollection.drop()
+    dbm.userCollection.drop()
+    dbm.postCollection.drop()
 #    user = dbm.signup({"username": "abaf", "password" : "12345", "email": "abca@gmail.com"})
 #    community = dbm.create_community({"communityTitle": "community1", "description": "new Community here",
 #                            "creationTime": "12.11.2021"}, {"id": user["id"], "userName": user["username"]})
