@@ -83,6 +83,25 @@ class Handler(BaseHTTPRequestHandler):
     </html>
             """)
 
+        elif self.path == "/getallcommunities":
+            self.wfile.write(b"""
+    <html>
+        <form action="/getallcommunities" method="POST">
+        <input type="submit" value="Submit">
+        </form>
+    </html>
+            """)
+        elif self.path == "/getcommunity":
+            self.wfile.write(b"""
+    <html>
+        <form action="/getcommunity" method="POST">
+        <label for="communityId">communityId:</label><br>
+        <input type="text" id="communityId" name="communityId"><br>
+        <input type="submit" value="Submit">
+        </form>
+    </html>
+            """)
+
     def do_POST(self):
         try:
             ProcessRequests.ProcessRequest(self, manager)

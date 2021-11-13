@@ -16,9 +16,9 @@ def CreateCommunity(manager : ServerManager, userid, params):
     response["@context"] = "https://www.w3.org/ns/activitystreams"
     response["@type"] = "Community.Create"
     
-    userobject = manager.DatabaseManager.find_user(userid)
+    userprevobject = manager.DatabaseManager.get_user_preview(userid)
     
-    if userobject == False:
+    if userprevobject == False:
         response["@success"] = "False"
         response["@error"] = "User is not found!"
         return response
@@ -29,10 +29,7 @@ def CreateCommunity(manager : ServerManager, userid, params):
             "description": params["description"][0],
             "creationTime": datetime.now(),
         },
-        {
-            "id": userid,
-            "username": userobject["username"],
-        }
+        userprevobject
     )
     
     if dbresult == False:
@@ -42,7 +39,7 @@ def CreateCommunity(manager : ServerManager, userid, params):
 
     response["@success"] = "True"
     dbresult["@type"] = "Community.Object"
-    dbresult["creationTime"] = dbresult["creationTime"].isoformat()
+    dbresult["creationTime"] = dbresult["creationTime"]
     dbresult["createdBy"]["@type"] = "User.Preview"
     for sub in dbresult["subscribers"]:
         sub["@type"] = "User.Preview"
@@ -74,3 +71,41 @@ def SubscribeToCommunity(manager : ServerManager, userid, params):
     
     response["@success"] = "True"
     return response
+
+def GetCommunity(manager : ServerManager, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "Community.Get"
+    
+    communityId = params["communityId"][0]
+
+    dbresult = manager.DatabaseManager.get_specific_community(communityId)
+
+    if dbresult == False:
+        response["@success"] = "False"
+        response["@error"] = "Can't get the community!"
+        return response
+
+    response["@success"] = "True"
+    dbresult["@type"] = "Community.Object"
+    response["@return"] = dbresult
+
+    return response
+
+def GetAllCommunities(manager : ServerManager, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "Community.GetAll"
+    
+    dbresult = manager.DatabaseManager.get_communuties()
+
+    if dbresult == False:
+        response["@success"] = "False"
+        response["@error"] = "Can't get communities!"
+        return response
+
+    response["@success"] = "True"
+    response["@return"] = dbresult
+
+    return response
+

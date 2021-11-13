@@ -8,12 +8,25 @@ import string
 import unicodedata
 import html
 import Endpoints
+from datetime import datetime
 
+
+def default(obj):
+    if isinstance(obj, datetime):
+        return { '_isoformat': obj.isoformat() }
+    raise TypeError('...')
+
+def object_hook(obj):
+    _isoformat = obj.get('_isoformat')
+    if _isoformat is not None:
+        return datetime.fromisoformat(_isoformat)
+    return obj
 
 def WriteJSON(self, response):
-    bbb = json.dumps(response).encode('utf8')
+    bbb = json.dumps(response, default=default).encode('utf8')
     self.headers["Content-Length"] = str(len(bbb))
     self.wfile.write(bbb)
+    #print(d == json.loads(s, object_hook=object_hook))
 
 def ParsePostBody(self):
     res = self.rfile.read(int(self.headers["Content-Length"]))
@@ -41,6 +54,16 @@ def ProcessNonTokenRequests(self, manager):
     elif self.path == "/signup":
         params = ParsePostBody(self)
         response = Endpoints.User.SignUp(manager, params)
+        WriteJSON(self, response)
+        return True
+    elif self.path == "/getallcommunities":
+        params = ParsePostBody(self)
+        response = Endpoints.Community.GetAllCommunities(manager, params)
+        WriteJSON(self, response)
+        return True
+    elif self.path == "/getcommunity":
+        params = ParsePostBody(self)
+        response = Endpoints.Community.GetCommunity(manager, params)
         WriteJSON(self, response)
         return True
     else:
