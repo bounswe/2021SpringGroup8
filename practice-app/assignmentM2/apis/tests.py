@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import json
 from django.http.response import HttpResponse
 from django.test import TestCase, Client, testcases
@@ -101,6 +102,8 @@ class WeatherTest(unittest):
         self.assertEqual(returned, None)
 >>>>>>> I add url path and write unittest for weather api
 =======
+=======
+>>>>>>> Revert "Merge pull request #113 from bounswe/frontend"
 import json
 from django.http.response import HttpResponse
 from django.test import TestCase, Client, testcases
@@ -248,4 +251,7 @@ class QuoteTest(unittest):
 
 
 
+<<<<<<< HEAD
 >>>>>>> added ui
+=======
+>>>>>>> Revert "Merge pull request #113 from bounswe/frontend"

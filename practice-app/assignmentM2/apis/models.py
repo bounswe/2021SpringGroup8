@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 from django.db import models
 
 # Create your models here.
@@ -33,6 +34,8 @@ class Meal(models.Model):
 =======
 >>>>>>> I add url path and write unittest for weather api
 =======
+=======
+>>>>>>> Revert "Merge pull request #113 from bounswe/frontend"
 from django.db import models
 
 # Create your models here.
@@ -50,6 +53,7 @@ class Event3(models.Model):
     city_name = models.CharField(max_length=20, default='Istanbul')
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 >>>>>>> added ui
@@ -57,6 +61,9 @@ class Event3(models.Model):
 =======
 
 >>>>>>> Revert "new branch created"
+=======
+
+>>>>>>> Revert "Merge pull request #113 from bounswe/frontend"
 class User(models.Model):
     name= models.CharField(max_length=30)
     username = models.CharField(max_length=30)
@@ -64,8 +71,11 @@ class User(models.Model):
     isActive = models.BooleanField(default=True)
     password = models.CharField(max_length=30)
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> model-test-view-regarding-user-registration-updated
 =======
 >>>>>>> Committing files of quote-api
 =======
 >>>>>>> Revert "new branch created"
+=======
+>>>>>>> Revert "Merge pull request #113 from bounswe/frontend"

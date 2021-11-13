@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 from django.urls import path
 from django.urls.resolvers import URLPattern
 from . import views
@@ -27,6 +28,8 @@ urlpatterns = [
 ]
 >>>>>>> I add url path and write unittest for weather api
 =======
+=======
+>>>>>>> Revert "Merge pull request #113 from bounswe/frontend"
 from django.urls import path
 from django.urls.resolvers import URLPattern
 from . import views
@@ -39,6 +42,7 @@ urlpatterns = [
     path("getrandommealrecipe", views.getrandommealrecipe, name="getrandommealrecipe"),
     path("getmealrecipebyname", views.getmealrecipebyname, name="getmealrecipebyname"),
     path("finddistance", views.finddistance, name="finddistance"),
+<<<<<<< HEAD
 <<<<<<< HEAD
     path('create-event/', views.create_event, name='create-event'),
     path('getquote/', views.getquote, name='getquote'),
@@ -60,3 +64,10 @@ urlpatterns = [
 >>>>>>> Register and SearchUser functions are reimplemented
 ]
 >>>>>>> quote-api is controlled, registeruser api updated with url path
+=======
+    path('create-event', views.create_event, name='create-event'),
+    path('getquote', views.getquote, name='getquote'),
+    path('registeruser', views.registeruser, name='registeruser'),
+    path('searchuser', views.searchuser, name='searchuser')
+]
+>>>>>>> Revert "Merge pull request #113 from bounswe/frontend"

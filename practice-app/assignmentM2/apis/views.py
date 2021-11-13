@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 from typing import List
 from django.http.request import HttpRequest
 from django.shortcuts import render
@@ -404,6 +405,8 @@ def getWeather(city_name):
     return weather
 >>>>>>> I add url path and write unittest for weather api
 =======
+=======
+>>>>>>> Revert "Merge pull request #113 from bounswe/frontend"
 from typing import List
 from django.http.request import HttpRequest
 from django.shortcuts import render
@@ -644,11 +647,15 @@ def getWeather(city_name):
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> added ui
 =======
 =======
 
 >>>>>>> quote-api is controlled, registeruser api updated with url path
+=======
+
+>>>>>>> Revert "Merge pull request #113 from bounswe/frontend"
 def getquote(request:HttpRequest):
    
     if request.method == "GET" and "first_name" in request.GET and "last_name" in request.GET:
@@ -661,9 +668,13 @@ def getquote(request:HttpRequest):
         page = response.read().decode("utf8")
         return HttpResponse(page)
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Committing files of quote-api
 =======
 >>>>>>> Revert "new branch created"
 =======
 
 >>>>>>> quote-api is controlled, registeruser api updated with url path
+=======
+
+>>>>>>> Revert "Merge pull request #113 from bounswe/frontend"
