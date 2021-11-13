@@ -17,6 +17,9 @@ class DatabaseManager:
         username = user_dict["username"]
         myquery = { "username": username }
         mydoc = self.userCollection.find_one(myquery)
+        user_dict["subscribers"] = []
+        user_dict["createdCommunities"] = []
+        user_dict["posts"] = []
         if mydoc == None:
                 x = self.userCollection.insert_one(user_dict)
                 user = self.userCollection.find_one(myquery)
@@ -41,9 +44,6 @@ class DatabaseManager:
             user_return_dict = {"username" : user["username"], "id": str(user["_id"]),
             "email": user["email"], "subscribers": user.get("subscribers"), "createdCommunities": user.get("createdCommunities"), 
             "posts": user["posts"]}
-            user_return_dict["subscribers"] = user_return_dict["subscribers"] if user_return_dict["subscribers"] is not None else []
-            user_return_dict["createdCommunities"] = user_return_dict["createdCommunities"] if user_return_dict["createdCommunities"] is not None else []
-            user_return_dict["posts"] = user_return_dict["posts"] if user_return_dict["posts"] is not None else []
             return user_return_dict
         else:
             return False
@@ -59,10 +59,7 @@ class DatabaseManager:
     def find_subscribes_of_user(self, userId):
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
         subscribes = user.get("subscribers")
-        if subscribes == None:
-            return False
-        else:
-            return subscribes
+        return subscribes
 
     def subscribe_community(self, userId, community_preview):
         community = self.communityCollection.find_one({"_id": ObjectId(community_preview["id"])})
@@ -86,6 +83,8 @@ class DatabaseManager:
         community_title = community_dict["communityTitle"]
         myquery = {"communityTitle": community_title}
         mydoc = self.communityCollection.find_one(myquery)
+        community_dict["posts"] = []
+        community_dict["subscribers"] = []
         if mydoc == None:
             x = self.communityCollection.insert_one(community_dict)
             community = self.communityCollection.find_one(myquery)
@@ -104,9 +103,6 @@ class DatabaseManager:
             community_return_dict = {"communityTitle": community_title, "id": str(community["_id"]),
              "description": community["description"], "creationTime": community["creationTime"], "createdBy": user,
              "subscribers": community.get("subscribers"), "posts": community.get("posts")}
-            community_return_dict["subscribers"] = community_return_dict["subscribers"] if community_return_dict["subscribers"] is not None else []
-            community_return_dict["posts"] = community_return_dict["posts"] if community_return_dict["posts"] is not None else []
-
             return community_return_dict
         else:
             return False
@@ -155,8 +151,6 @@ class DatabaseManager:
             community_return_dict = {"communityTitle": community["communityTitle"], "id": str(community["_id"]),
                 "description": community["description"], "creationTime": community["creationTime"], "createdBy": community["createdBy"],
                 "subscribers": community.get("subscribers"), "posts": community.get("posts")}
-            community_return_dict["subscribers"] = community_return_dict["subscribers"] if community_return_dict["subscribers"] is not None else []
-            community_return_dict["posts"] = community_return_dict["posts"] if community_return_dict["posts"] is not None else []
             return community_return_dict
         else:
             return False
@@ -227,7 +221,9 @@ class DatabaseManager:
 
 if __name__== "__main__":
     dbm = DatabaseManager()
-    print(dbm.get_specific_community("618f801d4e94474249f54a75"))
+#    print(dbm.create_community({"communityTitle": "community4", "description": "new Community here",
+#                            "creationTime": "12.11.2021"}, {"id": "618ed5b261997b98afbac9b3", "userName": "sdA12323"}))
+    print(dbm.delete_community("618f8c8b81bbfc3fd4a308ad"))
 #    dbm.communityCollection.drop()
 #    dbm.userCollection.drop()
 #    dbm.postCollection.drop()
