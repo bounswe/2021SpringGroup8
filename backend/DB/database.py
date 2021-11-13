@@ -171,22 +171,17 @@ class DatabaseManager:
 
     def create_post(self, post_dict, user_preview, community_preview):
         post_title = post_dict["postTitle"]
-        community = self.communityCollection.find_one({"_id": ObjectId(community_preview["id"])})
         post_dict["postedAt"] = community_preview
         post_dict["postedBy"] = user_preview
-        if community != None:
-            myquery = {"postTitle": post_title}
-            x = self.postCollection.insert_one(post_dict)
-            post = self.postCollection.find_one(myquery)
-            post_return_dict = {"postTitle": post_title, "id": str(post["_id"]), "description": post["description"],
-            "creationTime": post["creationTime"], "postedBy": post["postedBy"], "postedAt": post["postedAt"]}
-            self.communityCollection.update_one( 
-            { "_id" : community["_id"] },
-            { "$push": { "posts": self.get_post_preview(str(post["_id"]))}}
-            )
-            return post_return_dict
-        else:
-            return False
+        x = self.postCollection.insert_one(post_dict)
+        post = self.postCollection.find_one({"_id": x.inserted_id})
+        post_return_dict = {"postTitle": post_title, "id": str(post["_id"]), "description": post["description"],
+        "creationTime": post["creationTime"], "postedBy": post["postedBy"], "postedAt": post["postedAt"]}
+        self.communityCollection.update_one( 
+        { "_id" : community_preview["id"]},
+        { "$push": { "posts": self.get_post_preview(str(post["_id"]))}}
+        )
+        return post_return_dict
 
     def delete_post(self, postId):
         post = self.communityCollection.find_one({"_id": ObjectId(postId)})
@@ -214,7 +209,7 @@ class DatabaseManager:
         return list
 
     def get_specific_post(self, postId):
-        post = self.communityCollection.find_one({"_id": ObjectId(postId)})
+        post = self.postCollection.find_one({"_id": ObjectId(postId)})
         if post is not None:
             post_return_dict = {"postTitle": post["postTitle"], "id": str(post["_id"]), "description": post["description"],
             "creationTime": post["creationTime"], "postedBy": post["postedBy"], "postedAt": post["postedAt"]}
@@ -223,7 +218,7 @@ class DatabaseManager:
             return False
 
     def get_post_preview(self, postId):
-        post = self.communityCollection.find_one({"_id": ObjectId(postId)})
+        post = self.postCollection.find_one({"_id": ObjectId(postId)})
         if post is not None:
             post_return_dict = {"postTitle": post["postTitle"], "id": str(post["_id"]),
             "postedBy": post["postedBy"], "creationTime": post["creationTime"]}
@@ -236,10 +231,12 @@ class DatabaseManager:
 
 if __name__== "__main__":
     dbm = DatabaseManager()
+#    print(dbm.create_post({"postTitle": "post 1 - 1", "description": "post 1-1 here", "creationTime": "13.11.2021"},
+#     dbm.get_user_preview("618f8fa7882b1ed439c85864"), dbm.get_community_preview("618f9c2030ee38a3153d5209")))
 #   print(dbm.find_user("618f8fa7882b1ed439c85864"))
 #    print(dbm.get_communuties())
-    print(dbm.create_community({"communityTitle": "community4", "description": "new Community here",
-                            "creationTime": "12.11.2021"}, {"id": "618ed5b261997b98afbac9b3", "userName": "sdA12323"}))
+#    print(dbm.create_community({"communityTitle": "community4", "description": "new Community here",
+#                            "creationTime": "12.11.2021"}, {"id": "618ed5b261997b98afbac9b3", "userName": "sdA12323"}))
     
 #    print(dbm.delete_community("618f8c8b81bbfc3fd4a308ad"))
 #    dbm.communityCollection.drop()
