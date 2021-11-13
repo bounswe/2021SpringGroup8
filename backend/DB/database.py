@@ -187,6 +187,11 @@ class DatabaseManager:
             { "_id" : ObjectId(user["id"]) },
             { "$pull": { "posts": self.get_post_preview(str(post["_id"]))}}
             )
+            community = post["postedAt"]
+            self.communityCollection.update_one(
+            { "_id" : ObjectId(community["id"]) },
+            { "$pull": { "posts": self.get_post_preview(str(post["_id"]))}}    
+            )
             self.postCollection.delete_one({"_id": ObjectId(postId)})
         else:
             return False
