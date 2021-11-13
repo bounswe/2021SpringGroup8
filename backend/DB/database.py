@@ -17,7 +17,7 @@ class DatabaseManager:
         username = user_dict["username"]
         myquery = { "username": username }
         mydoc = self.userCollection.find_one(myquery)
-        user_dict["subscribers"] = []
+        user_dict["subscribes"] = []
         user_dict["createdCommunities"] = []
         user_dict["posts"] = []
         if mydoc == None:
@@ -42,7 +42,7 @@ class DatabaseManager:
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
         if user is not None:
             user_return_dict = {"username" : user["username"], "id": str(user["_id"]),
-            "email": user["email"], "subscribers": user.get("subscribers"), "createdCommunities": user.get("createdCommunities"), 
+            "email": user["email"], "subscribers": user.get("subscribes"), "createdCommunities": user.get("createdCommunities"), 
             "posts": user["posts"]}
             return user_return_dict
         else:
@@ -58,7 +58,7 @@ class DatabaseManager:
 
     def find_subscribes_of_user(self, userId):
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
-        subscribes = user.get("subscribers")
+        subscribes = user.get("subscribes")
         return subscribes
 
     def subscribe_community(self, userId, community_preview):
@@ -67,7 +67,7 @@ class DatabaseManager:
         if (community != None) and (user != None):
             self.userCollection.update_one( 
             { "_id" : user["_id"] },
-            { "$push": { "subscribers": community_preview}}
+            { "$push": { "subscribes": community_preview}}
             )
 
             self.communityCollection.update_one( 
@@ -115,7 +115,7 @@ class DatabaseManager:
             for user in community["subscribers"]:
                 self.userCollection.update_one( 
                 { "_id" : ObjectId(user["id"]) },
-                { "$pull": { "subscribers": { "id": community_id} } }
+                { "$pull": { "subscribes": { "id": community_id} } }
                 )
                 self.userCollection.update_one( 
                 { "_id" : ObjectId(user["id"]) },
@@ -223,7 +223,7 @@ if __name__== "__main__":
     dbm = DatabaseManager()
 #    print(dbm.create_community({"communityTitle": "community4", "description": "new Community here",
 #                            "creationTime": "12.11.2021"}, {"id": "618ed5b261997b98afbac9b3", "userName": "sdA12323"}))
-    print(dbm.delete_community("618f8c8b81bbfc3fd4a308ad"))
+#    print(dbm.delete_community("618f8c8b81bbfc3fd4a308ad"))
 #    dbm.communityCollection.drop()
 #    dbm.userCollection.drop()
 #    dbm.postCollection.drop()
