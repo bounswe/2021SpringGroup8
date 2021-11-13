@@ -107,7 +107,7 @@ def GetAllCommunities(manager : ServerManager, params):
     response["@success"] = "True"
 
     for x in dbresult:
-        x["@type"] = "Community.Object"
+        x["@type"] = "Community.Preview"
 
     response["@return"] = dbresult
 

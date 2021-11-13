@@ -214,23 +214,16 @@
 ### Community.Preview
 ```
     {
-        "@type": "Community.Preview",
+        "CommunityTitle": str,
         "id": str,
-        "communityTitle": str, 
-        "creationTime": date time,
+        "creationTime": {
+            "_isoformat": str
+        },
         "createdBy": User.Preview,
+        "@type": "Community.Preview"
     }
 ```
-### Post.Preview
-```
-    {
-        "@type": "Post.Preview",
-        "id": str,
-        "title": str, 
-        "postedy": str,
-        "createtime": date time => ISO FORMAT,
-    }
-```
+
 
 ## Create Community
 - Url: http://localhost:8080/createcommunity
@@ -366,7 +359,7 @@
                     "username": "sdA12323",
                     "id": "618faf6d9ed00de04c65ab6e"
                 },
-                "@type": "Community.Object"
+                "@type": "Community.Preview"
             }
         ]
     }
@@ -467,6 +460,19 @@
 
 
 # Post Functionalities
+
+### Post.Preview
+```
+    {
+        "@type": "Post.Preview",
+        "postTitle": str,
+        "id": str,
+        "postedBy": User.Preview,
+        "creationTime": {
+            "_isoformat": str
+        }
+    }
+```
 
 ## Submit Post
 
