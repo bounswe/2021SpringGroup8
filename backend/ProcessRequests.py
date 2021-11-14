@@ -31,7 +31,7 @@ def WriteJSON(self, response):
 def ParsePostBody(self):
     res = self.rfile.read(int(self.headers["Content-Length"]))
     res = res.decode("utf8")
-    res = urllib.parse.unquote(res, encoding='ANSI')
+    res = urllib.parse.unquote(res, encoding='latin1')
     res = html.unescape(res)
     res = urllib.parse.parse_qs(res, encoding='utf8')
     return res
