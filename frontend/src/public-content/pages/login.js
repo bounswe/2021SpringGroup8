@@ -5,6 +5,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { connect } from "react-redux";
+import {login} from "../../actions/register";
 
 
 const required = (value) => {
@@ -54,8 +55,19 @@ class Login extends Component {
 
 
 
-        if (this.checkBtn.context._errors.length === 0) {
+        const { dispatch, history } = this.props;
 
+        if (this.checkBtn.context._errors.length === 0) {
+            dispatch(login(this.state.username, this.state.password))
+                .then(() => {
+                    history.push("/profile");
+                    window.location.reload();
+                })
+                .catch(() => {
+                    this.setState({
+                        loading: false
+                    });
+                });
         } else {
             this.setState({
                 loading: false,
@@ -146,7 +158,12 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
+    const { isLoggedIn } = state.reg;
 
+    return {
+        isLoggedIn,
+
+    };
 }
 
 export default connect(mapStateToProps)(Login);

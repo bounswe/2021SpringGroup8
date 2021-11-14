@@ -7,6 +7,8 @@ import ValidatingSignUpForm from "./public-content/pages/ValidatingSignUpForm";
 import Post from "./components/post"
 import PostListComponent from "./components/posts";
 import HomePage from "./public-content/pages/HomePage";
+import Profile from "./pages/profile";
+import Welcome from "./public-content/pages/welcome";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +34,9 @@ class App extends Component {
           <div>
             <>
               <Switch>
+                <Route exact path={"/"} component={Welcome}/>
                 <Route exact path={"/home"} component={HomePage}/>
+                <Route exact path={"/profile"} component={Profile}/>
                 <Route exact path={"/posts"} component={PostListComponent} />
                 <Route path="/post/:id" component={Post} />
                 <Route exact path="/login" component={Login} />
