@@ -25,6 +25,7 @@ def object_hook(obj):
 def WriteJSON(self, response):
     bbb = json.dumps(response, default=default).encode('utf8')
     self.headers["Content-Length"] = str(len(bbb))
+    self.end_headers()
     self.wfile.write(bbb)
     #print(d == json.loads(s, object_hook=object_hook))
 
