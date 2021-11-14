@@ -202,8 +202,8 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         try:
-            ProcessRequests.ProcessRequest(self, manager)
             self.send_response(200)
+            ProcessRequests.ProcessRequest(self, manager)
         except Exception as e:
             PrintTraceback(e)
             self.send_response(404)
