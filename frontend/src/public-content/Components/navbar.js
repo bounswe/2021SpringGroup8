@@ -31,7 +31,7 @@ export default class Navbar extends Component {
                         </li>
 
                         <li>
-                            <Link to="/Community">Community</Link>
+                            <Link to="/posts">Community</Link>
                         </li>
                         <li>
                             <Link to="/Signup">Sign Up</Link>

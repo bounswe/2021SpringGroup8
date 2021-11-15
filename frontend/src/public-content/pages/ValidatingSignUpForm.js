@@ -2,18 +2,22 @@ import React from "react";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import "../styles.css";
+import {register} from "../../actions/register";
+import axios from "axios";
 
 
 const ValidatedSignUpForm = () => (
-    <Formik initialValues={{email: "", password: "", name: "", surname: "", username: ""}}
-            onSubmit={(values, {setSubmitting}) => {
+    <Formik initialValues={{email: "", password: "", username: ""}}
+            onSubmit={(values, actions) => {
                 setTimeout(() => {
-                    console.log("Logging in", values);
-                    setSubmitting(false);
-                }, 500);
-            }
-                /*TODO add username validation*/
-            }
+                    alert(JSON.stringify(values, null, 2));
+                    const username = values.username;
+                    const email = values.email;
+                    const password = values.password;
+                    /*TODO Send Request */
+                    actions.setSubmitting(false);
+                }, 1000);
+            }}
             validationSchema={Yup.object().shape({
                 email: Yup.string()
                     .email()
@@ -21,11 +25,7 @@ const ValidatedSignUpForm = () => (
                 password: Yup.string()
                     .required("No password provided.")
                     .min(8, "Password is too short - should be 8 chars minimum.")
-                    .matches(/(?=.*[0-9])/, "Password must contain a number."),
-                name: Yup.string()
-                    .required("Required"),
-                surname: Yup.string()
-                    .required("Required")
+                    .matches(/(?=.*[0-9])/, "Password must contain a number.")
             })}
     >
         {
@@ -36,32 +36,6 @@ const ValidatedSignUpForm = () => (
 
                         <div className="card card-container">
                             <form onSubmit={handleSubmit}>
-                                <label htmlFor="email">Name</label>
-                                <input
-                                    name="name"
-                                    type="text"
-                                    placeholder="Enter your name"
-                                    value={values.name}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    className={errors.name && touched.name && "error"}
-                                />
-                                {errors.name && touched.name && (
-                                    <div className="input-feedback">{errors.name}</div>
-                                )}
-                                <label htmlFor="email">Surname</label>
-                                <input
-                                    name="surname"
-                                    type="text"
-                                    placeholder="Enter your surname"
-                                    value={values.surname}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    className={errors.surname && touched.surname && "error"}
-                                />
-                                {errors.surname && touched.surname && (
-                                    <div className="input-feedback">{errors.surname}</div>
-                                )}
                                 <label htmlFor="email">Username</label>
                                 <input
                                     name="username"
