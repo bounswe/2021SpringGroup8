@@ -18,6 +18,13 @@ def PrintTraceback(e):
     print('------End--------')
 
 class Handler(BaseHTTPRequestHandler):
+
+    def do_OPTIONS(self):
+        self.send_response(200, "ok")
+        self.send_header('Access-Control-Allow-Credentials', 'true')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-type")
     
     def do_GET(self):
         res = urllib.parse.urlparse(self.path)
