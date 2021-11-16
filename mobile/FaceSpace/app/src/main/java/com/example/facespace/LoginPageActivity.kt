@@ -50,13 +50,14 @@ class LoginPageActivity : AppCompatActivity() {
             params["password"] = password
 
 
-            val url = "http://10.0.2.2:8080/login"
+            val url = "http://52.22.100.255:8080/login"
 
 
             // Post parameters
             // Form fields and values
 
 
+            var error: JSONObject? = null
 
             val stringRequest: StringRequest = object : StringRequest( Method.POST, url,
                 Response.Listener { response ->
@@ -65,17 +66,18 @@ class LoginPageActivity : AppCompatActivity() {
                     try {
                         //Parse your api responce here
                         val jsonObject = JSONObject(response)
+                        error = jsonObject
                         val token = jsonObject["@usertoken"]
-                        Toast.makeText(this, "login Successful. Your Token is : $token", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "$url login Successful. Your Token is : $token", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, CommunitiesPageActivity::class.java)
                         startActivity(intent)
                     } catch (e: JSONException) {
                         e.printStackTrace()
-                        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, (error?.get("@error")) as String, Toast.LENGTH_SHORT).show()
                     }
                 },
                 Response.ErrorListener { error ->
-                    Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show()
                 }) {
                 override fun getParams(): Map<String, String> {
                     return params
@@ -103,7 +105,7 @@ class LoginPageActivity : AppCompatActivity() {
 
         btnForgot.setOnClickListener {
 
-            val toast = Toast.makeText(this, "Sorry to hear that. This feature is still under implementation", Toast.LENGTH_LONG)
+            val toast = Toast.makeText(this, "Sorry to hear that. This feature is still under implementation", Toast.LENGTH_SHORT)
             toast.show()
 
 

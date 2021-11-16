@@ -51,7 +51,7 @@ class SignUpPageActivity : AppCompatActivity() {
             params["email"] = email
 
 
-            val url = "http://10.0.2.2:8080/signup"
+            val url = "http://52.22.100.255:8080/signup"
 
 
             // Post parameters
@@ -59,6 +59,7 @@ class SignUpPageActivity : AppCompatActivity() {
 
 
             if (checkBox.isChecked) {
+                var error: JSONObject? = null
                 val stringRequest: StringRequest = object : StringRequest(Method.POST, url,
                     Response.Listener { response ->
                         emailView.text.clear()
@@ -67,20 +68,16 @@ class SignUpPageActivity : AppCompatActivity() {
                         try {
                             //Parse your api responce here
                             val jsonObject = JSONObject(response)
-
+                            error = jsonObject
                             val id = ((jsonObject["@return"]) as JSONObject)["id"]
-                            Toast.makeText(
-                                this,
-                                "Signup Successful. Your id is : $id",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            Toast.makeText(this, "Signup Successful. Your id is : $id", Toast.LENGTH_LONG).show()
                             val intent = Intent(this, CommunitiesPageActivity::class.java)
                             startActivity(intent)
 
 
                         } catch (e: JSONException) {
                             e.printStackTrace()
-                            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, (error?.get("@error")) as String, Toast.LENGTH_SHORT).show()
                         }
                     },
                     Response.ErrorListener { error ->
