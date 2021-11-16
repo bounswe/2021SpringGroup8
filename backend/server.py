@@ -23,8 +23,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(200, "ok")
         self.send_header('Access-Control-Allow-Credentials', 'true')
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-type")
+        self.send_header('Access-Control-Allow-Methods', '*')
+        self.send_header("Access-Control-Allow-Headers", "*")
         self.end_headers()
     
     def do_GET(self):
@@ -211,6 +211,10 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             self.send_response(200)
+            self.send_header('Access-Control-Allow-Credentials', 'true')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header("Content-type", "text/xml")
+            self.end_headers()
             ProcessRequests.ProcessRequest(self, manager)
         except Exception as e:
             PrintTraceback(e)
