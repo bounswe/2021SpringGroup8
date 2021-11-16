@@ -213,7 +213,7 @@ class Handler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Access-Control-Allow-Credentials', 'true')
             self.send_header('Access-Control-Allow-Origin', '*')
-            self.send_header("Content-type", "text/xml")
+            self.send_header("Content-type", "application/x-www-form-urlencoded")
             self.end_headers()
             ProcessRequests.ProcessRequest(self, manager)
         except Exception as e:
