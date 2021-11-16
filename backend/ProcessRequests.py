@@ -24,7 +24,11 @@ def object_hook(obj):
 
 def WriteJSON(self, response):
     bbb = json.dumps(response, default=default).encode('utf8')
-    self.headers["Content-Length"] = str(len(bbb))
+    self.send_header('Content-Length', str(len(bbb)))
+    self.send_header('Access-Control-Allow-Credentials', 'true')
+    self.send_header('Access-Control-Allow-Origin', '*')
+    self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+    self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-type")
     self.end_headers()
     self.wfile.write(bbb)
     #print(d == json.loads(s, object_hook=object_hook))
