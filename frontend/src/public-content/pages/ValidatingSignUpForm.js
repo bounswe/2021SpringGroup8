@@ -2,19 +2,55 @@ import React from "react";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import "../styles.css";
-import {register} from "../../actions/register";
 import axios from "axios";
 
 
 const ValidatedSignUpForm = () => (
     <Formik initialValues={{email: "", password: "", username: ""}}
             onSubmit={(values, actions) => {
-                setTimeout(() => {
+                setTimeout(async () => {
                     alert(JSON.stringify(values, null, 2));
                     const username = values.username;
                     const email = values.email;
                     const password = values.password;
                     /*TODO Send Request */
+                    const params = new URLSearchParams()
+                    params.append('username', username)
+                    params.append('email', email)
+                    params.append('password', password)
+                    const config = {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    }/*
+                    const response = await axios.post("http://localhost:8080/signup", params)
+                        .then((response) => {
+                            if (response.data) {
+                                //assumes that the response will be a json object
+                                console.log(response.data)
+                            }
+                            return response.data;
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+                      */
+                    const querystring = require('querystring');
+                    axios.post("http://52.22.100.255:8080/signup",
+                        querystring.stringify({
+                            username: username,
+                            password: password,
+                            email: email
+                        }), {
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            }
+                        }).then(function(response) {
+                        alert(JSON.stringify(response.data, null, 2))
+                        console.log(response.data['@success']);
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+
                     actions.setSubmitting(false);
                 }, 1000);
             }}
