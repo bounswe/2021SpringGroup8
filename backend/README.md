@@ -14,5 +14,15 @@ Implemented with python internal http request handlers! No need for specific ins
 Used mongoDB framework! Database is online and there is no need for specific installation.
 
 ## Folder Hierarchy
-  ### todo
-  todo2
+  - README.md -> Documentation for backend
+  - requirements.txt -> Pip libraries required
+  - server.py -> Main server code
+  - ProcessRequests.py -> Processing requests here
+    - DB
+      - database.py -> Database functionalities implemented
+    - Endpoints
+      - User.py -> User endpoints implemented
+      - Post.py -> Post endpoints implemented
+      - Community.py -> Community endpoints implemented
+      - Readme.md -> Endpoint documentation
+  
