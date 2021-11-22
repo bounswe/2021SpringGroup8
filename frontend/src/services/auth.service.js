@@ -3,7 +3,7 @@ import querystring from "querystring";
 
 const API_URL = "http://localhost:8080/";
 
-class RegisterService {
+class AuthService {
     login(username, password) {
         return axios
             .post(API_URL + "login", {username, password})
@@ -33,6 +33,7 @@ class RegisterService {
             });
 
     }
+
     getCurrentUser() {
         const userStr = localStorage.getItem("user");
         if (userStr) return JSON.parse(userStr);
@@ -41,4 +42,4 @@ class RegisterService {
     }
 }
 
-export default new RegisterService();
+export default new AuthService();

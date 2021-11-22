@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Login from "./public-content/pages/login";
-import ValidatingSignUpForm from "./public-content/pages/ValidatingSignUpForm";
+import Register from "./public-content/pages/Register";
 import Post from "./components/post"
 import PostListComponent from "./components/posts";
 import HomePage from "./public-content/pages/HomePage";
@@ -41,7 +41,7 @@ class App extends Component {
                 <Route exact path={"/posts"} component={PostListComponent} />
                 <Route path="/post/:id" component={Post} />
                 <Route exact path="/login" component={Login} />
-                <Route exact path={"/signup"} component={ValidatingSignUpForm} />
+                <Route exact path={"/signup"} component={Register} />
               </Switch>
             </>
           </div>
