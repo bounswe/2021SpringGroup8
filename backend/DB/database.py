@@ -217,6 +217,15 @@ class DatabaseManager:
             list.append(post_return_dict)
         return list
 
+    def get_community_posts(self, community_preview):
+        list = []
+        community = self.communityCollection.find_one({"_id": ObjectId(community_preview["id"])})
+        for post in community["posts"]:
+            post_return_dict = {"postTitle": post["postTitle"], "id": str(post["id"]),
+            "postedBy": post["postedBy"], "creationTime": post["creationTime"]}
+            list.append(post_return_dict)
+        return list
+
     def get_specific_post(self, postId):
         post = self.postCollection.find_one({"_id": ObjectId(postId)})
         if post is not None:
@@ -240,13 +249,18 @@ class DatabaseManager:
 
 if __name__== "__main__":
     dbm = DatabaseManager()
-#    print(dbm.create_post({"postTitle": "post 1 - 1", "description": "post 1-1 here", "creationTime": "13.11.2021"},
-#     dbm.get_user_preview("618fa18c024ad76c4fa4f527"), dbm.get_community_preview("618fa194024ad76c4fa4f528")))
-#    print(dbm.get_specific_community("618fa194024ad76c4fa4f528"))
-#   print(dbm.find_user("618f8fa7882b1ed439c85864"))
+#    print(dbm.create_post({"postTitle": "backend_post3", "description": "post3", "creationTime": "23.11.2021"},
+#     dbm.get_user_preview("619cdff3bb35199a704b7c9d"), dbm.get_community_preview("619ce04502e2845ef0c47701")))
+
 #    print(dbm.get_communuties())
-#    print(dbm.create_community({"communityTitle": "community4", "description": "new Community here",
-#                            "creationTime": "12.11.2021"}, {"id": "618ed5b261997b98afbac9b3", "userName": "sdA12323"}))
+#    print(dbm.signup({"username": "backend_test_new", "password" : "backend", "email": "backend@gmail.com"}))
+#    print(dbm.create_community({"communityTitle": "backend_test_community", "description": "new Community here",
+#                            "creationTime": "23.11.2021"}, {"id": "619cdff3bb35199a704b7c9d", "userName": "backend_test_new"}))
+
+#    print(dbm.get_specific_community("619ce04502e2845ef0c47701"))
+#    print(dbm.find_user("619cdff3bb35199a704b7c9d"))
+
+    print(dbm.get_community_posts(dbm.get_community_preview("619ce04502e2845ef0c47701")))
     
 #    print(dbm.delete_community("618f8c8b81bbfc3fd4a308ad"))
 #    dbm.communityCollection.drop()
