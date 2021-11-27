@@ -23,7 +23,7 @@ class DatabaseManager:
         if mydoc == None:
                 x = self.userCollection.insert_one(user_dict)
                 user = self.userCollection.find_one(myquery)
-                user_return_dict = self.get_user_preview(str(user["_id"]))
+                user_return_dict = self.find_user(str(user["_id"]))
                 return user_return_dict
         else:
             return False
@@ -35,7 +35,7 @@ class DatabaseManager:
         if user == None :
             return False
         else:
-            user_return_dict = self.get_user_preview(str(user["_id"]))
+            user_return_dict = self.find_user(str(user["_id"]))
             return user_return_dict
 
     def update_profile(self, user_dict):
