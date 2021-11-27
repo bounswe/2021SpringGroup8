@@ -1,14 +1,73 @@
-# User Functionalities
-
-## View Definitions
-### User.Preview
+# Objects
+## Date.Object
+```
+    {
+        "_isoformat": "2021-11-13T15:30:16.263000"
+    }
+```
+## User.Object
 ```
     {
         "@type": "User.Preview",
         "id": str,
         "username": str, 
+        "name": str, 
+        "surname": str, 
+        "city": str, 
+        "birthdate": Date.Object, 
+        "pplink": str, 
     }
 ```
+## User.Preview
+```
+    {
+        "@type": "User.Preview",
+        "id": str,
+        "username": str, 
+        "pplink": str, 
+    }
+```
+
+# User Functionalities
+
+## View Definitions
+
+## Update Profile
+- Url: http://localhost:8080/updateprofile
+- Method: POST
+- Request:
+    - Header:
+    - Body (all fields are optional except @usertoken):
+        - "@usertoken": str
+        - "email" str
+        - "name": str
+        - "surname": str
+        - "city": str
+        - "birthdate": ISODATE
+        - "pplink": str
+
+- Response:
+    - Header:
+    - Body:
+        ```   
+            {
+                "@context": "https://www.w3.org/ns/activitystreams",
+                "@type": "User.UpdateProfile",
+                "@success": "True" or "False",
+                "@error": str => if @success is "False",
+            }
+        ```
+        <details>
+        <summary>Looking for an example?</summary>
+        <br>
+        <pre>
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "User.UpdateProfile",
+            "@success": "True"
+        }
+        <pre>
+        </details>
 
 ## Sign Up
 - Url: http://localhost:8080/signup
@@ -19,6 +78,11 @@
         - "username": str
         - "email" str
         - "password": str
+        - "name": str
+        - "surname": str
+        - "city": str
+        - "birthdate": ISODATE
+        - "pplink": str
 - Response:
     - Header:
     - Body:
@@ -27,14 +91,9 @@
                 "@context": "https://www.w3.org/ns/activitystreams",
                 "@type": "User.SignUp",
                 "@success": "True" or "False",
-                "@return": 
-                {
-                    "@type": "User.Object",
-                    "id": str,
-                    "username": str,
-                    "email": str,
-                } => if @success is "True",
+                "@return": User.Object => if @success is "True",
                 "@error": str => if @success is "False",
+                "@usertoken": "xaqcxukchiavwjrb",
 
             }
         ```
@@ -47,11 +106,22 @@
             "@type": "User.SignUp",
             "@success": "True",
             "@return": {
-                "username": "sdA12323",
-                "id": "618ec90b00bed43ef2daf589",
-                "email": "asdasd@asda.com",
+                "username": "12312asdad",
+                "email": "asdasd@asdasd.com",
+                "name": "denemeisim",
+                "surname": "denemesoyyisim",
+                "birthdate": {
+                    "_isoformat": "2021-11-13T15:30:16.263000"
+                },
+                "city": "",
+                "pplink": "",
+                "subscribes": [],
+                "createdCommunities": [],
+                "posts": [],
+                "id": "61a20b7a1d423c6b62c1b172",
                 "@type": "User.Object"
-            }
+            },
+            "@usertoken": "xaqcxukchiavwjrb"
         }
         <pre>
         </details>
@@ -73,13 +143,7 @@
                 "@type": "User.Login",
                 "@success": "True" or "False",
                 "@usertoken": str,
-                "@return": 
-                {
-                    "@type": "User.Object",
-                    "id": str,
-                    "username": str,
-                    "email": str,
-                } => if @success is "True",
+                "@return": User.Object if @success is "True",
                 "@error": str => if @success is "False",
 
             }

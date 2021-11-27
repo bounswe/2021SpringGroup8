@@ -2,6 +2,8 @@ from http.server import BaseHTTPRequestHandler
 from json import encoder
 from typing import Tuple
 import urllib
+
+from pymongo import database
 from ServerManager import ServerManager
 import json
 import string
@@ -12,7 +14,12 @@ import re
 from datetime import date, datetime
  
 EmailRegex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
- 
+
+def SetError(response, err):
+    response["@success"] = "False"
+    response["@error"] = err
+    return response
+
 def CheckEmail(email):
     return re.fullmatch(EmailRegex, email)
 
@@ -148,3 +155,32 @@ def GetUserPreview(manager : ServerManager, params):
     return response
 
 
+
+def UpdateProfile(manager : ServerManager, userid, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "User.UpdateProfile"
+
+    update_d = {}
+    
+    if "email" in params:
+        update_d["email"] = params["email"][0]
+    if "name" in params:
+        update_d["name"] = params["name"][0]
+    if "surname" in params:
+        update_d["surname"] = params["surname"][0]
+    if "birthdate" in params:
+        update_d["birthdate"] = datetime.fromisoformat(params["birthdate"][0]) 
+    if "city" in params:
+        update_d["city"] = params["city"][0]
+    if "pplink" in params:
+        update_d["pplink"] = params["pplink"][0]
+
+
+    dbresult = manager.DatabaseManager.update_profile(userid, update_d)
+
+    if dbresult == False:
+        return SetError(response, "Couldn't update profile!")
+    
+    response["@success"] = "True"
+    return response
