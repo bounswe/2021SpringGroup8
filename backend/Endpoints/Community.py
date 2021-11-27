@@ -62,6 +62,9 @@ def SubscribeToCommunity(manager : ServerManager, userid, params):
         response["@error"] = "Couldn't find the community!"
         return response
 
+    if manager.DatabaseManager.is_subscribed(userid, communityId) == True:
+        return SetError(response, "Already subscribed!")
+
     dbresult = manager.DatabaseManager.subscribe_community(userid, communityPreview)
     
     if dbresult == False:
