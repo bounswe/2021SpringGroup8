@@ -69,10 +69,13 @@ class DatabaseManager:
         else:
             return False
 
-    def find_subscribes_of_user(self, userId):
-        user = self.userCollection.find_one({"_id": ObjectId(userId)})
+    def is_subscribed(self, user_id, community_id):
+        user = self.userCollection.find_one({"_id": ObjectId(user_id)})
         subscribes = user.get("subscribes")
-        return subscribes
+        for subscribe in subscribes:
+            if subscribe["id"] == community_id:
+                return True
+        return False
 
     def subscribe_community(self, userId, community_preview):
         community = self.communityCollection.find_one({"_id": ObjectId(community_preview["id"])})
@@ -260,6 +263,9 @@ class DatabaseManager:
 
 if __name__== "__main__":
     dbm = DatabaseManager()
+#    print(dbm.update_profile("619cdff3bb35199a704b7c9d", {"pplink":"test-pplink"}))
+#    print(dbm.subscribe_community("619cdff3bb35199a704b7c9d", dbm.get_community_preview("619ce04502e2845ef0c47701")))
+#    print(dbm.is_subscribed("619cdff3bb35199a704b7c9d", "619ce04502e2845ef0c47700"))
 #    x = dbm.find_user("619cdff3bb35199a704b7c9d")
 #    print(x)
 #    change = {}
