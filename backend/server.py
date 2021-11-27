@@ -58,7 +58,24 @@ class Handler(BaseHTTPRequestHandler):
     <label for="email">Email Address:</label><br>
     <input type="text" id="email" name="email"><br>
     <label for="password">Password:</label><br>
-    <input type="text" id="password" name="password">
+    <input type="text" id="password" name="password"><br>
+
+    <label for="name">name:</label><br>
+    <input type="text" id="name" name="name"><br>
+
+    <label for="surname">surname:</label><br>
+    <input type="text" id="surname" name="surname"><br>
+
+    <label for="city">city:</label><br>
+    <input type="text" id="city" name="city"><br>
+
+    <label for="birthdate">birthdate:</label><br>
+    <input type="text" id="birthdate" name="birthdate"><br>
+
+    <label for="pplink">pplink:</label><br>
+    <input type="text" id="pplink" name="pplink"><br>
+
+
     <input type="submit" value="Submit">
     </form>
 

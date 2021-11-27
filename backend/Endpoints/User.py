@@ -9,6 +9,7 @@ import unicodedata
 import html
 import hashlib
 import re
+from datetime import date, datetime
  
 EmailRegex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
  
@@ -55,6 +56,13 @@ def SignUp(manager : ServerManager, params):
     username = params["username"][0]
     email = params["email"][0]
     password = params["password"][0]
+    name = params["name"][0]
+    surname = params["surname"][0]
+    birthdate = datetime.fromisoformat(params["birthdate"][0])
+    
+    city = params["city"][0] if "city" in params else ""
+    pplink = params["pplink"][0] if "pplink" in params else ""
+
     hashedpassword = Hash(password)
     
     if not (len(password) >= 8 and len(password) <= 16):
@@ -77,7 +85,12 @@ def SignUp(manager : ServerManager, params):
         {
             "username": username,
             "email":email,
-            "password": hashedpassword
+            "password": hashedpassword,
+            "name": name,
+            "surname": surname,
+            "birthdate": birthdate,
+            "city": city,
+            "pplink": pplink,
         }
     )
     
@@ -91,6 +104,7 @@ def SignUp(manager : ServerManager, params):
     response["@success"] = "True"
     dbresult["@type"] = "User.Object"
     response["@return"] = dbresult
+    response["@usertoken"] = manager.RegisterToken(dbresult)
 
     return response 
 
