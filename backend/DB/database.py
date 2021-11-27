@@ -38,15 +38,16 @@ class DatabaseManager:
             user_return_dict = self.find_user(str(user["_id"]))
             return user_return_dict
 
-    def update_profile(self, user_dict):
-        user = self.userCollection.find_one({"_id": ObjectId(user_dict["id"])})
+    def update_profile(self, user_id, user_dict):
+        user = self.userCollection.find_one({"_id": ObjectId(user_id)})
         if user == None:
             return False
         else:
-            self.userCollection.update_one( 
-            { "_id" : user["_id"] },
-            { "$set": user_dict}
-            )
+            for feature in user_dict:
+                self.userCollection.update_one( 
+                { "_id" : user["_id"] },
+                { "$set": {feature: user_dict[feature]}}
+                )
         return True
 
     def find_user(self, userId):
@@ -259,10 +260,12 @@ class DatabaseManager:
 
 if __name__== "__main__":
     dbm = DatabaseManager()
-    x = dbm.find_user("619cdff3bb35199a704b7c9d")
-    print(x)
-#    x["email"] = "backend2@gmail.com"
-#    print(dbm.update_profile(x))
+#    x = dbm.find_user("619cdff3bb35199a704b7c9d")
+#    print(x)
+#    change = {}
+#    change["email"] = "backend3@gmail.com"
+#    change["name"] = "test-name"
+#    print(dbm.update_profile(x["id"], change))
 #    print(dbm.find_user("619cdff3bb35199a704b7c9d"))
 #    print(dbm.create_post({"postTitle": "backend_post3", "description": "post3", "creationTime": "23.11.2021"},
 #     dbm.get_user_preview("619cdff3bb35199a704b7c9d"), dbm.get_community_preview("619ce04502e2845ef0c47701")))
