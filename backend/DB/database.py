@@ -52,9 +52,7 @@ class DatabaseManager:
     def find_user(self, userId):
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
         if user is not None:
-            user_id = str(user["_id"])
             user.pop("_id")
-            user["id"] = user_id
             return user
         else:
             return False
