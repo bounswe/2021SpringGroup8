@@ -38,6 +38,17 @@ class DatabaseManager:
             user_return_dict = {"username" : user["username"], "id": str(user["_id"]), "email": user["email"]}
             return user_return_dict
 
+    def update_profile(self, user_dict):
+        user = self.userCollection.find_one({"_id": ObjectId(user_dict["id"])})
+        if user == None:
+            return False
+        else:
+            self.userCollection.update_one( 
+            { "_id" : user["_id"] },
+            { "$set": user_dict}
+            )
+        return True
+
     def find_user(self, userId):
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
         if user is not None:
@@ -245,10 +256,12 @@ class DatabaseManager:
             return False
 
 
-
-
 if __name__== "__main__":
     dbm = DatabaseManager()
+#    x = dbm.find_user("619cdff3bb35199a704b7c9d")
+#    x["email"] = "backend2@gmail.com"
+#    print(dbm.update_profile(x))
+#    print(dbm.find_user("619cdff3bb35199a704b7c9d"))
 #    print(dbm.create_post({"postTitle": "backend_post3", "description": "post3", "creationTime": "23.11.2021"},
 #     dbm.get_user_preview("619cdff3bb35199a704b7c9d"), dbm.get_community_preview("619ce04502e2845ef0c47701")))
 
@@ -260,7 +273,7 @@ if __name__== "__main__":
 #    print(dbm.get_specific_community("619ce04502e2845ef0c47701"))
 #    print(dbm.find_user("619cdff3bb35199a704b7c9d"))
 
-    print(dbm.get_community_posts(dbm.get_community_preview("619ce04502e2845ef0c47701")))
+#    print(dbm.get_community_posts(dbm.get_community_preview("619ce04502e2845ef0c47701")))
     
 #    print(dbm.delete_community("618f8c8b81bbfc3fd4a308ad"))
 #    dbm.communityCollection.drop()
