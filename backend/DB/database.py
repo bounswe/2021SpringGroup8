@@ -23,7 +23,7 @@ class DatabaseManager:
         if mydoc == None:
                 x = self.userCollection.insert_one(user_dict)
                 user = self.userCollection.find_one(myquery)
-                user_return_dict = {"username" : username, "id": str(user["_id"]), "email": user["email"]}
+                user_return_dict = self.get_user_preview(str(user["_id"]))
                 return user_return_dict
         else:
             return False
@@ -35,7 +35,7 @@ class DatabaseManager:
         if user == None :
             return False
         else:
-            user_return_dict = {"username" : user["username"], "id": str(user["_id"]), "email": user["email"]}
+            user_return_dict = self.get_user_preview(str(user["_id"]))
             return user_return_dict
 
     def update_profile(self, user_dict):
@@ -52,17 +52,17 @@ class DatabaseManager:
     def find_user(self, userId):
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
         if user is not None:
-            user_return_dict = {"username" : user["username"], "id": str(user["_id"]),
-            "email": user["email"], "subscribers": user.get("subscribes"), "createdCommunities": user.get("createdCommunities"), 
-            "posts": user["posts"]}
-            return user_return_dict
+            user_id = str(user["_id"])
+            user.pop("_id")
+            user["id"] = user_id
+            return user
         else:
             return False
     
     def get_user_preview(self, userId):
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
         if user is not None:
-            user_return_dict = {"username" : user["username"], "id": str(user["_id"])}
+            user_return_dict = {"username" : user["username"], "id": str(user["_id"]), "pplink": user["pplink"]}
             return user_return_dict
         else:
             return False
@@ -258,7 +258,8 @@ class DatabaseManager:
 
 if __name__== "__main__":
     dbm = DatabaseManager()
-#    x = dbm.find_user("619cdff3bb35199a704b7c9d")
+    x = dbm.find_user("619cdff3bb35199a704b7c9d")
+    print(x)
 #    x["email"] = "backend2@gmail.com"
 #    print(dbm.update_profile(x))
 #    print(dbm.find_user("619cdff3bb35199a704b7c9d"))
