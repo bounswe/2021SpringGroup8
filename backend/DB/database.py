@@ -23,7 +23,7 @@ class DatabaseManager:
         if mydoc == None:
                 x = self.userCollection.insert_one(user_dict)
                 user = self.userCollection.find_one(myquery)
-                user_return_dict = {"username" : username, "id": str(user["_id"]), "email": user["email"]}
+                user_return_dict = self.find_user(str(user["_id"]))
                 return user_return_dict
         else:
             return False
@@ -35,31 +35,47 @@ class DatabaseManager:
         if user == None :
             return False
         else:
-            user_return_dict = {"username" : user["username"], "id": str(user["_id"]), "email": user["email"]}
+            user_return_dict = self.find_user(str(user["_id"]))
             return user_return_dict
+
+    def update_profile(self, user_id, user_dict):
+        user = self.userCollection.find_one({"_id": ObjectId(user_id)})
+        if user == None:
+            return False
+        else:
+            for feature in user_dict:
+                self.userCollection.update_one( 
+                { "_id" : user["_id"] },
+                { "$set": {feature: user_dict[feature]}}
+                )
+        return True
 
     def find_user(self, userId):
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
         if user is not None:
-            user_return_dict = {"username" : user["username"], "id": str(user["_id"]),
-            "email": user["email"], "subscribers": user.get("subscribes"), "createdCommunities": user.get("createdCommunities"), 
-            "posts": user["posts"]}
-            return user_return_dict
+            user_id = str(user["_id"])
+            user.pop("_id")
+            user["id"] = user_id
+            user.pop("password")
+            return user
         else:
             return False
     
     def get_user_preview(self, userId):
         user = self.userCollection.find_one({"_id": ObjectId(userId)})
         if user is not None:
-            user_return_dict = {"username" : user["username"], "id": str(user["_id"])}
+            user_return_dict = {"username" : user["username"], "id": str(user["_id"]), "pplink": user["pplink"]}
             return user_return_dict
         else:
             return False
 
-    def find_subscribes_of_user(self, userId):
-        user = self.userCollection.find_one({"_id": ObjectId(userId)})
+    def is_subscribed(self, user_id, community_id):
+        user = self.userCollection.find_one({"_id": ObjectId(user_id)})
         subscribes = user.get("subscribes")
-        return subscribes
+        for subscribe in subscribes:
+            if subscribe["id"] == community_id:
+                return True
+        return False
 
     def subscribe_community(self, userId, community_preview):
         community = self.communityCollection.find_one({"_id": ObjectId(community_preview["id"])})
@@ -217,6 +233,15 @@ class DatabaseManager:
             list.append(post_return_dict)
         return list
 
+    def get_community_posts(self, community_preview):
+        list = []
+        community = self.communityCollection.find_one({"_id": ObjectId(community_preview["id"])})
+        for post in community["posts"]:
+            post_return_dict = {"postTitle": post["postTitle"], "id": str(post["id"]),
+            "postedBy": post["postedBy"], "creationTime": post["creationTime"]}
+            list.append(post_return_dict)
+        return list
+
     def get_specific_post(self, postId):
         post = self.postCollection.find_one({"_id": ObjectId(postId)})
         if post is not None:
@@ -236,17 +261,30 @@ class DatabaseManager:
             return False
 
 
-
-
 if __name__== "__main__":
     dbm = DatabaseManager()
-#    print(dbm.create_post({"postTitle": "post 1 - 1", "description": "post 1-1 here", "creationTime": "13.11.2021"},
-#     dbm.get_user_preview("618fa18c024ad76c4fa4f527"), dbm.get_community_preview("618fa194024ad76c4fa4f528")))
-#    print(dbm.get_specific_community("618fa194024ad76c4fa4f528"))
-#   print(dbm.find_user("618f8fa7882b1ed439c85864"))
+#    print(dbm.update_profile("619cdff3bb35199a704b7c9d", {"pplink":"test-pplink"}))
+#    print(dbm.subscribe_community("619cdff3bb35199a704b7c9d", dbm.get_community_preview("619ce04502e2845ef0c47701")))
+#    print(dbm.is_subscribed("619cdff3bb35199a704b7c9d", "619ce04502e2845ef0c47700"))
+#    x = dbm.find_user("619cdff3bb35199a704b7c9d")
+#    print(x)
+#    change = {}
+#    change["email"] = "backend3@gmail.com"
+#    change["name"] = "test-name"
+#    print(dbm.update_profile(x["id"], change))
+#    print(dbm.find_user("619cdff3bb35199a704b7c9d"))
+#    print(dbm.create_post({"postTitle": "backend_post3", "description": "post3", "creationTime": "23.11.2021"},
+#     dbm.get_user_preview("619cdff3bb35199a704b7c9d"), dbm.get_community_preview("619ce04502e2845ef0c47701")))
+
 #    print(dbm.get_communuties())
-#    print(dbm.create_community({"communityTitle": "community4", "description": "new Community here",
-#                            "creationTime": "12.11.2021"}, {"id": "618ed5b261997b98afbac9b3", "userName": "sdA12323"}))
+#    print(dbm.signup({"username": "backend_test_new", "password" : "backend", "email": "backend@gmail.com"}))
+#    print(dbm.create_community({"communityTitle": "backend_test_community", "description": "new Community here",
+#                            "creationTime": "23.11.2021"}, {"id": "619cdff3bb35199a704b7c9d", "userName": "backend_test_new"}))
+
+#    print(dbm.get_specific_community("619ce04502e2845ef0c47701"))
+#    print(dbm.find_user("619cdff3bb35199a704b7c9d"))
+
+#    print(dbm.get_community_posts(dbm.get_community_preview("619ce04502e2845ef0c47701")))
     
 #    print(dbm.delete_community("618f8c8b81bbfc3fd4a308ad"))
 #    dbm.communityCollection.drop()

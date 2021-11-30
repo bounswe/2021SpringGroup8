@@ -38,6 +38,9 @@ def Submit(manager : ServerManager, userid, params):
     if communitypreview == False:
         return SetError(response, "Community doesn't exist!")
     
+    if manager.DatabaseManager.is_subscribed(userid, communityId) == False:
+        return SetError(response, "Can't send post!")
+
     post_dic = \
     {
         "postTitle": title,

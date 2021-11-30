@@ -2,6 +2,8 @@ from http.server import BaseHTTPRequestHandler
 from json import encoder
 from typing import Tuple
 import urllib
+
+from pymongo import database
 from ServerManager import ServerManager
 import json
 import string
@@ -9,9 +11,15 @@ import unicodedata
 import html
 import hashlib
 import re
+from datetime import date, datetime
  
 EmailRegex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
- 
+
+def SetError(response, err):
+    response["@success"] = "False"
+    response["@error"] = err
+    return response
+
 def CheckEmail(email):
     return re.fullmatch(EmailRegex, email)
 
@@ -55,6 +63,13 @@ def SignUp(manager : ServerManager, params):
     username = params["username"][0]
     email = params["email"][0]
     password = params["password"][0]
+    name = params["name"][0]
+    surname = params["surname"][0]
+    birthdate = datetime.fromisoformat(params["birthdate"][0])
+    
+    city = params["city"][0] if "city" in params else ""
+    pplink = params["pplink"][0] if "pplink" in params else ""
+
     hashedpassword = Hash(password)
     
     if not (len(password) >= 8 and len(password) <= 16):
@@ -77,7 +92,12 @@ def SignUp(manager : ServerManager, params):
         {
             "username": username,
             "email":email,
-            "password": hashedpassword
+            "password": hashedpassword,
+            "name": name,
+            "surname": surname,
+            "birthdate": birthdate,
+            "city": city,
+            "pplink": pplink,
         }
     )
     
@@ -91,6 +111,7 @@ def SignUp(manager : ServerManager, params):
     response["@success"] = "True"
     dbresult["@type"] = "User.Object"
     response["@return"] = dbresult
+    response["@usertoken"] = manager.RegisterToken(dbresult)
 
     return response 
 
@@ -134,3 +155,32 @@ def GetUserPreview(manager : ServerManager, params):
     return response
 
 
+
+def UpdateProfile(manager : ServerManager, userid, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "User.UpdateProfile"
+
+    update_d = {}
+    
+    if "email" in params:
+        update_d["email"] = params["email"][0]
+    if "name" in params:
+        update_d["name"] = params["name"][0]
+    if "surname" in params:
+        update_d["surname"] = params["surname"][0]
+    if "birthdate" in params:
+        update_d["birthdate"] = datetime.fromisoformat(params["birthdate"][0]) 
+    if "city" in params:
+        update_d["city"] = params["city"][0]
+    if "pplink" in params:
+        update_d["pplink"] = params["pplink"][0]
+
+
+    dbresult = manager.DatabaseManager.update_profile(userid, update_d)
+
+    if dbresult == False:
+        return SetError(response, "Couldn't update profile!")
+    
+    response["@success"] = "True"
+    return response
