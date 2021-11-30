@@ -1,4 +1,3 @@
-
 import './App.css';
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
@@ -10,6 +9,7 @@ import PostListComponent from "./components/posts";
 import HomePage from "./public-content/pages/HomePage";
 import Profile from "./pages/profile";
 import Welcome from "./public-content/pages/welcome";
+import Communities from "./public-content/pages/Communities";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -42,6 +42,7 @@ class App extends Component {
                 <Route path="/post/:id" component={Post} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path={"/signup"} component={Register} />
+                <Route exact path={"/communities"} component={Communities} />
               </Switch>
             </>
           </div>
