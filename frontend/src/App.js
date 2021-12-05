@@ -10,6 +10,7 @@ import HomePage from "./public-content/pages/HomePage";
 import Profile from "./pages/profile";
 import Welcome from "./public-content/pages/welcome";
 import Communities from "./public-content/pages/Communities";
+import Community from "./public-content/pages/Community";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -43,6 +44,7 @@ class App extends Component {
                 <Route exact path="/login" component={Login} />
                 <Route exact path={"/signup"} component={Register} />
                 <Route exact path={"/communities"} component={Communities} />
+                <Route path="/community/:id" component={Community}/>
               </Switch>
             </>
           </div>

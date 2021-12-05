@@ -34,7 +34,7 @@ class Communities extends Component {
 
     goCommunity(id) {
         console.log(id);
-        this.props.history.push("/communities/" + id);
+        this.props.history.push("/community/" + id);
     }
 
     goProfile(id) {
