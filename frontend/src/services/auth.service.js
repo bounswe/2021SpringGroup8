@@ -10,7 +10,10 @@ class AuthService {
             .then((response) => {
                 if (response.data) {
                     //assumes that the response will be a json object
-                    localStorage.setItem("user", JSON.stringify(response.data));
+                    //TODO: to debug only delete this line later on
+                    console.log(JSON.stringify(response.data['@return']));
+                    localStorage.setItem("user", JSON.stringify(response.data['@return']));
+                    // localStorage.setItem("user", JSON.stringify(response.data));
                 }
                 return response.data;
             });
