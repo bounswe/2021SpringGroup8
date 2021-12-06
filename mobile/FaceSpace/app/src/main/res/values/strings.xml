@@ -24,4 +24,17 @@
     <string name="welcome_to_facesapce">Welcome to FaceSapce</string>
     <string name="register_today">Register Today</string>
     <string name="since">Since:</string>
+    <string name="name">Name:</string>
+    <string name="surname">Surname:</string>
+    <string name="birthday">Birthday:</string>
+    <string name="enter_date">Enter Date</string>
+    <string name="date">Date</string>
+    <string name="select_date">Select Date</string>
+    <string name="profile_page_link">Profile Picture Link:</string>
+    <string name="enter_your_name">enter your name</string>
+    <string name="enter_your_link">enter profile picture link</string>
+    <string name="enter_your_surname">enter your surname</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="cancel">Cancel</string>
+    <string name="search">Search</string>
 </resources>

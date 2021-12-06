@@ -13,7 +13,10 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
 
+
+
 class LoginPageActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_page)
@@ -43,14 +46,14 @@ class LoginPageActivity : AppCompatActivity() {
             val username = userEdit.text.toString()
             val password = passEdit.text.toString()
 
-
             val params: MutableMap<String, String> = HashMap()
+
             //Change with your post params
             params["username"] = username
             params["password"] = password
 
 
-            val url = "http://52.22.100.255:8080/login"
+            val url = "http://3.144.184.237:8080/login"
 
 
             // Post parameters
