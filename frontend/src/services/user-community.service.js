@@ -1,5 +1,6 @@
 
 import axios from "axios";
+import querystring from "querystring";
 
 
 class UserCommunityService {
@@ -13,7 +14,9 @@ class UserCommunityService {
 
 
     getCommunityById(id) {
-        return axios.post(`http://localhost:8080//getcommunity`,{communityId: id},
+        let paramStr = 'communityId='+id;
+        let searchParams = new URLSearchParams(paramStr);
+        return axios.post(`http://localhost:8080/getcommunity`, searchParams,
             {headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }});
