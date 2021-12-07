@@ -1,4 +1,4 @@
-package com.example.signin_signup
+package com.example.facespace
 
 data class Community
     (

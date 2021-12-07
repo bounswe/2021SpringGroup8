@@ -68,7 +68,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
             intent.putExtra("city", city) // to send parameter to another activity
             startActivity(intent)
             */
-            val intent = Intent(this, SignUpPageActivity::class.java)
+            val intent = Intent()
             intent.putExtra("city", city)
             setResult(RESULT_OK, intent)
             finish()
@@ -122,6 +122,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
             override fun onMapClick(p0: LatLng) {
 
                 val newLatLng = LatLng(p0.latitude, p0.longitude)
+
                 updateMarker(newLatLng)
 
             }

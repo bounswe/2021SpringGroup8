@@ -112,7 +112,7 @@ class SignUpPageActivity : AppCompatActivity() {
                 params["name"] = name
                 params["surname"] = surname
                 params["birthdate"] = date
-                params["pplink"] = email
+                params["pplink"] = pplink
                 params["city"] = city
 
 
@@ -136,7 +136,7 @@ class SignUpPageActivity : AppCompatActivity() {
                         }
                     },
                     Response.ErrorListener { error ->
-                        Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, params.toString()+error.toString(), Toast.LENGTH_SHORT).show()
                     }) {
                     override fun getParams(): Map<String, String> {
                         return params
@@ -146,7 +146,8 @@ class SignUpPageActivity : AppCompatActivity() {
                 requestQueue.add(stringRequest)
 
             } else {
-                Toast.makeText(this, "Please fill all inputs and read&accept terms. $date", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill all inputs and read&accept terms. $username" +
+                        "$password $email $name $surname $date $city", Toast.LENGTH_SHORT).show()
             }
         }
     }
