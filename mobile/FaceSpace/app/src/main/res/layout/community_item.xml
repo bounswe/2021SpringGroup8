@@ -3,73 +3,59 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="20dp"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="150dp"
     android:background="@drawable/round_corners"
-
-
 
     >
 
-    <TextView
-        android:id="@+id/TitleTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="@string/title"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Title"
-        android:layout_width="100dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginEnd="8dp"
         android:text="@string/title"
         android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/ByTitle"
-        app:layout_constraintStart_toEndOf="@+id/TitleTitle"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/ByTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/red"
         android:text="@string/by"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/Title"
+        app:layout_constraintEnd_toStartOf="@+id/By"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/By"
-        android:layout_width="0dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
         android:text="@string/created_by"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/ByTitle"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/DescTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:text="@string/desc"
+        android:textColor="@color/red"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TitleTitle"
-        android:layout_marginTop="10dp"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/Title" />
 
     <TextView
         android:id="@+id/Desc"
@@ -77,7 +63,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
         android:text="@string/desc"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +73,6 @@
         android:id="@+id/joinBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:text="@string/join"
         android:textColor="@color/red"
@@ -99,12 +83,13 @@
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:textSize="15sp"
+        android:background="@drawable/round_corners"
+        android:text="Details"
         android:textAllCaps="false"
-        android:text="@string/open"
+        android:textSize="13sp"
+        app:icon="@android:drawable/ic_menu_info_details"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Desc" />
 
@@ -131,6 +116,14 @@
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintStart_toEndOf="@+id/SinceTitile"
         app:layout_constraintTop_toBottomOf="@+id/Desc" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background"
+        app:layout_constraintBottom_toBottomOf="parent
+" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

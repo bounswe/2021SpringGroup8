@@ -110,17 +110,15 @@ class CommunitiesPageActivity : AppCompatActivity() {
             val title = commJson["CommunityTitle"]
             val desc = "yalan"
             val by = JSONObject(commJson["createdBy"].toString())["username"]
-            val since = JSONObject(commJson["creationTime"].toString())["_isoformat"].toString()
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val formatted = since.format(formatter) as String
-
-            val comm = Community(title as String, by.toString(), desc,false, formatted)
+            var since = JSONObject(commJson["creationTime"].toString())["_isoformat"]
+            val time:String = since.toString()
+            // val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            // val formatted = since.format(formatter) as String
+            val comm = Community(title as String, by.toString(), desc,false, time.substring(0,10))
             commAdapter.addComm(comm)
 
         }
     }
 
-    private fun showDialog() {
 
-    }
 }

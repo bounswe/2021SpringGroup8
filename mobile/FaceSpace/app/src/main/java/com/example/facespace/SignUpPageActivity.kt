@@ -57,8 +57,16 @@ class SignUpPageActivity : AppCompatActivity() {
 
         btnEnterDate.setOnClickListener {
             val dpd = DatePickerDialog(this, { view, mYear, mMonth, mDay  ->
-                val mMonth2 = mMonth + 1
-                dateTV.text = "$mYear-$mMonth2-$mDay"
+                var mMonth2 = mMonth + 1
+                var mMonth3 = mMonth2.toString()
+                var day2 = mDay.toString()
+                if(mMonth2<10) {
+                    mMonth3= "0$mMonth3"
+                }
+                if(mDay<10) {
+                    day2= "0$day2"
+                }
+                dateTV.text = "$mYear-$mMonth3-$day2"
             }, year, month, day)
             dpd.show()
         }
@@ -125,6 +133,8 @@ class SignUpPageActivity : AppCompatActivity() {
                             val jsonObject = JSONObject(response)
                             error = jsonObject
                             val id = ((jsonObject["@return"]) as JSONObject)["id"]
+                            Data().setUsername(username)
+                            Data().setToken((jsonObject["@usertoken"]).toString())
                             Toast.makeText(this, "Signup Successful. Your id is : $id", Toast.LENGTH_LONG).show()
                             val intent = Intent(this, CommunitiesPageActivity::class.java)
                             startActivity(intent)

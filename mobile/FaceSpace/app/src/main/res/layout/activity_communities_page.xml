@@ -44,7 +44,7 @@
             android:id="@+id/btnAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="25dp"
             android:layout_marginBottom="15dp"
             android:backgroundTint="@color/aqua"
             android:clickable="true"
@@ -58,13 +58,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="25dp"
             android:layout_marginBottom="17dp"
             android:backgroundTint="@color/red"
             android:text="@string/log_out"
-            app:icon="@drawable/logout"
-
             android:textSize="18sp"
+
+            app:icon="@drawable/logout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnRefresh" />
