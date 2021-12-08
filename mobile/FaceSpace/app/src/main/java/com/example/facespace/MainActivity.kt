@@ -13,6 +13,9 @@ class MainActivity : AppCompatActivity() {
 
         val btnSignIn = findViewById<Button>(R.id.btnIn)
         val btnGoSignUp = findViewById<Button>(R.id.btnUp)
+
+
+
         btnSignIn.setOnClickListener {
 
             // val deneme = "deneme" // to send parameters to another activity

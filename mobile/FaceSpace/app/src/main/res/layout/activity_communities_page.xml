@@ -101,13 +101,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:text="Create Comm"
+            android:text="Create Community"
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Desc" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btnRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="15dp"
+        android:text="Refresh"
+        app:layout_constraintBottom_toBottomOf="@+id/rvCommunityItems"
+        app:layout_constraintEnd_toEndOf="@+id/rvCommunityItems" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

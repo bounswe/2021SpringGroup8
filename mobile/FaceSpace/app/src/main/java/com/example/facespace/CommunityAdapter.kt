@@ -1,4 +1,4 @@
-package com.example.signin_signup
+package com.example.facespace
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.facespace.R
 import kotlinx.android.synthetic.main.community_item.view.*
 
 class CommunityAdapter (
@@ -28,6 +27,11 @@ class CommunityAdapter (
             )
 
         )
+    }
+
+    fun deleteAll() {
+        communities.clear()
+        notifyDataSetChanged()
     }
 
     fun addComm(comm: Community) {
