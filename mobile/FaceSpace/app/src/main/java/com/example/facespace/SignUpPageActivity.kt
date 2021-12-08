@@ -136,7 +136,8 @@ class SignUpPageActivity : AppCompatActivity() {
                             Data().setUsername(username)
                             Data().setToken((jsonObject["@usertoken"]).toString())
                             Toast.makeText(this, "Signup Successful. Your id is : $id", Toast.LENGTH_LONG).show()
-                            val intent = Intent(this, CommunitiesPageActivity::class.java)
+                            val intent = Intent(this, HomePageActivity::class.java)
+                            intent.putExtra("username", username)
                             startActivity(intent)
 
 

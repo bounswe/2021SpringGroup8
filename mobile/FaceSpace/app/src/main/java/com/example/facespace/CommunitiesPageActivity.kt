@@ -34,6 +34,7 @@ class CommunitiesPageActivity : AppCompatActivity() {
 
         val btnAdd = findViewById<FloatingActionButton>(R.id.btnAdd)
         val btnRefresh = findViewById<FloatingActionButton>(R.id.btnRefresh)
+        val btnGoHome = findViewById<FloatingActionButton>(R.id.btnGoHome)
         val btnLogot = findViewById<Button>(R.id.btnLogout)
 
         val rvComms = findViewById<RecyclerView>(R.id.rvCommunityItems)
@@ -45,9 +46,16 @@ class CommunitiesPageActivity : AppCompatActivity() {
         val editDesc = findViewById<EditText>(R.id.Desc)
         btnRefresh.bringToFront()
         btnAdd.bringToFront()
+        btnGoHome.bringToFront()
         btnRefresh.setOnClickListener {
             commAdapter.deleteAll()
             getCommunities()
+        }
+
+        btnGoHome.setOnClickListener {
+            val intent = Intent(this, HomePageActivity::class.java)
+            intent.putExtra("username", Data().getUsername())
+            startActivity(intent)
         }
 
         btnAdd.setOnClickListener {

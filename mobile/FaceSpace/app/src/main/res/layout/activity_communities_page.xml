@@ -32,33 +32,31 @@
             android:id="@+id/btnRefresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="20dp"
             android:layout_marginBottom="15dp"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="@+id/bottomPanel"
-            app:layout_constraintStart_toEndOf="@+id/btnAdd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnGoHome"
             app:srcCompat="@android:drawable/ic_popup_sync" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="@color/aqua"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="@+id/bottomPanel"
-            app:layout_constraintStart_toStartOf="@+id/bottomPanel"
+            app:layout_constraintStart_toEndOf="@+id/btnRefresh"
             app:srcCompat="@android:drawable/ic_input_add" />
 
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="25dp"
             android:layout_marginBottom="17dp"
             android:backgroundTint="@color/red"
             android:text="@string/log_out"
@@ -66,8 +64,18 @@
 
             app:icon="@drawable/logout"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnRefresh" />
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnGoHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="@color/darkgreen"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/home" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

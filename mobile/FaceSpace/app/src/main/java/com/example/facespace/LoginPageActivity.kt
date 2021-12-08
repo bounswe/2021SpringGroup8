@@ -74,7 +74,8 @@ class LoginPageActivity : AppCompatActivity() {
                         Toast.makeText(this, "$url login Successful. Your Token is : $token", Toast.LENGTH_SHORT).show()
                         Data().setToken(token as String)
                         Data().setUsername(username)
-                        val intent = Intent(this, CommunitiesPageActivity::class.java)
+                        val intent = Intent(this, HomePageActivity::class.java)
+                        intent.putExtra("username", username)
                         startActivity(intent)
                     } catch (e: JSONException) {
                         e.printStackTrace()

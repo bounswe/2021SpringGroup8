@@ -4,6 +4,7 @@ class Data {
 
     companion object {
         private var username = ""
+        private var name = ""
         private var token = ""
         private var currCommunityId = ""
         private var currCommunityTitle = ""
@@ -12,6 +13,12 @@ class Data {
         private var currCommunityCreator = ""
     }
 
+    fun setName(newName: String) {
+        name = newName
+    }
+    fun getName(): String {
+        return name
+    }
     fun setUsername(newUsername:String) {
         username = newUsername
     }
@@ -33,6 +40,7 @@ class Data {
     fun resetFields() {
         username = ""
         token = ""
+        name = ""
     }
 
     fun setCommInfo(title:String, desc:String, by:String, date:String) {
