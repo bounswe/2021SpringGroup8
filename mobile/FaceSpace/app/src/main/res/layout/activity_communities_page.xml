@@ -18,106 +18,59 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <!--
+    -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomPanel"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/TitleTitle"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnRefresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Title:"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/Title" />
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="15dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/bottomPanel"
+            app:layout_constraintStart_toEndOf="@+id/btnAdd"
+            app:srcCompat="@android:drawable/ic_popup_sync" />
 
-        <EditText
-            android:id="@+id/Title"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="8dp"
-            android:hint="Title"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toStartOf="@+id/ByTitle"
-            app:layout_constraintStart_toEndOf="@+id/TitleTitle"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/ByTitle"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="By:"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/Title"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_editor_absoluteX="230dp" />
-
-        <EditText
-            android:id="@+id/By"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:hint="@string/username"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ByTitle"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/DescTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Desc:"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TitleTitle" />
-
-        <EditText
-            android:id="@+id/Desc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="15dp"
-            android:hint="Description"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/DescTitle"
-            app:layout_constraintTop_toBottomOf="@+id/ByTitle" />
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="@color/aqua"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/bottomPanel"
+            app:layout_constraintStart_toStartOf="@+id/bottomPanel"
+            app:srcCompat="@android:drawable/ic_input_add" />
 
         <Button
-            android:id="@+id/btnCreate"
-            android:layout_width="0dp"
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="Create Community"
-            android:textAllCaps="false"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="17dp"
+            android:backgroundTint="@color/red"
+            android:text="@string/log_out"
+            app:icon="@drawable/logout"
+
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Desc" />
+            app:layout_constraintStart_toEndOf="@+id/btnRefresh" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/btnRefresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="15dp"
-        android:text="Refresh"
-        app:layout_constraintBottom_toBottomOf="@+id/rvCommunityItems"
-        app:layout_constraintEnd_toEndOf="@+id/rvCommunityItems" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

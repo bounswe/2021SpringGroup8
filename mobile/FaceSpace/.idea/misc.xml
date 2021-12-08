@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/aqua_background.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/round_button.xml" value="0.20677083333333332" />
         <entry key="app/src/main/res/drawable/round_corners.xml" value="0.371875" />
         <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.2285809906291834" />
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.266796875" />
@@ -13,6 +17,7 @@
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_sign_up_page.xml" value="0.33" />
         <entry key="app/src/main/res/layout/community_item.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_create_community.xml" value="0.33" />
         <entry key="app/src/main/res/layout/sign2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/signup2.xml" value="0.33" />
       </map>

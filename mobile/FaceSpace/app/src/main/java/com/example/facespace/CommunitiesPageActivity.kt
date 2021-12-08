@@ -1,5 +1,6 @@
 package com.example.facespace
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -30,8 +32,9 @@ class CommunitiesPageActivity : AppCompatActivity() {
 
         commAdapter = CommunityAdapter(mutableListOf())
 
-        val btnCreate = findViewById<Button>(R.id.btnCreate)
-        val btnRefresh = findViewById<Button>(R.id.btnRefresh)
+        val btnAdd = findViewById<FloatingActionButton>(R.id.btnAdd)
+        val btnRefresh = findViewById<FloatingActionButton>(R.id.btnRefresh)
+        val btnLogot = findViewById<Button>(R.id.btnLogout)
 
         val rvComms = findViewById<RecyclerView>(R.id.rvCommunityItems)
 
@@ -40,39 +43,25 @@ class CommunitiesPageActivity : AppCompatActivity() {
 
         val editTitle = findViewById<EditText>(R.id.Title)
         val editDesc = findViewById<EditText>(R.id.Desc)
-        val editBy = findViewById<EditText>(R.id.By)
-
+        btnRefresh.bringToFront()
+        btnAdd.bringToFront()
         btnRefresh.setOnClickListener {
             commAdapter.deleteAll()
             getCommunities()
         }
 
-        btnCreate.setOnClickListener {
+        btnAdd.setOnClickListener {
 
-            val data = Data()
-            Toast.makeText(this, data.getUsername(), Toast.LENGTH_SHORT).show()
-            val title = editTitle.text.toString()
-            val desc = editDesc.text.toString()
-            val by = editBy.text.toString()
+            var dialog = CreateCommunity()
+            dialog.show(supportFragmentManager, "Create New Community")
 
-            val current = LocalDateTime.now()
-
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val formatted = current.format(formatter) as String
-
-
-
-            if(title.isNotEmpty() && desc.isNotEmpty() && by.isNotEmpty()) {
-                val comm = Community(title,by,desc,false, formatted)
-                commAdapter.addComm(comm)
-                editTitle.text.clear()
-                editDesc.text.clear()
-                editBy.text.clear()
-
-            } else {
-                Toast.makeText(this, "Fill all cells", Toast.LENGTH_SHORT).show()
-            }
         }
+
+        btnLogot.setOnClickListener {
+            val intent = Intent(this, LoginPageActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     fun getCommunities(){
@@ -117,7 +106,6 @@ class CommunitiesPageActivity : AppCompatActivity() {
         print(list.toString())
         for (i in 0 until list.length()) {
             val current = list.getJSONObject(i)
-            Toast.makeText(this,"${list::class.qualifiedName}", Toast.LENGTH_SHORT).show()
             val commJson = JSONObject(current.toString())
             val title = commJson["CommunityTitle"]
             val desc = "yalan"
@@ -130,5 +118,9 @@ class CommunitiesPageActivity : AppCompatActivity() {
             commAdapter.addComm(comm)
 
         }
+    }
+
+    private fun showDialog() {
+
     }
 }

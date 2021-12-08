@@ -35,7 +35,7 @@ class LoginPageActivity : AppCompatActivity() {
 
 
 
-
+        Data().resetFields()
 
         val btnSignIn = findViewById<Button>(R.id.btnSignIn)
         val btnGoSignUp = findViewById<Button>(R.id.btnGoSignUpPage)
@@ -72,7 +72,8 @@ class LoginPageActivity : AppCompatActivity() {
                         error = jsonObject
                         val token = jsonObject["@usertoken"]
                         Toast.makeText(this, "$url login Successful. Your Token is : $token", Toast.LENGTH_SHORT).show()
-                        Data().setUsername(token as String)
+                        Data().setToken(token as String)
+                        Data().setUsername(username)
                         val intent = Intent(this, CommunitiesPageActivity::class.java)
                         startActivity(intent)
                     } catch (e: JSONException) {
