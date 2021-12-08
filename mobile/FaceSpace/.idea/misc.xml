@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.2285809906291834" />
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.266796875" />
         <entry key="app/src/main/res/layout/activity_communities_page.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_community_page.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_login_page.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
