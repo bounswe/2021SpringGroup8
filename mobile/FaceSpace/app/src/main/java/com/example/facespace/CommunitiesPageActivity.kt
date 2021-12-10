@@ -14,6 +14,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_communities_page.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -29,13 +30,14 @@ class CommunitiesPageActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_communities_page)
+        supportActionBar?.hide()
 
         commAdapter = CommunityAdapter(mutableListOf())
 
         val btnAdd = findViewById<FloatingActionButton>(R.id.btnAdd)
         val btnRefresh = findViewById<FloatingActionButton>(R.id.btnRefresh)
         val btnGoHome = findViewById<FloatingActionButton>(R.id.btnGoHome)
-        val btnLogot = findViewById<Button>(R.id.btnLogout)
+        val btnLogout = findViewById<FloatingActionButton>(R.id.btnLogout)
 
         val rvComms = findViewById<RecyclerView>(R.id.rvCommunityItems)
 
@@ -47,6 +49,7 @@ class CommunitiesPageActivity : AppCompatActivity() {
         btnRefresh.bringToFront()
         btnAdd.bringToFront()
         btnGoHome.bringToFront()
+        btnLogout.bringToFront()
         btnRefresh.setOnClickListener {
             commAdapter.deleteAll()
             getCommunities()
@@ -65,7 +68,7 @@ class CommunitiesPageActivity : AppCompatActivity() {
 
         }
 
-        btnLogot.setOnClickListener {
+        btnLogout.setOnClickListener {
             val intent = Intent(this, LoginPageActivity::class.java)
             startActivity(intent)
         }

@@ -2,7 +2,7 @@
     <string name="app_name">FaceSpace</string>
     <string name="forgot">Forgot Password?</string>
     <string name="signUp">Sign Up</string>
-    <string name="projectName">FaceSpace</string>
+    <string name="projectName">Facespace</string>
     <string name="email">Email:</string>
     <string name="enterPassword">enter your password</string>
     <string name="enterEmail">enter your email</string>
@@ -23,7 +23,7 @@
     <string name="joined">Joined</string>
     <string name="welcome_to_facesapce">Welcome to FaceSpace</string>
     <string name="purpose">Here, you will share thoughts and find out what others think.</string>
-    <string name="register_today">Register Today</string>
+    <string name="register_today">Register Now</string>
     <string name="since">Since:</string>
     <string name="name">Name:</string>
     <string name="surname">Surname:</string>

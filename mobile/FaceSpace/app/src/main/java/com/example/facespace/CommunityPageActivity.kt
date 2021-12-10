@@ -18,6 +18,7 @@ class CommunityPageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_page)
+        supportActionBar?.hide()
 
         val titleTV = findViewById<TextView>(R.id.communityTitle)
         val descTV = findViewById<TextView>(R.id.communityDescription)
