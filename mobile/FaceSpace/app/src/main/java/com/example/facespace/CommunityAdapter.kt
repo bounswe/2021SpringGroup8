@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.community_item.view.*
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.Serializable
 
 class CommunityAdapter (
 
@@ -75,10 +76,11 @@ class CommunityAdapter (
             Desc.text = currComm.desc
             By.text = "by " + currComm.by
             since.text = currComm.since
-            //joinBox.isChecked = currComm.isJoined
-            //changeText(joinBox, currComm.isJoined)
-
             /*
+            joinBox.isChecked = currComm.isJoined
+            changeText(joinBox, currComm.isJoined)
+
+
             joinBox.setOnCheckedChangeListener { joinbox, isJoined ->
                 changeText(joinBox as CheckBox, isJoined)
                 currComm.isJoined = !currComm.isJoined
@@ -89,9 +91,9 @@ class CommunityAdapter (
                 val temp: String = currComm.id
                 Data().setCurrentComunityId(temp)
                 setInfo(temp)
-                Thread.sleep(700)
+                // Thread.sleep(700)
                 // Toast.makeText(context,"$temp this is under implementation still.",Toast.LENGTH_SHORT).show()
-                context.startActivity(Intent(context, CommunityPageActivity::class.java))
+
             }
 
 
@@ -135,17 +137,20 @@ class CommunityAdapter (
     }
     private fun helper(res: JSONObject) {
 
+        val infos:MutableMap<String,String> = HashMap()
+
         val tempDate: JSONObject = res["creationTime"] as JSONObject
         val tempBy: JSONObject = res["createdBy"] as JSONObject
 
-        val title = res["communityTitle"].toString()
-        val desc = res["description"].toString()
-        val date = tempDate["_isoformat"].toString()
-        val by = tempBy["username"].toString()
+        infos["title"]  = res["communityTitle"].toString()
+        infos["desc"]  = res["description"].toString()
+        infos["date"]  = tempDate["_isoformat"].toString().substring(0,10)
+        infos["by"]  = tempBy["username"].toString()
 
         Toast.makeText(mContext,"helalsfsf", Toast.LENGTH_SHORT).show()
-
-        Data().setCommInfo(title ,desc, by, date.substring(0,10))
+        val intent: Intent = Intent(mContext, CommunityPageActivity::class.java)
+        intent.putExtra("keys", infos as Serializable)
+        mContext.startActivity(intent)
 
     }
 
