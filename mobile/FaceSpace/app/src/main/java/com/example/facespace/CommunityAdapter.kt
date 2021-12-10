@@ -3,6 +3,7 @@ package com.example.facespace
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.SystemClock.sleep
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +52,7 @@ class CommunityAdapter (
     }
 
 
+    /*
     private fun changeText(joinBox: CheckBox, isChecked: Boolean) {
         if(isChecked) {
             joinBox.text = "Joined"
@@ -61,6 +63,8 @@ class CommunityAdapter (
         }
     }
 
+     */
+
 
 
 
@@ -69,21 +73,23 @@ class CommunityAdapter (
         holder.itemView.apply {
             Title.text = currComm.title
             Desc.text = currComm.desc
-            By.text = currComm.by
+            By.text = "by " + currComm.by
             since.text = currComm.since
-            joinBox.isChecked = currComm.isJoined
-            changeText(joinBox, currComm.isJoined)
+            //joinBox.isChecked = currComm.isJoined
+            //changeText(joinBox, currComm.isJoined)
 
+            /*
             joinBox.setOnCheckedChangeListener { joinbox, isJoined ->
                 changeText(joinBox as CheckBox, isJoined)
                 currComm.isJoined = !currComm.isJoined
 
             }
+             */
             btnOpenComm.setOnClickListener {
                 val temp: String = currComm.id
                 Data().setCurrentComunityId(temp)
                 setInfo(temp)
-                Thread.sleep(500)
+                Thread.sleep(700)
                 // Toast.makeText(context,"$temp this is under implementation still.",Toast.LENGTH_SHORT).show()
                 context.startActivity(Intent(context, CommunityPageActivity::class.java))
             }

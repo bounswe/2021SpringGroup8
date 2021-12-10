@@ -8,30 +8,28 @@
     android:layout_gravity="top"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="20dp"
-    android:background="@drawable/aqua_background"
     tools:context=".CreateCommunity">
 
     <TextView
         android:id="@+id/Baslik"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/create_community"
-        android:textSize="20sp"
-        android:textColor="@color/blue"
         android:textStyle="bold"
+        android:textColor="@color/pink"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/TitleTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Title:"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/Baslik" />
@@ -51,12 +49,11 @@
 
     <TextView
         android:id="@+id/DescTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Desc:"
+        android:text="Description:"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Title" />
@@ -73,29 +70,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DescTitle" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/cancelDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="50dp"
-        android:backgroundTint="@color/red"
-        android:clickable="true"
-        android:src="@android:drawable/ic_delete"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Desc" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageView
         android:id="@+id/addOk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="10dp"
-        android:backgroundTint="@color/darkgreen"
-        android:clickable="true"
-        android:src="@android:drawable/ic_input_add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Desc" />
+        android:layout_width="115dp"
+        android:layout_height="115dp"
+        android:src="@drawable/okbutton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/cancelDialog"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
+        android:src="@drawable/cancelbutton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

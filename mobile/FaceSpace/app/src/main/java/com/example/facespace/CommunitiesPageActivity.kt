@@ -46,6 +46,7 @@ class CommunitiesPageActivity : AppCompatActivity() {
 
         val editTitle = findViewById<EditText>(R.id.Title)
         val editDesc = findViewById<EditText>(R.id.Desc)
+        getCommunities()
         btnRefresh.bringToFront()
         btnAdd.bringToFront()
         btnGoHome.bringToFront()

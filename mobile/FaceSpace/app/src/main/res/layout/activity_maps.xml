@@ -25,7 +25,7 @@
                 android:layout_weight="1"
                 android:hint="Search Location"
                 android:inputType="textPersonName"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
 
                 />
 

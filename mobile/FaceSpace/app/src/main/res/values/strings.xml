@@ -39,7 +39,7 @@
     <string name="cancel">Cancel</string>
     <string name="search">Search</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="create_community">Create New Community</string>
+    <string name="create_community">New Community</string>
     <string name="log_out">Log Out</string>
     <string name="facesapce">Facesapce</string>
 </resources>
