@@ -45,6 +45,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+        supportActionBar?.hide()
         /*
         val extras = intent.extras
         if (extras != null) {

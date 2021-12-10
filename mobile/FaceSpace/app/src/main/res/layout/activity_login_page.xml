@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="30dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
+    android:paddingHorizontal="40dp"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
@@ -19,26 +18,15 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="232dp"
+            android:layout_height="191dp"
             android:layout_gravity="center"
-            android:src="@drawable/logo"
-            android:contentDescription="@string/projectName" />
+            android:layout_marginTop="30dp"
+            android:contentDescription="@string/projectName"
+            android:src="@drawable/facespace" />
 
         <TextView
-            android:id="@+id/face"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="50sp"
-            android:text="@string/projectName"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            />
-
-        <TextView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/signIn"
@@ -58,10 +46,10 @@
         <TextView
             android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="35dp"
             android:text="@string/username"
             android:textSize="17sp"
-            android:textColor="@color/red"
+            android:textColor="@color/black"
             />
 
         <EditText
@@ -70,15 +58,16 @@
             android:layout_height="wrap_content"
             android:hint="@string/enterUsername"
             android:inputType="textEmailAddress"
+            android:textSize="15sp"
             />
 
         <TextView
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="50sp"
+            android:layout_height="35sp"
             android:text="@string/password"
             android:textSize="17sp"
-            android:textColor="@color/red"
+            android:textColor="@color/black"
             />
 
         <EditText
@@ -87,20 +76,22 @@
             android:layout_height="wrap_content"
             android:hint="@string/enterPassword"
             android:inputType="textPassword"
+            android:textSize="15sp"
             />
 
         <Button
             android:id="@+id/btnSignIn"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/green"
+            android:fontFamily="@font/cairo_semibold"
             android:gravity="center"
-            android:backgroundTint="@color/red"
-            android:textSize="15sp"
-            android:textColor="@color/white"
             android:text="@string/signIn"
             android:textAllCaps="false"
-            />
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
 
 
@@ -114,7 +105,7 @@
         android:id="@+id/llFour"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.7"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -122,13 +113,14 @@
 
         <Button
             android:id="@+id/btnForgot"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:backgroundTint="@color/white"
-            android:textSize="15sp"
-            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:textColor="@color/pink"
             android:text="@string/forgot"
+            android:fontFamily="@font/cairo_semibold"
             android:textAllCaps="false"
             android:shadowColor="@color/white"
             />
@@ -136,13 +128,14 @@
 
         <Button
             android:id="@+id/btnGoSignUpPage"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/pink"
             android:layout_marginStart="10dp"
+            android:fontFamily="@font/amiko_semibold"
             android:textSize="15sp"
-            android:textColor="@color/red"
+            android:textColor="@color/white"
             android:text="@string/signUp"
             android:textAllCaps="false"
             />
