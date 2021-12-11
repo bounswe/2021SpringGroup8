@@ -65,10 +65,10 @@ def SignUp(manager : ServerManager, params):
     password = params["password"][0]
     name = params["name"][0]
     surname = params["surname"][0]
-    birthdate = datetime.fromisoformat(params["birthdate"][0])
+    birthdate = datetime.fromisoformat(params["birthdate"][0]) if "birthdate" in params else None
     
-    city = params["city"][0] if "city" in params else ""
-    pplink = params["pplink"][0] if "pplink" in params else ""
+    city = params["city"][0] if "city" in params else None
+    pplink = params["pplink"][0] if "pplink" in params else None
 
     hashedpassword = Hash(password)
     
