@@ -215,7 +215,6 @@ class DatabaseManager:
         post_dict["postedBy"] = user_preview
         x = self.postCollection.insert_one(post_dict)
         post = self.postCollection.find_one({"_id": x.inserted_id})
-        post_return_dict = post
         self.communityCollection.update_one( 
         { "_id" : ObjectId(community_preview["id"])},
         { "$push": { "posts": self.get_post_preview(str(post["_id"]))}}
@@ -224,7 +223,7 @@ class DatabaseManager:
         { "_id" : ObjectId(user_preview["id"])},
         { "$push": { "posts": self.get_post_preview(str(post["_id"]))}}
         )
-        
+        post_return_dict = self.get_specific_post(str(post["_id"]))
         return post_return_dict
 
     def delete_post(self, postId):
@@ -264,9 +263,9 @@ class DatabaseManager:
     def get_specific_post(self, postId):
         post = self.postCollection.find_one({"_id": ObjectId(postId)})
         if post is not None:
-            post_return_dict = {"postTitle": post["postTitle"], "id": str(post["_id"]), "description": post["description"],
-            "creationTime": post["creationTime"], "postedBy": post["postedBy"], "postedAt": post["postedAt"]}
-            return post_return_dict
+            post.pop("_id")
+            post["id"] = postId
+            return post
         else:
             return False
 
