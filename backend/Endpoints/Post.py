@@ -26,7 +26,8 @@ def Submit(manager : ServerManager, userid, params):
 
     communityId = params["communityId"][0]
     title = params["title"][0]
-    description = params["description"][0]
+    datatypename = params["datatypename"][0]
+    datatypevalues = json.loads(params["datatypevalues"][0])
     
     userpreview = manager.DatabaseManager.get_user_preview(userid)
     
@@ -41,10 +42,45 @@ def Submit(manager : ServerManager, userid, params):
     if manager.DatabaseManager.is_subscribed(userid, communityId) == False:
         return SetError(response, "Can't send post!")
 
+    datatype = manager.DatabaseManager.find_dataType(datatypename, communitypreview)
+
+    if datatype == False:
+        return SetError(response, "Data Type doesn't exist!")
+    
+    #check if fields are correct
+    #convert all field values to their corresponding objects
+    for fieldname in datatype["fields"]:
+        if not fieldname in datatypevalues:
+            return SetError(response, f"Data Type doesn't contain {fieldname} field!")
+        
+        #int str datetime
+        fieldtype = datatype["fields"][fieldname]
+        fieldval = datatypevalues[fieldname]
+
+        realfieldval = None
+
+        try:
+            if fieldtype == "int":
+                realfieldval = int(fieldval)
+            elif fieldtype == "str":
+                realfieldval = str(fieldval)
+            elif fieldtype == "datetime":
+                realfieldval = datetime.fromisoformat(str(fieldval))
+            
+        except:
+            pass
+        
+        if realfieldval == None:
+            return SetError(response, f"Unimplemented field type {fieldtype} or wrong field value {str(fieldval)}!")
+
+        datatypevalues[fieldname] = realfieldval
+        
+
     post_dic = \
     {
         "postTitle": title,
-        "description": description,
+        "dataTypeName": datatypename,
+        "fieldValues": datatypevalues,
         "creationTime": datetime.now(),
     }
 
