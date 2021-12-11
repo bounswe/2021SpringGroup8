@@ -115,6 +115,7 @@ class DatabaseManager:
         mydoc = self.communityCollection.find_one(myquery)
         community_dict["posts"] = []
         community_dict["subscribers"] = []
+        community_dict["dataTypes"] = []
         if mydoc == None:
             x = self.communityCollection.insert_one(community_dict)
             community = self.communityCollection.find_one(myquery)
@@ -174,6 +175,14 @@ class DatabaseManager:
             return return_dict
         else:
             return False
+
+    def create_dataType(self, dataTypeDict, communityPreview):
+        communityId = communityPreview["id"]
+        self.communityCollection.update_one( 
+        { "_id" : ObjectId(communityId)},
+        { "$push": { "dataTypes": self.get_post_preview(dataTypeDict)}}
+        )
+        return True
 
     def get_specific_community(self, communityId):
         community = self.communityCollection.find_one({"_id": ObjectId(communityId)})
@@ -263,6 +272,7 @@ if __name__== "__main__":
 #    print(dbm.is_subscribed("619cdff3bb35199a704b7c9d", "619ce04502e2845ef0c47700"))
     x = dbm.find_user("61aea3219715d896eb60d145")   
     print(x)
+#    print(dbm.get_communuties())
 #    change = {}
 #    change["email"] = "backend3@gmail.com"
 #    change["name"] = "test-name"
