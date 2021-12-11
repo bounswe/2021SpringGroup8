@@ -18,8 +18,6 @@ class Profile extends Component {
     render() {
         const { user: currentUser } = this.props;
 
-
-
         if (!currentUser) {
             return <Redirect to="/login"/>;
         }
@@ -48,9 +46,11 @@ class Profile extends Component {
                     <p>
                         <strong>City:</strong> {currentUser.city}
                     </p>
-                    {/*<p>*/}
-                    {/*    <strong>Birth Date:</strong> {currentUser.birthdate._isoformat.substring(0,10)}*/}
-                    {/*</p>*/}
+
+                    <p>
+                        <strong>Birth Date:</strong> {new Date(currentUser.birthdate._isoformat).toLocaleDateString()}
+                    </p>
+
                     <p>
                         <strong>Profile Picture:</strong> {currentUser.pplink}
                     </p>
