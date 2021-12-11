@@ -1,7 +1,7 @@
 import axios from "axios";
 import querystring from "querystring";
 
-const API_URL = "http://localhost:8080/";
+const API_URL = "http://3.144.184.237:8080/";
 
 class AuthService {
     login(username, password) {
@@ -23,12 +23,15 @@ class AuthService {
         localStorage.removeItem("user");
     }
 
-    register(username, email, password) {
+    register(username, email, password, name, surname, birthdate) {
         return axios.post(API_URL + "signup",
             querystring.stringify({
                 username: username,
                 password: password,
-                email: email
+                email: email,
+                name: name,
+                surname: surname,
+                birthdate: birthdate
             }), {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
