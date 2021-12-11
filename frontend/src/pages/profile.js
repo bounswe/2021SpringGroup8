@@ -18,6 +18,9 @@ class Profile extends Component {
     render() {
         const { user: currentUser } = this.props;
 
+        const { usertoken: currentToken } = this.props;
+
+        console.log(currentToken);
         if (!currentUser) {
             return <Redirect to="/login"/>;
         }
@@ -55,6 +58,10 @@ class Profile extends Component {
                         <strong>Profile Picture:</strong> {currentUser.pplink}
                     </p>
 
+                    <p>
+                        <strong>Token:</strong> {currentToken}
+                    </p>
+
 
 
                 </div>
@@ -64,9 +71,9 @@ class Profile extends Component {
 }
 
 function mapStateToProps(state) {
-    const { user } = state.reg;
+    const { user, usertoken } = state.reg;
     return {
-        user,
+        user, usertoken
     };
 }
 

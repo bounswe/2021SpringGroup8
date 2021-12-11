@@ -17,6 +17,7 @@ class RegisterService {
                     console.log(JSON.stringify(response.data['@return']));
                     if(JSON.stringify(response.data['@return'])){
                         localStorage.setItem("user", JSON.stringify(response.data['@return']));
+                        localStorage.setItem("usertoken", JSON.stringify(response.data['@usertoken']));
                     }else{
                         localStorage.setItem("user", null);
                         alert("Wrong Credentials");
@@ -29,6 +30,7 @@ class RegisterService {
 
     logout() {
         localStorage.removeItem("user");
+        localStorage.removeItem("usertoken");
     }
 
     register(username, email, password) {
