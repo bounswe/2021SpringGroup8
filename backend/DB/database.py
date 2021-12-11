@@ -171,7 +171,7 @@ class DatabaseManager:
         community = self.communityCollection.find_one({"_id": ObjectId(communityId)})
         if community is not None:
             return_dict = community_dict = {"CommunityTitle": community["communityTitle"], "id": str(community["_id"]),
-                "creationTime": community["creationTime"], "createdBy": community["createdBy"]}
+                "creationTime": community["creationTime"], "createdBy": community["createdBy"], "description":community["description"]}
             return return_dict
         else:
             return False
