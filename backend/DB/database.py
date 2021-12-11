@@ -106,7 +106,6 @@ class DatabaseManager:
             { "_id" : ObjectId(community_preview["id"]) },
             { "$pull": { "subscribers": self.get_user_preview(userId)}}
             )
-
         else:
             return False
 
@@ -124,16 +123,14 @@ class DatabaseManager:
             { "$set": { "createdBy": user}}
             )
             community = self.communityCollection.find_one(myquery)
-            community_preview = {"communityTitle" : community_title, "id": str(community["_id"])}
+            community_preview = self.get_community_preview(str(community["_id"]))
             self.userCollection.update_one( 
             { "_id" : ObjectId(user["id"]) },
             { "$push": { "createdCommunities": community_preview}}
             )
             myquery = {"_id": ObjectId(user["id"])}
             user_object = self.userCollection.find_one(myquery)
-            community_return_dict = {"communityTitle": community_title, "id": str(community["_id"]),
-             "description": community["description"], "creationTime": community["creationTime"], "createdBy": user,
-             "subscribers": community.get("subscribers"), "posts": community.get("posts")}
+            community_return_dict = self.get_specific_community(str(community["_id"]))
             return community_return_dict
         else:
             return False
@@ -165,8 +162,7 @@ class DatabaseManager:
     def get_communuties(self):
         list = []
         for community in self.communityCollection.find():
-            community_dict = {"CommunityTitle": community["communityTitle"], "id": str(community["_id"]),
-            "creationTime": community["creationTime"], "createdBy": community["createdBy"]}
+            community_dict = self.get_community_preview(str(community["_id"]))
             list.append(community_dict)
         return list
 
@@ -182,10 +178,9 @@ class DatabaseManager:
     def get_specific_community(self, communityId):
         community = self.communityCollection.find_one({"_id": ObjectId(communityId)})
         if community is not None:
-            community_return_dict = {"communityTitle": community["communityTitle"], "id": str(community["_id"]),
-                "description": community["description"], "creationTime": community["creationTime"], "createdBy": community["createdBy"],
-                "subscribers": community.get("subscribers"), "posts": community.get("posts")}
-            return community_return_dict
+            community.pop("_id")
+            community["id"] = communityId
+            return community
         else:
             return False
 
@@ -266,8 +261,8 @@ if __name__== "__main__":
 #    print(dbm.update_profile("619cdff3bb35199a704b7c9d", {"pplink":"test-pplink"}))
 #    print(dbm.subscribe_community("619cdff3bb35199a704b7c9d", dbm.get_community_preview("619ce04502e2845ef0c47701")))
 #    print(dbm.is_subscribed("619cdff3bb35199a704b7c9d", "619ce04502e2845ef0c47700"))
-#    x = dbm.find_user("619cdff3bb35199a704b7c9d")
-#    print(x)
+    x = dbm.find_user("61aea3219715d896eb60d145")   
+    print(x)
 #    change = {}
 #    change["email"] = "backend3@gmail.com"
 #    change["name"] = "test-name"
