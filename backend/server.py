@@ -67,8 +67,8 @@ class Handler(BaseHTTPRequestHandler):
     <label for="surname">surname:</label><br>
     <input type="text" id="surname" name="surname"><br>
 
-    <label for="city">city:</label><br>
-    <input type="text" id="city" name="city"><br>
+    <label for="loc">loc:</label><br>
+    <input type="text" id="loc" name="loc"><br>
 
     <label for="birthdate">birthdate:</label><br>
     <input type="text" id="birthdate" name="birthdate"><br>
@@ -97,8 +97,8 @@ class Handler(BaseHTTPRequestHandler):
     <label for="surname">surname:</label><br>
     <input type="text" id="surname" name="surname"><br>
 
-    <label for="city">city:</label><br>
-    <input type="text" id="city" name="city"><br>
+    <label for="loc">loc:</label><br>
+    <input type="text" id="loc" name="loc"><br>
 
     <label for="birthdate">birthdate:</label><br>
     <input type="text" id="birthdate" name="birthdate"><br>
@@ -291,7 +291,7 @@ class Handler(BaseHTTPRequestHandler):
             WriteJSON(self, 
                 {
                     "@context": "https://www.w3.org/ns/activitystreams",
-                    "@type": "Post.Delete",
+                    "@type": "NoType",
                     "@success": "False",
                     "@error":  "Error! " + str(e),
                 }

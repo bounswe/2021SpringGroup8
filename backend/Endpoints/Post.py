@@ -12,6 +12,7 @@ import html
 import hashlib
 import re
 from datetime import date, datetime
+from .ObjectChecker import CheckLocation
 
 def SetError(response, err):
     response["@success"] = "False"
@@ -49,6 +50,9 @@ def Submit(manager : ServerManager, userid, params):
     
     #check if fields are correct
     #convert all field values to their corresponding objects
+
+    if len(datatypevalues) != len(datatype["fields"]):
+        return SetError(response, "Params don't matches with the dataype " +  datatype["name"] + "}")
     for fieldname in datatype["fields"]:
         if not fieldname in datatypevalues:
             return SetError(response, f"Data Type doesn't contain {fieldname} field!")
@@ -68,7 +72,10 @@ def Submit(manager : ServerManager, userid, params):
                 realfieldval = datetime.fromisoformat(str(fieldval))
             elif fieldtype == "bool":
                 realfieldval = bool(str(fieldval))
-            
+            elif fieldtype == "location":
+                valid, message = CheckLocation(fieldval)
+                if valid:
+                    realfieldval = fieldval
         except:
             pass
         
