@@ -279,6 +279,7 @@ class Handler(BaseHTTPRequestHandler):
         </form>
     </html>
             """)
+        
 
     def do_POST(self):
         try:

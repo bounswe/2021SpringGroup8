@@ -61,11 +61,13 @@ def Submit(manager : ServerManager, userid, params):
 
         try:
             if fieldtype == "int":
-                realfieldval = int(fieldval)
+                realfieldval = int(str(fieldval))
             elif fieldtype == "str":
                 realfieldval = str(fieldval)
             elif fieldtype == "datetime":
                 realfieldval = datetime.fromisoformat(str(fieldval))
+            elif fieldtype == "bool":
+                realfieldval = bool(str(fieldval))
             
         except:
             pass
