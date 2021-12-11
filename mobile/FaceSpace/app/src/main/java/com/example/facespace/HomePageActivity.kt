@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.example.facespaceextenstion.Data
 
 class HomePageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,8 +14,8 @@ class HomePageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home_page)
         supportActionBar?.hide()
 
-        val extras = intent.extras
-        var username = extras?.get("username")
+        // val extras = intent.extras
+        var username = Data().getUsername()
 
         val greetingTV = findViewById<TextView>(R.id.greeting)
         greetingTV.text = "Hello, $username!"
@@ -25,7 +26,10 @@ class HomePageActivity : AppCompatActivity() {
         val logout = findViewById<ImageView>(R.id.imageLogOut)
 
         goProfile.setOnClickListener {
-            Toast.makeText(this, "${username.toString()} wants to go his profile.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "${username.toString()} wants to go his profile.", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ProfilePage::class.java)
+            startActivity(intent)
+
         }
 
         goAllComm.setOnClickListener {

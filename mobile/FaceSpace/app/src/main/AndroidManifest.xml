@@ -19,6 +19,9 @@
         android:theme="@style/Theme.FaceSpace"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ProfilePage"
+            android:exported="true" />
+        <activity
             android:name=".HomePageActivity"
             android:exported="true" />
         <activity

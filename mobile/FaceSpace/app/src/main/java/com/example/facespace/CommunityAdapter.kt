@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.facespaceextenstion.Data
 import kotlinx.android.synthetic.main.community_item.view.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -106,7 +107,7 @@ class CommunityAdapter (
 
     private fun setInfo(id:String) {
 
-        val url = "http://3.144.184.237:8080/getcommunity"
+        val url = Data().getUrl("getcommunity")
 
         var error: JSONObject? = null
 

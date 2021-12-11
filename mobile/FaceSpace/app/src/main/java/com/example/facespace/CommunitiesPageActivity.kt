@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.facespaceextenstion.Data
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_communities_page.*
 import org.json.JSONArray
@@ -51,6 +52,8 @@ class CommunitiesPageActivity : AppCompatActivity() {
         btnAdd.bringToFront()
         btnGoHome.bringToFront()
         btnLogout.bringToFront()
+
+
         btnRefresh.setOnClickListener {
             commAdapter.deleteAll()
             getCommunities()
@@ -58,7 +61,6 @@ class CommunitiesPageActivity : AppCompatActivity() {
 
         btnGoHome.setOnClickListener {
             val intent = Intent(this, HomePageActivity::class.java)
-            intent.putExtra("username", Data().getUsername())
             startActivity(intent)
         }
 
@@ -80,7 +82,7 @@ class CommunitiesPageActivity : AppCompatActivity() {
 
         // val allComm: MutableList<Community>
 
-        val url = "http://3.144.184.237:8080/getallcommunities"
+        val url = Data().getUrl("getallcommunities")
         var error: JSONObject? = null
 
         val stringRequest: StringRequest = @RequiresApi(Build.VERSION_CODES.O)

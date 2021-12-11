@@ -19,8 +19,7 @@ import kotlin.collections.HashMap
 import android.R.attr.data
 
 import android.app.Activity
-
-
+import com.example.facespaceextenstion.Data
 
 
 class SignUpPageActivity : AppCompatActivity() {
@@ -103,7 +102,7 @@ class SignUpPageActivity : AppCompatActivity() {
 
             val params: MutableMap<String, String> = HashMap()
 
-            val url = "http://3.144.184.237:8080/signup"
+            val url = Data().getUrl("signup")
 
 
             // Post parameters

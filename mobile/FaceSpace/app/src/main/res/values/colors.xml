@@ -21,6 +21,8 @@
     <color name="lightgray">#D9D9D9</color>
     <color name="cansu">#3E606F</color>
     <color name="cansu2">#91AA9D</color>
+    <color name="yellow"> #adff2f </color>
+    <color name="darkgray">#6F7378</color>
 
 
 </resources>

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.facespaceextenstion.Data
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -36,7 +37,7 @@ class LoginPageActivity : AppCompatActivity() {
 
 
 
-        Data().resetFields()
+        Data().resetAll()
 
         val btnSignIn = findViewById<Button>(R.id.btnSignIn)
         val btnGoSignUp = findViewById<Button>(R.id.btnGoSignUpPage)
@@ -54,7 +55,7 @@ class LoginPageActivity : AppCompatActivity() {
             params["password"] = password
 
 
-            val url = "http://3.144.184.237:8080/login"
+            val url = Data().getUrl("login")
 
 
             // Post parameters
@@ -72,9 +73,13 @@ class LoginPageActivity : AppCompatActivity() {
                         val jsonObject = JSONObject(response)
                         error = jsonObject
                         val token = jsonObject["@usertoken"]
+                        val returns = JSONObject(jsonObject["@return"].toString())
+                        val dob = (JSONObject(returns["birthdate"].toString()))["_isoformat"]
                         Toast.makeText(this, "$url login Successful. Your Token is : $token", Toast.LENGTH_SHORT).show()
                         Data().setToken(token as String)
-                        Data().setUsername(username)
+                        Data().setAll(returns["username"].toString(), returns["email"].toString(),
+                            returns["name"].toString(), returns["surname"].toString(),
+                            dob.toString().substring(0,10), returns["city"].toString(), returns["pplink"].toString(), )
                         val intent = Intent(this, HomePageActivity::class.java)
                         intent.putExtra("username", username)
                         startActivity(intent)
