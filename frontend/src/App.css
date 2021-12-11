@@ -83,7 +83,7 @@ label {
   left: 0;
   width: 100%;
   padding: 0.75rem 2rem;
-  background: var(--offWhite);
+  background: #50b7f5;
   z-index: 1;
 }
 .nav-header {
@@ -101,6 +101,7 @@ label {
   font-size: 1.5rem;
   color: var(--primaryColor);
 }
+
 .nav-links {
   margin-top: 0rem;
   height: 0;
@@ -109,6 +110,9 @@ label {
   list-style-type: none;
   background: #6DCCA3;
   text-align: center;
+}
+.navbar > bg-secondary{
+  color : #9155A7;
 }
 .nav-links a {
   display:  -moz-stack;
@@ -145,7 +149,7 @@ label {
     height: fit-content;
     display: flex;
     margin-left: 3rem;
-    background: white;
+    background: #50b7f5;
     text-align: justify-all;
   }
   .nav-links a {

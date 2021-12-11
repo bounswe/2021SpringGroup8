@@ -6,17 +6,19 @@ const API_URL = "http://localhost:8080/";
 class AuthService {
     login(username, password) {
         return axios
-            .post(API_URL + "login", {username, password})
-            .then((response) => {
-                if (response.data) {
-                    //assumes that the response will be a json object
-                    //TODO: to debug only delete this line later on
-                    console.log(JSON.stringify(response.data['@return']));
-                    localStorage.setItem("user", JSON.stringify(response.data['@return']));
-                    // localStorage.setItem("user", JSON.stringify(response.data));
+            .post(API_URL + "login", querystring.stringify({username:username, password:password}), {
+                headers:{
+                    "Content-Type": "application/x-www-form-urlencoded"
                 }
-                return response.data;
             });
+            // .then((response) => {
+            //     if (response.data) {
+            //         //assumes that the response will be a json object
+            //         console.log(JSON.stringify(response.data['@return']));
+            //         localStorage.setItem("user", JSON.stringify(response.data['@return']));
+            //     }
+            //     return response.data;
+            // });
     }
 
     logout() {

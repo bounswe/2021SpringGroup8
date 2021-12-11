@@ -11,6 +11,7 @@ import Profile from "./pages/profile";
 import Welcome from "./public-content/pages/welcome";
 import Communities from "./public-content/pages/Communities";
 import Community from "./public-content/pages/Community";
+import home from "./public-content/pages/home";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +37,7 @@ class App extends Component {
           <div>
             <>
               <Switch>
-                <Route exact path={"/"} component={Welcome}/>
+                <Route exact path={"/"} component={home}/>
                 <Route exact path={"/home"} component={HomePage}/>
                 <Route exact path={"/profile"} component={Profile}/>
                 <Route exact path={"/posts"} component={PostListComponent} />

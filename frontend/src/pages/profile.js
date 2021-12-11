@@ -2,15 +2,22 @@ import React, { Component } from "react";
 import { Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import Profilebar from "../components/profilebar";
+import querystring from "querystring";
 
 
 
 class Profile extends Component {
 
+    constructor(props) {
+        super(props);
+
+    }
+
 
 
     render() {
         const { user: currentUser } = this.props;
+
 
 
         if (!currentUser) {
@@ -41,9 +48,9 @@ class Profile extends Component {
                     <p>
                         <strong>City:</strong> {currentUser.city}
                     </p>
-                    <p>
-                        <strong>Birth Date:</strong> {currentUser.birthdate}
-                    </p>
+                    {/*<p>*/}
+                    {/*    <strong>Birth Date:</strong> {currentUser.birthdate._isoformat.substring(0,10)}*/}
+                    {/*</p>*/}
                     <p>
                         <strong>Profile Picture:</strong> {currentUser.pplink}
                     </p>

@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import UserCommunityService from "../../services/user-community.service";
 import {withRouter} from 'react-router-dom';
 import {Button, Card, Col, Container} from "react-bootstrap";
-
+import Header from "../Components/header/header2";
 
 class Communities extends Component {
 
@@ -46,6 +46,8 @@ class Communities extends Component {
         const {communities} = this.state
 
         return (
+            <>
+            <Header/>
             <Container fluid="md">
                 {communities && communities.map((community, index) => (
                     <Col md="9">
@@ -63,6 +65,7 @@ class Communities extends Component {
 
                 ))}
             </Container>
+                </>
         );
     }
 
