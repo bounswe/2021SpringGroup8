@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
+import Profilebar from "../components/profilebar";
 
 
 
 class Profile extends Component {
 
+
+
     render() {
         const { user: currentUser } = this.props;
+
 
         if (!currentUser) {
             return <Redirect to="/login"/>;
@@ -15,6 +19,7 @@ class Profile extends Component {
 
         return (
             <>
+                <Profilebar/>
                 <div className="container">
                     <header className="jumbotron">
                         <h3>
@@ -27,6 +32,22 @@ class Profile extends Component {
                     <p>
                         <strong>Email:</strong> {currentUser.email}
                     </p>
+                    <p>
+                        <strong>Name:</strong> {currentUser.name}
+                    </p>
+                    <p>
+                        <strong>Surname:</strong> {currentUser.surname}
+                    </p>
+                    <p>
+                        <strong>City:</strong> {currentUser.city}
+                    </p>
+                    <p>
+                        <strong>Birth Date:</strong> {currentUser.birthdate}
+                    </p>
+                    <p>
+                        <strong>Profile Picture:</strong> {currentUser.pplink}
+                    </p>
+
 
 
                 </div>

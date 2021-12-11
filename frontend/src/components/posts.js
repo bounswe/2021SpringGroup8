@@ -25,6 +25,7 @@ export default class PostListComponent extends Component{
         this.retrievePosts();
     }
 
+
     refreshList() {
         this.retrievePosts();
         this.setState({
@@ -41,7 +42,7 @@ export default class PostListComponent extends Component{
                 console.log(response.data);
             })
             .catch(e => {
-                console.log(e);
+                console.log(e.toString());
             });
     }
 

@@ -1,15 +1,20 @@
 import axios from "axios";
+import querystring from "querystring";
 
-const API_URL = "http://35.170.202.102:8080/";
+const API_URL = "http://localhost:8080/";
 
 class RegisterService {
     login(username, password) {
         return axios
-            .post(API_URL + "login", {username, password})
+            .post(API_URL + "login", querystring.stringify({username:username, password:password}), {
+                headers:{
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            })
             .then((response) => {
                 if (response.data) {
                     //assumes that the response will be a json object
-                    localStorage.setItem("user", JSON.stringify(response.data));
+                    localStorage.setItem("user", JSON.stringify(response.data['@return']));
                 }
                 return response.data;
             });
@@ -20,17 +25,23 @@ class RegisterService {
     }
 
     register(username, email, password) {
-        return axios.post(API_URL + "signup", {
-            username,
-            email,
-            password,
-        }).then((response) => {
-            if (response.data) {
-                //assumes that the response will be a json object
-                localStorage.setItem("user", JSON.stringify(response.data));
-            }
-            return response.data;
-        });
+        return axios.post(API_URL + "signup",
+            querystring.stringify({
+                username: username,
+                password: password,
+                email: email
+            }), {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            });
+
+    }
+    getCurrentUser() {
+        const userStr = localStorage.getItem("user");
+        if (userStr) return JSON.parse(userStr);
+
+        return null;
     }
 }
 

@@ -13,9 +13,13 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
 
+
+
 class LoginPageActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_login_page)
 
 
@@ -32,7 +36,7 @@ class LoginPageActivity : AppCompatActivity() {
 
 
 
-
+        Data().resetFields()
 
         val btnSignIn = findViewById<Button>(R.id.btnSignIn)
         val btnGoSignUp = findViewById<Button>(R.id.btnGoSignUpPage)
@@ -43,20 +47,21 @@ class LoginPageActivity : AppCompatActivity() {
             val username = userEdit.text.toString()
             val password = passEdit.text.toString()
 
-
             val params: MutableMap<String, String> = HashMap()
+
             //Change with your post params
             params["username"] = username
             params["password"] = password
 
 
-            val url = "http://10.0.2.2:8080/login"
+            val url = "http://3.144.184.237:8080/login"
 
 
             // Post parameters
             // Form fields and values
 
 
+            var error: JSONObject? = null
 
             val stringRequest: StringRequest = object : StringRequest( Method.POST, url,
                 Response.Listener { response ->
@@ -65,17 +70,21 @@ class LoginPageActivity : AppCompatActivity() {
                     try {
                         //Parse your api responce here
                         val jsonObject = JSONObject(response)
+                        error = jsonObject
                         val token = jsonObject["@usertoken"]
-                        Toast.makeText(this, "login Successful. Your Token is : $token", Toast.LENGTH_LONG).show()
-                        val intent = Intent(this, CommunitiesPageActivity::class.java)
+                        Toast.makeText(this, "$url login Successful. Your Token is : $token", Toast.LENGTH_SHORT).show()
+                        Data().setToken(token as String)
+                        Data().setUsername(username)
+                        val intent = Intent(this, HomePageActivity::class.java)
+                        intent.putExtra("username", username)
                         startActivity(intent)
                     } catch (e: JSONException) {
                         e.printStackTrace()
-                        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, (error?.get("@error")) as String, Toast.LENGTH_SHORT).show()
                     }
                 },
                 Response.ErrorListener { error ->
-                    Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show()
                 }) {
                 override fun getParams(): Map<String, String> {
                     return params
@@ -103,7 +112,7 @@ class LoginPageActivity : AppCompatActivity() {
 
         btnForgot.setOnClickListener {
 
-            val toast = Toast.makeText(this, "Sorry to hear that. This feature is still under implementation", Toast.LENGTH_LONG)
+            val toast = Toast.makeText(this, "Sorry to hear that. This feature is still under implementation", Toast.LENGTH_SHORT)
             toast.show()
 
 

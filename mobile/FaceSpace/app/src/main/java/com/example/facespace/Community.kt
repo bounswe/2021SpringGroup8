@@ -1,4 +1,4 @@
-package com.example.signin_signup
+package com.example.facespace
 
 data class Community
     (
@@ -6,5 +6,6 @@ data class Community
     val by: String,
     val desc: String,
     var isJoined: Boolean = false,
-    var since:String
+    var since:String,
+    var id: String
     )
