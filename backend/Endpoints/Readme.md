@@ -1,36 +1,102 @@
-# Objects
+# Objects Definitions
 ## Date.Object
+``` json
+{
+    "_isoformat": "2021-11-13T15:30:16.263000"
+}
 ```
-    {
-        "_isoformat": "2021-11-13T15:30:16.263000"
+## Location.Object
+``` json
+{
+    "@type": "Location.Object",
+    "locname": str,
+    "longitude": double,
+    "latitude": double
+}
+```
+## DataType.Object
+``` json
+{
+    "@type": "DataType.Object",
+    "name": "datatype2",
+        "fields": {
+        "fieldname1": "str",
+        "fieldname2": "int",
+        "fieldname3": "bool",
+        "fieldname4": "location",
+        //"fieldname5": "image",
+        "fieldname6": "datetime"
     }
+}
 ```
 ## User.Object
+``` json
+{
+    "@type": "User.Preview",
+    "id": str,
+    "username": str, 
+    "name": str, 
+    "surname": str, 
+    "loc": Location.Object, 
+    "birthdate": Date.Object, 
+    "pplink": str, 
+}
 ```
-    {
-        "@type": "User.Preview",
-        "id": str,
-        "username": str, 
-        "name": str, 
-        "surname": str, 
-        "city": str, 
-        "birthdate": Date.Object, 
-        "pplink": str, 
-    }
+## Community.Object
+``` json
+{
+    "@type": "Community.Object",
+    "id": str,
+    "communityTitle": str,
+    "description": str,
+    //"moderators": [list of User.Preview],
+    "dataTypes": [list of DataType.Object],
+    "subscribers": [list of User.Preview],
+    "posts": [list of Post.Preview],
+    "creationTime": Date.Object,
+    "createdBy": User.Preview,
+}
 ```
+# View Definitions
 ## User.Preview
+``` json
+{
+    "@type": "User.Preview",
+    "id": str,
+    "username": str, 
+    "pplink": str, 
+}
 ```
-    {
-        "@type": "User.Preview",
-        "id": str,
-        "username": str, 
-        "pplink": str, 
+
+## Community.Preview
+``` json
+{
+    "CommunityTitle": str,
+    "id": str,
+    "creationTime": {
+        "_isoformat": str
+    },
+    "createdBy": User.Preview,
+    "@type": "Community.Preview"
+}
+```
+
+## Post.Preview
+``` json
+{
+    "@type": "Post.Preview",
+    "postTitle": str,
+    "id": str,
+    "postedBy": User.Preview,
+    "creationTime": {
+        "_isoformat": str
     }
+}
 ```
+
 
 # User Functionalities
 
-## View Definitions
 
 ## Update Profile
 - Url: http://localhost:8080/updateprofile
@@ -42,32 +108,21 @@
         - "email" str
         - "name": str
         - "surname": str
-        - "city": str
+        - "loc": Location.Object
         - "birthdate": ISODATE
         - "pplink": str
 
 - Response:
     - Header:
     - Body:
-        ```   
-            {
-                "@context": "https://www.w3.org/ns/activitystreams",
-                "@type": "User.UpdateProfile",
-                "@success": "True" or "False",
-                "@error": str => if @success is "False",
-            }
-        ```
-        <details>
-        <summary>Looking for an example?</summary>
-        <br>
-        <pre>
+        ``` json  
         {
             "@context": "https://www.w3.org/ns/activitystreams",
             "@type": "User.UpdateProfile",
-            "@success": "True"
+            "@success": "True" or "False",
+            "@error": str => if @success is "False",
         }
-        <pre>
-        </details>
+        ```
 
 ## Sign Up
 - Url: http://localhost:8080/signup
@@ -80,51 +135,22 @@
         - "password": str
         - "name": str
         - "surname": str
-        - "city": str
-        - "birthdate": ISODATE
-        - "pplink": str
+        - "loc": Location.Object (optional)
+        - "birthdate": ISODATE (optional)
+        - "pplink": str (optional)
 - Response:
     - Header:
     - Body:
-        ```   
-            {
-                "@context": "https://www.w3.org/ns/activitystreams",
-                "@type": "User.SignUp",
-                "@success": "True" or "False",
-                "@return": User.Object => if @success is "True",
-                "@error": str => if @success is "False",
-                "@usertoken": "xaqcxukchiavwjrb",
-
-            }
-        ```
-        <details>
-        <summary>Looking for an example?</summary>
-        <br>
-        <pre>
+        ``` json   
         {
             "@context": "https://www.w3.org/ns/activitystreams",
             "@type": "User.SignUp",
-            "@success": "True",
-            "@return": {
-                "username": "12312asdad",
-                "email": "asdasd@asdasd.com",
-                "name": "denemeisim",
-                "surname": "denemesoyyisim",
-                "birthdate": {
-                    "_isoformat": "2021-11-13T15:30:16.263000"
-                },
-                "city": "",
-                "pplink": "",
-                "subscribes": [],
-                "createdCommunities": [],
-                "posts": [],
-                "id": "61a20b7a1d423c6b62c1b172",
-                "@type": "User.Object"
-            },
-            "@usertoken": "xaqcxukchiavwjrb"
+            "@success": "True" or "False",
+            "@return": User.Object => if @success is "True",
+            "@error": str => if @success is "False",
+            "@usertoken": str,
         }
-        <pre>
-        </details>
+        ```
 
 ## Login
 - Url: http://localhost:8080/login
@@ -137,156 +163,61 @@
 - Response:
     - Header:
     - Body:
-        ```   
-            {
-                "@context": "https://www.w3.org/ns/activitystreams",
-                "@type": "User.Login",
-                "@success": "True" or "False",
-                "@usertoken": str,
-                "@return": User.Object if @success is "True",
-                "@error": str => if @success is "False",
-
-            }
-        ```
-        <details>
-        <summary>Looking for an example?</summary>
-        <br>
-        <pre>
+        ``` json   
         {
             "@context": "https://www.w3.org/ns/activitystreams",
             "@type": "User.Login",
-            "@success": "True",
-            "@return": {
-                "username": "sdA12323",
-                "id": "618ec90b00bed43ef2daf589",
-                "email": "asdasd@asda.com",
-                "@type": "User.Object"
-            },
-            "@usertoken": "ghiitmxtelzhzjow"
-        }
-        <pre>
-        </details>
+            "@success": "True" or "False",
+            "@usertoken": str,
+            "@return": User.Object if @success is "True",
+            "@error": str => if @success is "False",
 
+        }
+        ```
 
 
 ## Get My Profile
-
+- Url: http://127.0.0.1:8080/getmyprofile
+- Method: POST
 - Request:
-    - url: /getmyprofile
-    - method: POST
+    - Header:
     - Body:
         - "@usertoken": str
 
 - Response:
-    - 
-    <details>
-    <summary>Looking for an example?</summary>
-    <br>
-    <pre>
-    {
-        "@context": "https://www.w3.org/ns/activitystreams",
-        "@type": "User.GetMyProfile",
-        "@success": "True",
-        "@return": {
-            "username": "sdA12323",
-            "id": "618faf6d9ed00de04c65ab6e",
-            "email": "asdasd@asda.com",
-            "subscribers": [
-                {
-                    "CommunityTitle": "AAAAA",
-                    "id": "618fafd89ed00de04c65ab72",
-                    "creationTime": {
-                        "_isoformat": "2021-11-13T15:30:16.263000"
-                    },
-                    "createdBy": {
-                    "username": "sdA12323",
-                    "id": "618faf6d9ed00de04c65ab6e"
-                }
-            }
-            ],
-            "createdCommunities": [
-                {
-                    "communityTitle": "AAAAA",
-                    "id": "618fafd89ed00de04c65ab72"
-                }
-            ],
-            "posts": [
-                {
-                    "postTitle": "titledeneme",
-                    "id": "618faff69ed00de04c65ab73",
-                    "postedBy": {
-                        "username": "sdA12323",
-                        "id": "618faf6d9ed00de04c65ab6e"
-                    },
-                    "creationTime": {
-                        "_isoformat": "2021-11-13T15:30:46.417000"
-                    }
-                },
-                {
-                    "postTitle": "titledeneme2",
-                    "id": "618faff99ed00de04c65ab74",
-                    "postedBy": {
-                        "username": "sdA12323",
-                        "id": "618faf6d9ed00de04c65ab6e"
-                    },
-                    "creationTime": {
-                        "_isoformat": "2021-11-13T15:30:49.954000"
-                    }
-                }
-            ],
-            "@type": "User.Object"
-            }
+    - Header:
+    - Body:
+        ``` json       
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "User.GetMyProfile",
+            "@success": "True",
+            "@return": User.Object
         }
-    }
-    <pre>
-
+        ```   
 
 
 ## Get User Preview
-
+- Url: http://127.0.0.1:8080/getuserpreview
+- Method: POST
 - Request:
-    - url: /getuserpreview
-    - method: POST
+    - Header:
     - Body:
         - "userid": str
 
 - Response:
-    - 
-    <details>
-    <summary>Looking for an example?</summary>
-    <br>
-    <pre>
-    {
-        "@context": "https://www.w3.org/ns/activitystreams",
-        "@type": "User.GetPreview",
-        "@success": "True",
-        "@return": {
-            "username": "sdA12323",
-            "id": "618faf6d9ed00de04c65ab6e",
-            "@type": "User.Preview"
+    - Header:
+    - Body:
+        ``` json       
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "User.GetPreview",
+            "@success": "True",
+            "@return": User.Preview
         }
-    }
-    <pre>
-
-
-
-
+        ```  
 
 # Community Functionalities
-
-## View Definitions
-### Community.Preview
-```
-    {
-        "CommunityTitle": str,
-        "id": str,
-        "creationTime": {
-            "_isoformat": str
-        },
-        "createdBy": User.Preview,
-        "@type": "Community.Preview"
-    }
-```
 
 
 ## Create Community
@@ -302,291 +233,165 @@
 - Response:
     - Header:
     - Body:
-        ```
+        ``` json
         {
             "@context": "https://www.w3.org/ns/activitystreams",
             "@type": "Community.Create",
             "@success": "True" or "False",
-            "@return": Community Object
-            {
-                "@type": "Community.Object",
-                "id": str,
-                "communityTitle": str,
-                "description": str,
-                "moderators": [list of User.Preview],
-                "subscribers": [list of User.Preview],
-                "posts": [list of Post.Preview],
-                "creationTime": date time ("2021-11-12T22:57:25.918000" => ISO FORMAT),
-                "createdBy": User.Preview,
-
-            } => if @success is "True",
+            "@return": Community Object => if @success is "True",
             "@error": str => if @success is "False",
         }
         ```
-        <details>
-        <summary>Looking for an example?</summary>
-        <br>
-        <pre>
-        {
-            "@context": "https://www.w3.org/ns/activitystreams",
-            "@type": "Community.Create",
-            "@success": "True",
-            "@return": {
-                "communityTitle": "sdasd213123",
-                "id": "618ec91800bed43ef2daf58a",
-                "description": "asdasd",
-                "creationTime": "2021-11-12T23:05:44.524000",
-                "createdBy": {
-                    "id": "618ec90b00bed43ef2daf589",
-                    "username": "sdA12323",
-                    "@type": "User.Preview"
-                },
-                "subscribers": [],
-                "@type": "Community.Object"
-            }
-        }
-        <pre>
-        </details>
-
 
 ## Subscribe To Community
-
+- Url: http://localhost:8080/subscribetocommunity
+- Method: POST
 - Request:
-    - url: /subscribetocommunity
-    - method: POST
+    - Header:
     - Body:
         - "@usertoken": str
         - "communityId": str
 - Response:
-    - 
-    <details>
-    <summary>Looking for an example?</summary>
-    <br>
-    <pre>
-    {
-        "@context": "https://www.w3.org/ns/activitystreams",
-        "@type": "Community.SubscribeTo",
-        "@success": "True"
-    }
-    <pre>
-
-
+    - Header:
+    - Body:
+        ``` json
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "Community.SubscribeTo",
+            "@success": "True" or "False"
+        }
+        ```
 
 
 ## Unsubscribe Community
-
+- Url: http://localhost:8080/unsubscribecommunity
+- Method: POST
 - Request:
-    - url: /unsubscribecommunity
-    - method: POST
+    - Header:
     - Body:
         - "@usertoken": str
         - "communityId": str
 - Response:
-    - 
-    <details>
-    <summary>Looking for an example?</summary>
-    <br>
-    <pre>
-    {
-        "@context": "https://www.w3.org/ns/activitystreams",
-        "@type": "Community.Unsubscribe",
-        "@success": "True"
-    }
-    <pre>
-
-
+    - Header:
+    - Body:
+        ``` json
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "Community.Unsubscribe",
+            "@success": "True" or "False"
+        }
+        ```
 
 ## Get All Communities
-
+- Url: http://localhost:8080/getallcommunities
+- Method: POST
 - Request:
-    - url: /getallcommunities
-    - method: POST
+    - Header:
     - Body:
 - Response:
-    - 
-    <details>
-    <summary>Looking for an example?</summary>
-    <br>
-    <pre>
-    {
-        "@context": "https://www.w3.org/ns/activitystreams",
-        "@type": "Community.GetAll",
-        "@success": "True",
-        "@return": [
-            {
-                "CommunityTitle": "AAAAA",
-                "id": "618fafd89ed00de04c65ab72",
-                "creationTime": {
-                    "_isoformat": "2021-11-13T15:30:16.263000"
-                },
-                "createdBy": {
-                    "username": "sdA12323",
-                    "id": "618faf6d9ed00de04c65ab6e"
-                },
-                "@type": "Community.Preview"
-            }
-        ]
-    }
-    <pre>
+    - Header:
+    - Body:
+        ``` json
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "Community.GetAll",
+            "@success": "True",
+            "@return": [list of Community.Preview]
+        }
+        ```
 
 
 
 ## Get Community
-
+- Url: http://localhost:8080/getcommunity
+- Method: POST
 - Request:
-    - url: /getcommunity
-    - method: POST
+    - Header:
     - Body:
         - "communityId": str
 - Response:
-    - 
-    <details>
-    <summary>Looking for an example?</summary>
-    <br>
-    <pre>
-    {
-        "@context": "https://www.w3.org/ns/activitystreams",
-        "@type": "Community.Get",
-        "@success": "True",
-        "@return": {
-            "communityTitle": "AAAAA",
-            "id": "618fafd89ed00de04c65ab72",
-            "description": "asdasd",
-            "creationTime": {
-                "_isoformat": "2021-11-13T15:30:16.263000"
-            },
-            "createdBy": {
-                "username": "sdA12323",
-                "id": "618faf6d9ed00de04c65ab6e"
-            },
-            "subscribers": [
-                {
-                    "username": "sdA12323",
-                    "id": "618faf6d9ed00de04c65ab6e"
-                }
-            ],
-            "posts": [
-                {
-                    "postTitle": "titledeneme",
-                    "id": "618faff69ed00de04c65ab73",
-                    "postedBy": {
-                        "username": "sdA12323",
-                        "id": "618faf6d9ed00de04c65ab6e"
-                    },
-                    "creationTime": {
-                        "_isoformat": "2021-11-13T15:30:46.417000"
-                    }
-                },
-                {
-                    "postTitle": "titledeneme2",
-                    "id": "618faff99ed00de04c65ab74",
-                    "postedBy": {
-                        "username": "sdA12323",
-                        "id": "618faf6d9ed00de04c65ab6e"
-                    },
-                    "creationTime": {
-                        "_isoformat": "2021-11-13T15:30:49.954000"
-                    }
-                }
-            ],
-            "@type": "Community.Object"
+    - Header:
+    - Body:
+        ``` json
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "Community.Get",
+            "@success": "True",
+            "@return": Community.Object
         }
-    }
-    <pre>
-
-
-
+        ```
 
 
 
 
 
 ## Delete Community
-
+- Url: http://localhost:8080/deletecommunity
+- Method: POST
 - Request:
-    - url: /deletecommunity
-    - method: POST
+    - Header:
     - Body:
         - "@usertoken": str
         - "communityId": str
 - Response:
-    - 
-    <details>
-    <summary>Looking for an example?</summary>
-    <br>
-    <pre>
-    {
-        "@context": "https://www.w3.org/ns/activitystreams",
-        "@type": "Community.Delete",
-        "@success": "True"
-    }
-    <pre>
+    - Header:
+    - Body:
+        ``` json
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "Community.Delete",
+            "@success": "True" or "False"
+        }
+        ```
+
+## Create Data Type
+- Url: http://localhost:8080/createdatatype
+- Method: POST
+- Request:
+    - Header:
+    - Body:
+        - "@usertoken": str
+        - "communityId": str
+        - "datatypename": str
+        - "datatypefields": Json | example `{"a":"str","b":"int","c":"location"}`,
+
+- Response:
+    - Header:
+    - Body:
+        ``` json
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "Community.CreateDataType",
+            "@success": "True" or "False"
+        }
+        ```
 
 
 # Post Functionalities
 
-### Post.Preview
-```
-    {
-        "@type": "Post.Preview",
-        "postTitle": str,
-        "id": str,
-        "postedBy": User.Preview,
-        "creationTime": {
-            "_isoformat": str
-        }
-    }
-```
-
 ## Submit Post
-
+- Url: http://localhost:8080/submitpost
+- Method: POST
 - Request:
-    - url: /submitpost
-    - method: POST
+    - Header:
     - Body:
         - "@usertoken": str
         - "communityId": str
         - "title": str
-        - "description": str
+        - "datatypename": str
+        - "datatypevalues": Json | example => `{"a":"asdasd","b":412,"c":{ "locname": "Istanbul", "longitude": 1.5, "latitude": 1.7}}`
+
 - Response:
-    - 
-    <details>
-    <summary>Looking for an example?</summary>
-    <br>
-    <pre>
-    {
-        "@context": "https://www.w3.org/ns/activitystreams",
-        "@type": "Post.Submit",
-        "success": "True",
-        "@return": {
-            "postTitle": "titledeneme2",
-            "id": "618faff99ed00de04c65ab74",
-            "description": "descdeneme2",
-            "creationTime": {
-                "_isoformat": "2021-11-13T15:30:49.954000"
-            },
-            "postedBy": {
-                "username": "sdA12323",
-                "id": "618faf6d9ed00de04c65ab6e",
-                "@type": "User.Preview"
-            },
-            "postedAt": {
-                "CommunityTitle": "AAAAA",
-                "id": "618fafd89ed00de04c65ab72",
-                "creationTime": {
-                    "_isoformat": "2021-11-13T15:30:16.263000"
-                },
-                "createdBy": {
-                    "username": "sdA12323",
-                    "id": "618faf6d9ed00de04c65ab6e",
-                    "@type": "User.Preview"
-                },
-                "@type": "Community.Preview"
-            },
-            "@type": "Post.Object"
+    - Header:
+    - Body:
+        ``` json
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "Post.Submit",
+            "success": "True",
+            "@return": Post.Object
         }
-    }
-    <pre>
+        ```
 
 
 
@@ -594,68 +399,41 @@
 
 
 ## View Post
-
+- Url: http://localhost:8080/viewpost
+- Method: POST
 - Request:
-    - url: /viewpost
-    - method: POST
+    - Header:
     - Body:
         - "postId": str
 - Response:
-    - 
-    <details>
-    <summary>Looking for an example?</summary>
-    <br>
-    <pre>
-    {
-        "@context": "https://www.w3.org/ns/activitystreams",
-        "@type": "Post.View",
-        "success": "True",
-        "@return": {
-            "postTitle": "titledeneme2",
-            "id": "618faff99ed00de04c65ab74",
-            "description": "descdeneme2",
-            "creationTime": {
-                "_isoformat": "2021-11-13T15:30:49.954000"
-            },
-            "postedBy": {
-                "username": "sdA12323",
-                "id": "618faf6d9ed00de04c65ab6e"
-            },
-            "postedAt": {
-                "CommunityTitle": "AAAAA",
-                "id": "618fafd89ed00de04c65ab72",
-                "creationTime": {
-                    "_isoformat": "2021-11-13T15:30:16.263000"
-                },
-                "createdBy": {
-                    "username": "sdA12323",
-                    "id": "618faf6d9ed00de04c65ab6e"
-                }
-            },
-            "@type": "Post.Object"
+    - Header:
+    - Body:
+        ``` json
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "Post.View",
+            "success": "True",
+            "@return": Post.Object
         }
-    }
-    <pre>
+        ```
 
 
 
 ## Delete Post
-
+- Url: http://localhost:8080/deletepost
+- Method: POST
 - Request:
-    - url: /deletepost
-    - method: POST
+    - Header:
     - Body:
         - "@usertoken": str
         - "postId": str
 - Response:
-    - 
-    <details>
-    <summary>Looking for an example?</summary>
-    <br>
-    <pre>
-    {
-        "@context": "https://www.w3.org/ns/activitystreams",
-        "@type": "Post.Delete",
-        "success": "True"
-    }
-    <pre>
+    - Header:
+    - Body:
+        ``` json
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "Post.Delete",
+            "success": "True" or "False"
+        }
+        ```
