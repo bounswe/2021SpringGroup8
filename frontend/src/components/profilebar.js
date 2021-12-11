@@ -7,8 +7,8 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-
+import "../App.css";
+import logo from "../public-content/images/logo_t.png";
 
 
 class Profilebar extends Component{
@@ -55,11 +55,23 @@ class Profilebar extends Component{
         return (
             <Router history={history}>
                 <div>
-                    <nav className="navbar navbar-expand navbar-dark bg-primary">
-
-
+                    <nav className="navbar navbar-expand navbar-light bg-secondary">
+                        <Link to={"/"} className="navbar-brand">
+                            <img src={logo} width="150"
+                                 height="100"/>
+                        </Link>
                         {currentUser ? (
                             <div className="navbar-nav ml-auto">
+                                <li className="nav-item">
+                                    <Link to={"/communities"} className="nav-link">
+                                        Communities
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to={"/feed"} className="nav-link">
+                                        Home Feed
+                                    </Link>
+                                </li>
                                 <li className="nav-item">
                                     <Link to={"/profile"} className="nav-link">
                                         {currentUser.username}

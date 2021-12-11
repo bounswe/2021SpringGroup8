@@ -1,0 +1,288 @@
+.headerContainer {
+    --backgroundColor: #9155A7;
+    --height: 157px;
+
+    background-color: var(--backgroundColor);
+    height: var(--height);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    --textColor: white;
+    --fontSize: 34px;
+
+    color: var(--textColor);
+    font-size: var(--fontSize);
+}
+
+.carouselContainer {
+    --height: 725px;
+    --width: 100%;
+
+    height: var(--height);
+    width: var(--width);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carouselContainer > img {
+    height: 725px;
+    width: 100%;
+}
+
+.carouselContainer > h4 {
+    --textColor: blue;
+    --fontSize: 40px;
+    color: var(--textColor);
+    font-size: var(--fontSize);
+    font-family: "Hiragino Maru Gothic ProN";
+}
+
+.slide, .slideRight, .slideLeft {
+    position: absolute;
+    width: 100%;
+    height: 725px;
+}
+
+.slideRight {
+    animation: slideRight 1.0s forwards;
+}
+
+@keyframes slideRight {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+.slideLeft {
+    animation: slideLeft 1.0s forwards;
+}
+
+@keyframes slideLeft {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.carouselContainer > button {
+    border: none;
+    background-color: transparent;
+}
+
+.nextArrow, .backArrow {
+    position: absolute;
+    top: 50%;
+    z-index: 999;
+    font-size: 64px;
+}
+
+.nextArrow {
+    right: 25px;
+}
+
+.backArrow {
+    left: 25px;
+}
+
+.arrowSVG {
+    fill: #ffffff;
+    stroke: black;
+    stroke-width: 5;
+}
+
+.arrowSVG:hover {
+    fill: #9155A7;
+    stroke: #9155A7;
+}
+
+.solutionsCarouselContainer {
+    bottom: 45px;
+    width: 950px;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.solutionsInfoContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    height: 249px;
+    width: 309px;
+    background-color: #097747E6;
+    color: white;
+}
+
+.solutionsInfoContainer > h2 {
+    height: 56px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.solutionsInfoContainer > p {
+    padding-bottom: 10px;
+}
+
+.solutionsInfoContainer button {
+    background-color: #043B2426;
+    width: 107px;
+    height: 41px;
+    border: none;
+    color: white;
+    font-size: 13px;
+}
+
+.solutionsInfoContainer button:hover {
+    background-color: #0DB26B;
+}
+
+.digitalImagingSolutionsViewContainer {
+    height: 513px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.digitalImagingSolutionsViewContainer > h2 {
+    padding-bottom: 35px;
+    font-size: 34px;
+    color: #0DB26B;
+}
+
+.digitalImagingSolutionsContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 950px;
+}
+
+.digitalImagingSolutionsBoxContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 278px;
+}
+
+.digitalImagingSolutionsBoxContainer > h3 {
+    font-size: 22px;
+    color: #0DB26B;
+}
+
+.digitalImagingSolutionsBoxContainer > p {
+    text-align: center;
+    padding-bottom: 10px;
+    color: #605e5e;
+}
+
+.digitalImagingSolutionsBoxContainer button {
+    width: 107px;
+    height: 41px;
+    border: none;
+    background-color: transparent;
+    color: #9155A7;
+    font-size: 15px;
+}
+
+.digitalImagingSolutionsBoxContainer button:hover {
+    color: black;
+}
+
+.digitalImagingSolutionsIconSVGBackground {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0DB26B;
+    border-radius: 50%;
+    width: 77px;
+    height: 76px;
+}
+
+.digitalImagingSolutionsIconSVG {
+    fill: white;
+    stroke: white;
+    font-size: 46px;
+}
+
+.signUpNewsLetterViewContainer {
+    width: 100%;
+    height: 353px;
+    background-color: #F2F2F2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.signUpNewsLetterViewContainer > h2 {
+    color: #0DB26B;
+    font-size: 34px;
+}
+.signUpNewsLetterViewContainer > h5 {
+    color: #605e5e;
+    font-size: 17px;
+}
+
+.signUpNewsLetterViewContainer > p {
+    color: #605e5e;
+    padding-bottom: 20px;
+}
+
+.signUpNewsLetterFormContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 897px;
+    height: 90px;
+}
+
+.signUpNewsLetterFormContainer > button {
+    background-color: #9155A7;
+    border: none;
+    color: white;
+    font-size: 15px;
+    width: 897px;
+    height: 40px;
+}
+
+.signUpNewsLetterFormContainer > button:hover {
+    background-color: #ce72e3;
+}
+
+.signUpNewsLetterInput {
+    background-color: #FF404000;
+    border: none;
+    border-bottom: 1px solid black;
+    width: 894px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.signUpNewsLetterInput:hover, .signUpNewsLetterInput:focus {
+    border-bottom: 4px solid black;
+}
+
+.signUpNewsLetterInput::placeholder {
+    text-align: center;
+}
+
+.signUpNewsLetterInput:focus {
+    text-align: left;
+}
+

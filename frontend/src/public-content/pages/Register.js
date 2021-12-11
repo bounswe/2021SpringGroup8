@@ -2,7 +2,7 @@ import React from 'react';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import AuthService from "../../services/auth.service";
-
+import Navbar from "../Components/navbar";
 
 export default class Register extends React.Component {
     render() {
@@ -13,6 +13,8 @@ export default class Register extends React.Component {
         }
 
         return (
+            <>
+            <Navbar/>
             <Formik
                 initialValues={{
                     username: '',
@@ -167,6 +169,7 @@ export default class Register extends React.Component {
 
                 )}
             />
+            </>
         )
     }
 }

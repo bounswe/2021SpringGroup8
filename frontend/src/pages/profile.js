@@ -2,10 +2,16 @@ import React, { Component } from "react";
 import { Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import Profilebar from "../components/profilebar";
+import querystring from "querystring";
 
 
 
 class Profile extends Component {
+
+    constructor(props) {
+        super(props);
+
+    }
 
 
 
@@ -40,9 +46,11 @@ class Profile extends Component {
                     <p>
                         <strong>City:</strong> {currentUser.city}
                     </p>
+
                     <p>
                         <strong>Birth Date:</strong> {new Date(currentUser.birthdate._isoformat).toLocaleDateString()}
                     </p>
+
                     <p>
                         <strong>Profile Picture:</strong> {currentUser.pplink}
                     </p>
