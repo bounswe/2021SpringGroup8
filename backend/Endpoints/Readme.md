@@ -18,7 +18,7 @@
 ``` json
 {
     "@type": "DataType.Object",
-    "name": "datatype2",
+    "name": str,
         "fields": {
         "fieldname1": "str",
         "fieldname2": "int",
