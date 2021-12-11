@@ -176,16 +176,19 @@ class DatabaseManager:
         else:
             return False
 
-    def create_dataType(self, dataTypeDict, communityPreview):
+    def create_dataType(self, name, dataTypeFields, communityPreview):
         communityId = communityPreview["id"]
-        dataTypeName = dataTypeDict["name"]
+        datatype = {
+        "name": name,
+        "fields": dataTypeFields
+    }
         community = self.get_specific_community(communityId)
-        for dataType in community["dataTypes"]:
-            if dataType["name"] == dataTypeName:
+        for DT in community["dataTypes"]:
+            if DT["name"] == name:
                 return False
         self.communityCollection.update_one( 
         { "_id" : ObjectId(communityId)},
-        { "$push": { "dataTypes": self.get_post_preview(dataTypeDict)}}
+        { "$push": { "dataTypes": self.get_post_preview(datatype)}}
         )
         return True
 
