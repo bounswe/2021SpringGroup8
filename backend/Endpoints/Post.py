@@ -41,7 +41,7 @@ def Submit(manager : ServerManager, userid, params):
         return SetError(response, "Community doesn't exist!")
     
     if manager.DatabaseManager.is_subscribed(userid, communityId) == False:
-        return SetError(response, "Can't send post!")
+        return SetError(response, "Submitting post requires subsciption to the community!")
 
     datatype = manager.DatabaseManager.find_dataType(datatypename, communitypreview)
 
