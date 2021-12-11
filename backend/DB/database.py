@@ -215,8 +215,7 @@ class DatabaseManager:
         post_dict["postedBy"] = user_preview
         x = self.postCollection.insert_one(post_dict)
         post = self.postCollection.find_one({"_id": x.inserted_id})
-        post_return_dict = {"postTitle": post_title, "id": str(post["_id"]), "description": post["description"],
-        "creationTime": post["creationTime"], "postedBy": post["postedBy"], "postedAt": post["postedAt"]}
+        post_return_dict = post
         self.communityCollection.update_one( 
         { "_id" : ObjectId(community_preview["id"])},
         { "$push": { "posts": self.get_post_preview(str(post["_id"]))}}
