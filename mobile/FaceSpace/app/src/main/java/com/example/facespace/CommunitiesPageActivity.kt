@@ -3,7 +3,6 @@ package com.example.facespace
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -13,13 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.facespaceextenstion.Data
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.activity_communities_page.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class CommunitiesPageActivity : AppCompatActivity() {
     private lateinit var commAdapter: CommunityAdapter
@@ -51,6 +48,8 @@ class CommunitiesPageActivity : AppCompatActivity() {
         btnAdd.bringToFront()
         btnGoHome.bringToFront()
         btnLogout.bringToFront()
+
+
         btnRefresh.setOnClickListener {
             commAdapter.deleteAll()
             getCommunities()
@@ -58,7 +57,6 @@ class CommunitiesPageActivity : AppCompatActivity() {
 
         btnGoHome.setOnClickListener {
             val intent = Intent(this, HomePageActivity::class.java)
-            intent.putExtra("username", Data().getUsername())
             startActivity(intent)
         }
 
@@ -76,11 +74,11 @@ class CommunitiesPageActivity : AppCompatActivity() {
 
     }
 
-    fun getCommunities(){
+    private fun getCommunities(){
 
         // val allComm: MutableList<Community>
 
-        val url = "http://3.144.184.237:8080/getallcommunities"
+        val url = Data().getUrl("getallcommunities")
         var error: JSONObject? = null
 
         val stringRequest: StringRequest = @RequiresApi(Build.VERSION_CODES.O)
@@ -117,17 +115,19 @@ class CommunitiesPageActivity : AppCompatActivity() {
     fun helper(list: JSONArray) {
         print(list.toString())
         for (i in 0 until list.length()) {
-            val current = list.getJSONObject(i)
-            val commJson = JSONObject(current.toString())
+            // val current = list.getJSONObject(i)
+            // val commJson = JSONObject(current.toString())
+            val commJson = list.getJSONObject(i)
             val title = commJson["CommunityTitle"]
             val id = commJson["id"]
-            val desc = "yalan"
+            val desc = commJson["description"]
             val by = JSONObject(commJson["createdBy"].toString())["username"]
             var since = JSONObject(commJson["creationTime"].toString())["_isoformat"]
             val time:String = since.toString()
             // val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             // val formatted = since.format(formatter) as String
-            val comm = Community(title as String, by.toString(), desc,false, time.substring(0,10), id.toString())
+            val comm = Community(title.toString(), by.toString(), desc.toString(),null,
+                null,null, time.substring(0,10), id.toString())
             commAdapter.addComm(comm)
 
         }

@@ -1,11 +1,14 @@
 package com.example.facespace
 
-data class Community
-    (
+import org.json.JSONArray
+
+data class Community(
     val title: String,
     val by: String,
     val desc: String,
-    var isJoined: Boolean = false,
+    val subscribers: JSONArray?,
+    val posts: JSONArray?,
+    val dataTypes: JSONArray?,
     var since:String,
     var id: String
     )
