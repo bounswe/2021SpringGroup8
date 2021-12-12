@@ -12,16 +12,14 @@ import html
 import hashlib
 import re
 from datetime import date, datetime
- 
-EmailRegex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+from .ObjectChecker import CheckLocation
+from .ObjectChecker import CheckEmail
+from .ObjectChecker import CheckPassword
 
 def SetError(response, err):
     response["@success"] = "False"
     response["@error"] = err
     return response
-
-def CheckEmail(email):
-    return re.fullmatch(EmailRegex, email)
 
 def Hash(password):
     return hashlib.sha256(password.encode('utf-8')).hexdigest()
@@ -65,28 +63,27 @@ def SignUp(manager : ServerManager, params):
     password = params["password"][0]
     name = params["name"][0]
     surname = params["surname"][0]
-    birthdate = datetime.fromisoformat(params["birthdate"][0])
+    birthdate = datetime.fromisoformat(params["birthdate"][0]) if "birthdate" in params else None
     
-    city = params["city"][0] if "city" in params else ""
-    pplink = params["pplink"][0] if "pplink" in params else ""
+    loc = json.loads(params["loc"][0]) if "loc" in params else None
+    pplink = params["pplink"][0] if "pplink" in params else None
 
     hashedpassword = Hash(password)
     
-    if not (len(password) >= 8 and len(password) <= 16):
-        response["@success"] = "False"
-        response["@error"] = "Password Length must be >= 8, <= 16!"
-        return response
+    valid, message = CheckLocation(loc)
 
-    if sum(1 for c in password if c.isupper()) == 0:
-        response["@success"] = "False"
-        response["@error"] = "Password must contain at least 1 upper case letter!"
-        return response
+    if loc != None and not valid:
+        return SetError(response, message)
 
-    if not CheckEmail(email):
-        response["@success"] = "False"
-        response["@error"] = "Email is not valid!"
-        return response
+    valid, message = CheckPassword(password)
+   
+    if not valid:
+        return SetError(response, message)
 
+    valid, message = CheckEmail(email)
+    
+    if not valid:
+        return SetError(response, message)
 
     dbresult = manager.DatabaseManager.signup(
         {
@@ -96,7 +93,7 @@ def SignUp(manager : ServerManager, params):
             "name": name,
             "surname": surname,
             "birthdate": birthdate,
-            "city": city,
+            "loc": loc,
             "pplink": pplink,
         }
     )
@@ -165,14 +162,25 @@ def UpdateProfile(manager : ServerManager, userid, params):
     
     if "email" in params:
         update_d["email"] = params["email"][0]
+            
+        valid, message = CheckEmail(update_d["email"])
+        
+        if not valid:
+            return SetError(response, message)
     if "name" in params:
         update_d["name"] = params["name"][0]
     if "surname" in params:
         update_d["surname"] = params["surname"][0]
     if "birthdate" in params:
         update_d["birthdate"] = datetime.fromisoformat(params["birthdate"][0]) 
-    if "city" in params:
-        update_d["city"] = params["city"][0]
+    if "loc" in params:
+        update_d["loc"] = json.loads(params["loc"][0])
+         
+        valid, message = CheckLocation(update_d["loc"])
+
+        if not valid:
+            return SetError(response, message)
+
     if "pplink" in params:
         update_d["pplink"] = params["pplink"][0]
 

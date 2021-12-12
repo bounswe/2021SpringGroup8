@@ -8,6 +8,7 @@ from DB.database import DatabaseManager
 import Endpoints
 from ServerManager import ServerManager 
 import ProcessRequests
+from ProcessRequests import WriteJSON
 import traceback
 
 USE_HTTPS = False
@@ -66,8 +67,8 @@ class Handler(BaseHTTPRequestHandler):
     <label for="surname">surname:</label><br>
     <input type="text" id="surname" name="surname"><br>
 
-    <label for="city">city:</label><br>
-    <input type="text" id="city" name="city"><br>
+    <label for="loc">loc:</label><br>
+    <input type="text" id="loc" name="loc"><br>
 
     <label for="birthdate">birthdate:</label><br>
     <input type="text" id="birthdate" name="birthdate"><br>
@@ -96,8 +97,8 @@ class Handler(BaseHTTPRequestHandler):
     <label for="surname">surname:</label><br>
     <input type="text" id="surname" name="surname"><br>
 
-    <label for="city">city:</label><br>
-    <input type="text" id="city" name="city"><br>
+    <label for="loc">loc:</label><br>
+    <input type="text" id="loc" name="loc"><br>
 
     <label for="birthdate">birthdate:</label><br>
     <input type="text" id="birthdate" name="birthdate"><br>
@@ -204,8 +205,11 @@ class Handler(BaseHTTPRequestHandler):
         <label for="title">title:</label><br>
         <input type="text" id="title" name="title"><br>
 
-        <label for="description">description:</label><br>
-        <input type="text" id="description" name="description"><br>
+        <label for="datatypename">datatypename:</label><br>
+        <input type="text" id="datatypename" name="datatypename"><br>
+
+        <label for="datatypevalues">datatypevalues:</label><br>
+        <input type="text" id="datatypevalues" name="datatypevalues"><br>
 
         <input type="submit" value="Submit">
         </form>
@@ -253,6 +257,29 @@ class Handler(BaseHTTPRequestHandler):
         </form>
     </html>
             """)
+        
+        elif self.path == "/createdatatype":
+            self.wfile.write(b"""
+    <html>
+        <form action="/createdatatype" method="POST">
+        
+        <label for="@usertoken">@usertoken:</label><br>
+        <input type="text" id="@usertoken" name="@usertoken"><br>
+
+        <label for="communityId">communityId:</label><br>
+        <input type="text" id="communityId" name="communityId"><br>
+        
+        <label for="datatypename">datatypename:</label><br>
+        <input type="text" id="datatypename" name="datatypename"><br>
+
+        <label for="datatypefields">datatypefields:</label><br>
+        <input type="text" id="datatypefields" name="datatypefields"><br>
+    
+        <input type="submit" value="Submit">
+        </form>
+    </html>
+            """)
+        
 
     def do_POST(self):
         try:
@@ -260,7 +287,15 @@ class Handler(BaseHTTPRequestHandler):
             ProcessRequests.ProcessRequest(self, manager)
         except Exception as e:
             PrintTraceback(e)
-            self.send_response(404)
+            self.send_response(200)
+            WriteJSON(self, 
+                {
+                    "@context": "https://www.w3.org/ns/activitystreams",
+                    "@type": "NoType",
+                    "@success": "False",
+                    "@error":  "Error! " + str(e),
+                }
+            )
 
 class ThreadingSimpleServer(ThreadingMixIn, HTTPServer):
         pass

@@ -11,6 +11,36 @@ import hashlib
 import re
 from datetime import datetime
 
+POST_FIELD_TYPES = ["str", "int", "bool", "location", "image", "datetime"]
+
+def CreateDataType(manager : ServerManager, userid, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "Community.CreateDataType"
+
+    communityId = params["communityId"][0]
+
+    communitypreview = manager.DatabaseManager.get_community_preview(communityId)
+
+    if communitypreview == False:
+        return SetError(response, "Invalid community id!")
+
+    datatypefields = json.loads(params["datatypefields"][0])
+    datatypename = params["datatypename"][0]
+
+    for field in datatypefields:
+        field_val = str(datatypefields[field])
+        if not field_val in POST_FIELD_TYPES:
+            return SetError(response, "Invalid field type!")
+
+    dbres = manager.DatabaseManager.create_dataType(datatypename, datatypefields, communitypreview)
+
+    if dbres == False:
+        return SetError(response, "Couldn't add data type!")
+
+    response["@success"] = "True"
+    return response
+
 def CreateCommunity(manager : ServerManager, userid, params):
     response = {}
     response["@context"] = "https://www.w3.org/ns/activitystreams"
