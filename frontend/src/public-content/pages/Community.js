@@ -4,7 +4,6 @@ import UserCommunityService from "../../services/user-community.service";
 import UserService from "../../services/user.service";
 import AuthService from "../../services/auth.service"
 import {withRouter} from 'react-router-dom';
-import CommunityHeader from "../Components/CommunityHeader";
 import {Avatar, Container, Grid} from "@mui/material";
 import CommunityAbout from "../Components/CommunityAbout";
 import CommunityPosts from "../Components/CommunityPosts";
@@ -133,11 +132,9 @@ class Community extends Component {
     }
 
     render() {
-        const {posts, subscribers, creator, description, communityTitle, subscribed, variant, text} = this.state
+        const {posts, creator, description, communityTitle, variant, text} = this.state
         return (
             <Container maxWidth="md">
-                {/*<CommunityHeader id={this.props.match.params.id} title={communityTitle} subscribed={subscribed}
-                                 subscribers={subscribers}/>*/}
                 <Toolbar sx={{height: "100px", borderBottom: 1, borderColor: 'divider'}}>
                     <Avatar alt={communityTitle} src="https://picsum.photos/200/200" sx={{width: 100, height: 100}}/>
                     <div style={{marginLeft: 10}}>
