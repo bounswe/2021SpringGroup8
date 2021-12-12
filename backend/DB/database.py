@@ -217,7 +217,7 @@ class DatabaseManager:
         post = self.postCollection.find_one({"_id": x.inserted_id})
         self.communityCollection.update_one( 
         { "_id" : ObjectId(community_preview["id"])},
-        { "$push": { "posts": self.get_post_preview(str(post["_id"]))}}
+        { "$push": { "posts": self.get_specific_post(str(post["_id"]))}}
         )
         self.userCollection.update_one( 
         { "_id" : ObjectId(user_preview["id"])},
