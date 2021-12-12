@@ -75,11 +75,14 @@ class LoginPageActivity : AppCompatActivity() {
                         val token = jsonObject["@usertoken"]
                         val returns = JSONObject(jsonObject["@return"].toString())
                         val dob = (JSONObject(returns["birthdate"].toString()))["_isoformat"]
+                        val loc = JSONObject(returns["loc"].toString())
                         Toast.makeText(this, "$url login Successful. Your Token is : $token", Toast.LENGTH_SHORT).show()
                         Data().setToken(token as String)
                         Data().setAll(returns["username"].toString(), returns["email"].toString(),
                             returns["name"].toString(), returns["surname"].toString(),
-                            dob.toString().substring(0,10), returns["city"].toString(), returns["pplink"].toString(), )
+                            dob.toString().substring(0,10), loc["locname"].toString(), returns["pplink"].toString(),
+                            loc["longitude"] as Double, loc["latitude"] as Double
+                        )
                         val intent = Intent(this, HomePageActivity::class.java)
                         intent.putExtra("username", username)
                         startActivity(intent)

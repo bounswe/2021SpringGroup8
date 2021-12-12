@@ -170,7 +170,8 @@
             android:layout_marginTop="15dp"
             android:backgroundTint="@color/red"
             android:text="Select City"
-            app:icon="@android:drawable/ic_dialog_map"
+            android:drawableStart="@android:drawable/ic_dialog_map"
+            android:drawablePadding="5dp"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="17sp"
@@ -245,7 +246,8 @@
             android:text="@string/KVKK"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputPPLink"
-            />
+            android:clickable="true"
+            android:focusable="true" />
 
         <Button
             android:id="@+id/btnSignUp"
@@ -264,7 +266,7 @@
         <TextView
             android:id="@+id/textView9"
             android:layout_width="150dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/white"
             android:gravity="center"
@@ -280,7 +282,7 @@
         <Button
             android:id="@+id/btnGoSigninPage"
             android:layout_width="150dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:backgroundTint="@color/white"

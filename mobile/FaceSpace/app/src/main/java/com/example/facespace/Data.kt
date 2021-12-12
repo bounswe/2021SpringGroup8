@@ -1,5 +1,7 @@
 package com.example.facespaceextenstion
 
+import com.example.facespace.Location
+
 class Data {
 
     companion object {
@@ -10,6 +12,8 @@ class Data {
         private var surname = ""
         private var birthdate = ""
         private var city = ""
+        private var longitude = 0.0
+        private var latitude = 0.0
         private var pplink = ""
         private var token = ""
         private var currCommunityId = ""
@@ -17,13 +21,15 @@ class Data {
         private var currCommunityDesc = ""
         private var currCommunityDate = ""
         private var currCommunityCreator = ""
+
     }
     fun getUrl(extension:String): String {
         return url+extension
     }
 
     fun setAll(newUsername: String, newEmail:String, newName:String,
-               newSurname:String, newBirth:String, newCity:String, newPPLink:String ) {
+               newSurname:String, newBirth:String, newCity:String, newPPLink:String,
+                newLong: Double, newLat: Double) {
         username = newUsername
         email = newEmail
         name = newName
@@ -31,6 +37,8 @@ class Data {
         birthdate = newBirth
         city = newCity
         pplink = newPPLink
+        longitude = newLong
+        latitude = newLat
 
     }
 
@@ -54,7 +62,8 @@ class Data {
     }
 
     fun resetAll() {
-        setAll("","","","","","","")
+        setAll("","","","","",
+            "","", 0.0, 0.0)
     }
 
     fun getName(): String {
@@ -100,5 +109,9 @@ class Data {
         infos["date"] = currCommunityDate
 
         return infos
+    }
+
+    fun getLoc(): Location {
+        return Location(city, longitude, latitude)
     }
 }

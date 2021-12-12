@@ -24,6 +24,9 @@ import com.example.facespaceextenstion.Data
 
 class SignUpPageActivity : AppCompatActivity() {
 
+    var lon: Double = 0.0
+    var lat: Double = 0.0
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,7 +123,13 @@ class SignUpPageActivity : AppCompatActivity() {
                 params["surname"] = surname
                 params["birthdate"] = date
                 params["pplink"] = pplink
-                params["city"] = city
+                var loc = JSONObject()
+                loc.put("locname", city)
+                loc.put("longitude", lon)
+                loc.put("latitude", lat)
+
+
+                params["loc"] = loc.toString()
 
 
                 var error: JSONObject? = null
@@ -134,7 +143,7 @@ class SignUpPageActivity : AppCompatActivity() {
                             val id = ((jsonObject["@return"]) as JSONObject)["id"]
                             Data().setUsername(username)
                             Data().setToken((jsonObject["@usertoken"]).toString())
-                            Toast.makeText(this, "Signup Successful. Your id is : $id", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Signup Successful. \n ${jsonObject.toString()}", Toast.LENGTH_LONG).show()
                             val intent = Intent(this, HomePageActivity::class.java)
                             intent.putExtra("username", username)
                             startActivity(intent)
@@ -165,8 +174,9 @@ class SignUpPageActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            var city:String = "ali"
-            city = data?.getStringExtra("city").toString()
+            val city: String = data?.getStringExtra("city").toString()
+            lon = data?.getDoubleExtra("lon", 0.0)!!
+            lat = data.getDoubleExtra("lat", 0.0)
             Toast.makeText(this, city,Toast.LENGTH_SHORT).show()
             val cityTV = findViewById<TextView>(R.id.City)
             cityTV.text = city

@@ -1,6 +1,7 @@
 package com.example.facespace
 
 import android.content.Intent
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -17,6 +18,8 @@ class ProfilePage : AppCompatActivity() {
         supportActionBar?.hide()
         val btnGohome = findViewById<Button>(R.id.btnBackHome)
         val editProfile = findViewById<ImageView>(R.id.btnEdit)
+
+        val btnMaps = findViewById<ImageView>(R.id.imageView6)
 
         val tvusername = findViewById<TextView>(R.id.tvUsername)
         val tvname = findViewById<TextView>(R.id.tvName)
@@ -43,6 +46,14 @@ class ProfilePage : AppCompatActivity() {
 
         btnEdit.setOnClickListener{
             Toast.makeText(this,"This is still under implementation", Toast.LENGTH_SHORT).show()
+        }
+
+        btnMaps.setOnClickListener {
+            val intent = Intent(this, MapsActivity::class.java)
+            val loc:Location = Data().getLoc()
+            intent.putExtra("lon", loc.longitude)
+            intent.putExtra("lat", loc.latitude)
+            startActivityForResult(intent, 2)
         }
     }
 }
