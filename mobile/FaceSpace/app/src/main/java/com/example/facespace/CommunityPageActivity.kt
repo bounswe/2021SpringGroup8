@@ -25,6 +25,7 @@ class CommunityPageActivity : AppCompatActivity() {
         // var value: Serializable = extras?.
         val intent = intent
         val infos = intent.getSerializableExtra("keys") as HashMap<*, *>?
+        val res = intent.getStringExtra("result")
         infos!!["key"]?.let { Log.v("HashMapTest", it as String) }
 
         val titleTV = findViewById<TextView>(R.id.communityTitle)
@@ -38,6 +39,12 @@ class CommunityPageActivity : AppCompatActivity() {
         descTV.text = infos["desc"].toString()
         byTV.text = infos["by"].toString()
         dateTV.text = infos["date"].toString()
+
+        val resJson = JSONObject(res)
+        val posts = JSONArray(resJson["posts"].toString())
+        Toast.makeText(this, posts.toString(), Toast.LENGTH_LONG).show()
+
+        // From here you continue from here to list posts previews
 
         // Toast.makeText(this, "magam be", Toast.LENGTH_LONG).show()
     }

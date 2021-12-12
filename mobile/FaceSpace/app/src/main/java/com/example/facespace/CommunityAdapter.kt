@@ -151,6 +151,7 @@ class CommunityAdapter (
         Toast.makeText(mContext,"helalsfsf", Toast.LENGTH_SHORT).show()
         val intent: Intent = Intent(mContext, CommunityPageActivity::class.java)
         intent.putExtra("keys", infos as Serializable)
+        intent.putExtra("result", res.toString())
         mContext.startActivity(intent)
 
     }
