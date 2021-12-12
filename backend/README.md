@@ -21,8 +21,8 @@ Used mongoDB framework! Database is online and there is no need for specific ins
     - DB
       - database.py -> Database functionalities implemented
     - Endpoints
-      - User.py -> User endpoints implemented
-      - Post.py -> Post endpoints implemented
       - Community.py -> Community endpoints implemented
+      - ObjectChecker.py -> Checking Validity of Objects
+      - Post.py -> Post endpoints implemented
+      - User.py -> User endpoints implemented
       - Readme.md -> Endpoint documentation
-  
