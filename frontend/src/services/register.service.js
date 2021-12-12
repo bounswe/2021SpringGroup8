@@ -1,7 +1,7 @@
 import axios from "axios";
 import querystring from "querystring";
 
-const API_URL = "http://localhost:8080/";
+const API_URL = "http://3.145.120.66:8080/";
 
 class RegisterService {
     login(username, password) {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
@@ -10,11 +10,18 @@ import userCommunityService from "../../services/user-community.service";
 
 function CommunityHeader(props) {
 
-    const {title, id, subscribed} = props;
+    const {title, id, subscribed,  subscribers} = props;
+    let subscribedlocal = false
     const initialState = {
         variant: subscribed ? "outlined" : "contained",
         text: subscribed ? "Unsubscribe" : "Subscribe"
     }
+    useEffect(() => {
+        setSubs(subscribed)
+        setVariant((subs ? "outlined" : "contained"))
+        setText((subs ? "Unsubscribe" : "Subscribe"))
+    })
+
     const [variant, setVariant] = useState(initialState.variant);
     const [subs, setSubs] = useState(subscribed);
     const [text, setText] = useState(initialState.text);
@@ -24,17 +31,37 @@ function CommunityHeader(props) {
     );
 
     function subscribe() {
-        userCommunityService.subscribeCommunity(id).then(response => {
-            if (response.data['@success'] === "True") {
-                setSubs(response.data['@success'])
-                setVariant((subs ? "outlined" : "contained"))
-                setText((subs ? "Unsubscribe" : "Subscribe"))
-            } else {
-                alert(response.data['@error'])
-            }
-        }).catch(error => {
-            console.log(error);
-        });
+        if(subs) {
+            userCommunityService.unsubscribeCommunity(id).then(response => {
+                console.log(response)
+                if (response.data['@success'] === "True") {
+                    setSubs(false)
+                    setVariant((subs ? "outlined" : "contained"))
+                    setText((subs ? "Unsubscribe" : "Subscribe"))
+                    alert('unsubscribed')
+                } else {
+                    console.log(response.data['@error'])
+                    alert(response.data['@error'])
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+        }else {
+            userCommunityService.subscribeCommunity(id).then(response => {
+                console.log(response.data)
+                if (response.data['@success'] === "True") {
+                    setSubs(true)
+                    setVariant((subs ? "outlined" : "contained"))
+                    setText((subs ? "Unsubscribe" : "Subscribe"))
+                    alert('subscribed')
+                } else {
+                    console.log(response.data['@error'])
+                    alert(response.data['@error'])
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+        }
     }
 
     return (
