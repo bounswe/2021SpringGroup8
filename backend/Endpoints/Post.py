@@ -12,6 +12,7 @@ import html
 import hashlib
 import re
 from datetime import date, datetime
+from .ObjectChecker import CheckLocation
 
 def SetError(response, err):
     response["@success"] = "False"
@@ -26,7 +27,8 @@ def Submit(manager : ServerManager, userid, params):
 
     communityId = params["communityId"][0]
     title = params["title"][0]
-    description = params["description"][0]
+    datatypename = params["datatypename"][0]
+    datatypevalues = json.loads(params["datatypevalues"][0])
     
     userpreview = manager.DatabaseManager.get_user_preview(userid)
     
@@ -39,12 +41,55 @@ def Submit(manager : ServerManager, userid, params):
         return SetError(response, "Community doesn't exist!")
     
     if manager.DatabaseManager.is_subscribed(userid, communityId) == False:
-        return SetError(response, "Can't send post!")
+        return SetError(response, "Submitting post requires subsciption to the community!")
+
+    datatype = manager.DatabaseManager.find_dataType(datatypename, communitypreview)
+
+    if datatype == False:
+        return SetError(response, "Data Type doesn't exist!")
+    
+    #check if fields are correct
+    #convert all field values to their corresponding objects
+
+    if len(datatypevalues) != len(datatype["fields"]):
+        return SetError(response, "Params don't matches with the dataype " +  datatype["name"] + "}")
+    for fieldname in datatype["fields"]:
+        if not fieldname in datatypevalues:
+            return SetError(response, f"Data Type doesn't contain {fieldname} field!")
+        
+        #int str datetime
+        fieldtype = datatype["fields"][fieldname]
+        fieldval = datatypevalues[fieldname]
+
+        realfieldval = None
+
+        try:
+            if fieldtype == "int":
+                realfieldval = int(str(fieldval))
+            elif fieldtype == "str":
+                realfieldval = str(fieldval)
+            elif fieldtype == "datetime":
+                realfieldval = datetime.fromisoformat(str(fieldval))
+            elif fieldtype == "bool":
+                realfieldval = bool(str(fieldval))
+            elif fieldtype == "location":
+                valid, message = CheckLocation(fieldval)
+                if valid:
+                    realfieldval = fieldval
+        except:
+            pass
+        
+        if realfieldval == None:
+            return SetError(response, f"Unimplemented field type {fieldtype} or wrong field value {str(fieldval)}!")
+
+        datatypevalues[fieldname] = realfieldval
+        
 
     post_dic = \
     {
         "postTitle": title,
-        "description": description,
+        "dataTypeName": datatypename,
+        "fieldValues": datatypevalues,
         "creationTime": datetime.now(),
     }
 

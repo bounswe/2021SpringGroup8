@@ -43,5 +43,9 @@
     <string name="log_out">Log Out</string>
     <string name="facesapce">Facesapce</string>
     <string name="back_to_n_home">Back to \n home</string>
+<<<<<<< HEAD
     <string name="create_post">New Post</string>
 </resources>
+=======
+</resources>
+>>>>>>> 98e7128ea7b8e9fbb696d31b8e80e09e8a78e2f3

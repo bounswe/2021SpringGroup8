@@ -2,7 +2,7 @@ import React from 'react';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import AuthService from "../../services/auth.service";
-
+import Navbar from "../Components/navbar";
 
 export default class Register extends React.Component {
     render() {
@@ -13,15 +13,23 @@ export default class Register extends React.Component {
         }
 
         return (
+            <>
+            <Navbar/>
             <Formik
                 initialValues={{
                     username: '',
                     email: '',
                     password: '',
+                    name: '',
+                    surname: ''
                 }}
                 validationSchema={Yup.object().shape({
                     username: Yup.string()
-                        .required('Last Name is required'),
+                        .required('Username is required'),
+                    name: Yup.string()
+                        .required('Name is required'),
+                    surname: Yup.string()
+                        .required('Surname is required'),
                     email: Yup.string()
                         .email('Email is invalid')
                         .required('Email is required'),
@@ -34,12 +42,19 @@ export default class Register extends React.Component {
                     const username = values.username;
                     const email = values.email;
                     const password = values.password;
+                    const name = values.name;
+                    const surname = values.surname;
+                    const birthdate = values.birthdate;
+                    console.log(birthdate)
 
                     AuthService
                         .register(
                             username,
                             email,
-                            password
+                            password,
+                            name,
+                            surname,
+                            birthdate
                         )
                         .then(
                             response => {
@@ -70,7 +85,43 @@ export default class Register extends React.Component {
 
                         <div className="card card-container">
                             <form onSubmit={handleSubmit}>
-                                <label htmlFor="email">Username</label>
+                                <label htmlFor="name">Name</label>
+                                <input
+                                    name="name"
+                                    type="text"
+                                    placeholder="Enter your name"
+                                    value={values.name}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                />
+                                {errors.name && touched.name && (
+                                    <div className="input-feedback" style={{marginTop: 10}}>{errors.name}</div>
+                                )}
+                                <label htmlFor="surname">Surname</label>
+                                <input
+                                    name="surname"
+                                    type="text"
+                                    placeholder="Enter your surname"
+                                    value={values.surname}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                />
+                                {errors.surname && touched.surname && (
+                                    <div className="input-feedback">{errors.surname}</div>
+                                )}
+                                <label htmlFor="birthdate">Birth Date</label>
+                                <input
+                                    name="birthdate"
+                                    type="date"
+                                    placeholder="Enter your birthdate"
+                                    value={values.birthdate}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                />
+                                {errors.surname && touched.surname && (
+                                    <div className="input-feedback">{errors.surname}</div>
+                                )}
+                                <label htmlFor="username">Username</label>
                                 <input
                                     name="username"
                                     type="text"
@@ -79,6 +130,9 @@ export default class Register extends React.Component {
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                 />
+                                {errors.username && touched.username && (
+                                    <div className="input-feedback">{errors.username}</div>
+                                )}
                                 <label htmlFor="email">Email</label>
                                 <input
                                     name="email"
@@ -115,6 +169,7 @@ export default class Register extends React.Component {
 
                 )}
             />
+            </>
         )
     }
 }

@@ -32,7 +32,7 @@
             android:id="@+id/btnRefresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
+            android:layout_marginStart="60dp"
             android:backgroundTint="@color/white"
             android:clickable="true"
             android:focusable="true"
@@ -65,7 +65,7 @@
             android:id="@+id/btnGoHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="30dp"
             android:backgroundTint="@color/white"
             android:clickable="true"
             app:borderWidth="0dp"
@@ -80,8 +80,12 @@
             android:id="@+id/btnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_marginStart="42dp"
             android:layout_marginEnd="20dp"
+=======
+            android:layout_marginEnd="30dp"
+>>>>>>> 98e7128ea7b8e9fbb696d31b8e80e09e8a78e2f3
             android:backgroundTint="@color/white"
             android:clickable="true"
             app:borderWidth="0dp"
@@ -97,8 +101,12 @@
             android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_marginStart="25dp"
             android:layout_marginBottom="8dp"
+=======
+            android:layout_marginStart="30dp"
+>>>>>>> 98e7128ea7b8e9fbb696d31b8e80e09e8a78e2f3
             android:text="Home"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,8 +116,12 @@
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_marginStart="60dp"
             android:layout_marginBottom="8dp"
+=======
+            android:layout_marginStart="57dp"
+>>>>>>> 98e7128ea7b8e9fbb696d31b8e80e09e8a78e2f3
             android:text="Refresh"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView11"
@@ -131,6 +143,7 @@
             android:id="@+id/textView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_marginStart="42dp"
             android:layout_marginBottom="8dp"
             android:text="Logout"
@@ -138,6 +151,13 @@
             app:layout_anchorGravity="bottom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView19"
+=======
+            android:layout_marginEnd="25dp"
+            android:text="Logout"
+            app:layout_anchor="@id/btnLogout"
+            app:layout_anchorGravity="bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+>>>>>>> 98e7128ea7b8e9fbb696d31b8e80e09e8a78e2f3
             app:layout_constraintTop_toBottomOf="@+id/btnLogout" />
 
 

@@ -6,6 +6,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { connect } from "react-redux";
 import {login} from "../../actions/register";
+import Navbar from "../Components/navbar";
 
 
 const required = (value) => {
@@ -85,6 +86,7 @@ class Login extends Component {
         return (
 
             <>
+                <Navbar/>
 
                 <div className="col-md-12">
 

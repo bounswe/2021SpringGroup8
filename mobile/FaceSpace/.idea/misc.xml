@@ -6,8 +6,15 @@
         <entry key="../../../../../../layout/custom_preview.xml" value="0.12552083333333333" />
         <entry key="app/src/main/res/drawable-v24/aqua_background.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.371875" />
+<<<<<<< HEAD
         <entry key="app/src/main/res/drawable/halfircle.xml" value="0.1265625" />
+=======
+        <entry key="app/src/main/res/drawable/circle.xml" value="0.25885416666666666" />
+        <entry key="app/src/main/res/drawable/custom_styles.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/halfircle.xml" value="0.2640625" />
+>>>>>>> 98e7128ea7b8e9fbb696d31b8e80e09e8a78e2f3
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/img.xml" value="0.25885416666666666" />
         <entry key="app/src/main/res/drawable/round_button.xml" value="0.20677083333333332" />
         <entry key="app/src/main/res/drawable/round_corners.xml" value="0.371875" />
         <entry key="app/src/main/res/layout-v23/community_item.xml" value="0.29270833333333335" />
@@ -22,10 +29,17 @@
         <entry key="app/src/main/res/layout/activity_login_page.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.19791666666666666" />
+<<<<<<< HEAD
         <entry key="app/src/main/res/layout/activity_post.xml" value="0.22268907563025211" />
         <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.19157608695652173" />
         <entry key="app/src/main/res/layout/activity_sign_up_page.xml" value="0.33" />
         <entry key="app/src/main/res/layout/community_item.xml" value="0.375" />
+=======
+        <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_sign_up_page.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/community_item.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/custom_styles.xml" value="0.35572916666666665" />
+>>>>>>> 98e7128ea7b8e9fbb696d31b8e80e09e8a78e2f3
         <entry key="app/src/main/res/layout/fragment_create_community.xml" value="0.33" />
         <entry key="app/src/main/res/layout/post_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/sign2.xml" value="0.25" />

@@ -5,7 +5,10 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+<<<<<<< HEAD
 import android.widget.Button
+=======
+>>>>>>> 98e7128ea7b8e9fbb696d31b8e80e09e8a78e2f3
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -29,6 +32,7 @@ class CommunityPageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_page)
         supportActionBar?.hide()
+<<<<<<< HEAD
         Toast.makeText(this, "HELLOOOOOO", Toast.LENGTH_SHORT).show()
 
         postAdapter = PostAdapter(mutableListOf())
@@ -69,11 +73,17 @@ class CommunityPageActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+=======
+>>>>>>> 98e7128ea7b8e9fbb696d31b8e80e09e8a78e2f3
         // val infos = intent.getSerializableExtra("keys") as HashMap<String, String>
         // var value: Serializable = extras?.
         val intent = intent
         val infos = intent.getSerializableExtra("keys") as HashMap<*, *>?
+<<<<<<< HEAD
         val res = intent.getStringExtra("result").toString()
+=======
+        val res = intent.getStringExtra("result")
+>>>>>>> 98e7128ea7b8e9fbb696d31b8e80e09e8a78e2f3
         infos!!["key"]?.let { Log.v("HashMapTest", it as String) }
 
         val titleTV = findViewById<TextView>(R.id.communityTitle)
@@ -82,6 +92,7 @@ class CommunityPageActivity : AppCompatActivity() {
         val dateTV = findViewById<TextView>(R.id.communityDate)
 
         // val infos: MutableMap<String, String> = Data().getCommInfo()
+<<<<<<< HEAD
 
         titleTV.text = infos["title"].toString()
         descTV.text = infos["desc"].toString()
@@ -99,6 +110,19 @@ class CommunityPageActivity : AppCompatActivity() {
 
         // From here you continue from here to list posts previews
 
+=======
+
+        titleTV.text = infos["title"].toString()
+        descTV.text = infos["desc"].toString()
+        byTV.text = infos["by"].toString()
+        dateTV.text = infos["date"].toString()
+
+        val resJson = JSONObject(res)
+        val posts = JSONArray(resJson["posts"].toString())
+        Toast.makeText(this, posts.toString(), Toast.LENGTH_LONG).show()
+
+        // From here you continue from here to list posts previews
+>>>>>>> 98e7128ea7b8e9fbb696d31b8e80e09e8a78e2f3
 
         // Toast.makeText(this, "magam be", Toast.LENGTH_LONG).show()
     }

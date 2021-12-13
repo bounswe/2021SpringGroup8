@@ -2,17 +2,25 @@ import React, { Component } from "react";
 import { Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import Profilebar from "../components/profilebar";
+import querystring from "querystring";
 
 
 
 class Profile extends Component {
+
+    constructor(props) {
+        super(props);
+
+    }
 
 
 
     render() {
         const { user: currentUser } = this.props;
 
+        const { usertoken: currentToken } = this.props;
 
+        console.log(currentToken);
         if (!currentUser) {
             return <Redirect to="/login"/>;
         }
@@ -41,11 +49,17 @@ class Profile extends Component {
                     <p>
                         <strong>City:</strong> {currentUser.city}
                     </p>
+
                     <p>
-                        <strong>Birth Date:</strong> {currentUser.birthdate}
+                        <strong>Birth Date:</strong> {new Date(currentUser.birthdate._isoformat).toLocaleDateString()}
                     </p>
+
                     <p>
                         <strong>Profile Picture:</strong> {currentUser.pplink}
+                    </p>
+
+                    <p>
+                        <strong>Token:</strong> {currentToken}
                     </p>
 
 
@@ -57,9 +71,9 @@ class Profile extends Component {
 }
 
 function mapStateToProps(state) {
-    const { user } = state.reg;
+    const { user, usertoken } = state.reg;
     return {
-        user,
+        user, usertoken
     };
 }
 

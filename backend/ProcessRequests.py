@@ -247,6 +247,26 @@ def ProcessTokenRequests(self, manager : ServerManager):
             )
             
         return True
+    elif self.path == "/createdatatype":
+        params = ParsePostBody(self)
+        usertoken = params["@usertoken"][0]
+
+        if manager.ValidToken(usertoken):
+            manager.RefreshToken(usertoken)
+            userid = manager.GetUserId(usertoken)
+            response = Endpoints.Community.CreateDataType(manager, userid, params)
+            WriteJSON(self, response)
+        else:
+            WriteJSON(self, 
+                {
+                    "@context": "https://www.w3.org/ns/activitystreams",
+                    "@type": "Community.CreateDataType",
+                    "@success": "False",
+                    "@error":  "Invalid UserToken!",
+                }
+            )
+            
+        return True
     else: 
         return False
 
