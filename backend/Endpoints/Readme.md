@@ -52,9 +52,31 @@
     //"moderators": [list of User.Preview],
     "dataTypes": [list of DataType.Object],
     "subscribers": [list of User.Preview],
-    "posts": [list of Post.Preview],
+    "posts": [list of Post.Objects],
     "creationTime": Date.Object,
     "createdBy": User.Preview,
+}
+```
+## Post.Object
+``` json
+{
+    "postTitle": str,
+    "dataTypeName": str,
+    "fieldValues": {  (this is an example field values, it depends on the data type)
+        "a": "asdasd",
+        "b": 412,
+        "c": {
+            "locname": "Istanbul",
+            "longitude": 1.5,
+            "latitude": 1.7,
+            "@type": "Location.Object"
+        }
+    },
+    "creationTime": Date.Object,
+    "postedAt": Community.Preview,
+    "postedBy": User.Preview,
+    "id": str,
+    "@type": "Post.Object"
 }
 ```
 # View Definitions
