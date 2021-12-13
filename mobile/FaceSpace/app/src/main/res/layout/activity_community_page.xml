@@ -214,17 +214,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/communityTitle" />
 
-        <Button
-            android:id="@+id/btnUnsubscribe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#CE0BD5"
-            android:enabled="false"
-            android:text="@string/unsubscribe"
-            android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnSubscribe" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

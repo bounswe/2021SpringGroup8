@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -30,7 +31,7 @@ class CommunityPageActivity : AppCompatActivity() {
     private val userId = Data().getToken()
     private val commId = Data().getCurrentCommunityId()
     private var CommunitySubs: JSONArray? = null
-
+    private var isSubscribed = isInComm(username)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_page)
@@ -44,7 +45,7 @@ class CommunityPageActivity : AppCompatActivity() {
         val btnGoHome = findViewById<FloatingActionButton>(R.id.btnGoHome)
         val btnLogout = findViewById<FloatingActionButton>(R.id.btnLogout)
         val btnSubs = findViewById<Button>(R.id.btnSubscribe)
-        val btnUnsubs = findViewById<Button>(R.id.btnUnsubscribe)
+        //val btnUnsubs = findViewById<Button>(R.id.btnUnsubscribe)
 
         val rvPosts = findViewById<RecyclerView>(R.id.rvPostItems)
 
@@ -77,26 +78,29 @@ class CommunityPageActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        if (true) {
-            btnSubs.isEnabled = false
-            btnUnsubs.isEnabled = true
+        getSubscribers(commId)
+        isSubscribed = isInComm(username)
+        if (isSubscribed) {
+            btnSubs.text = getText(R.string.unsubscribe)
         }
 
-        btnSubs.setOnClickListener {
-            getSubscribers(commId)
-            if (subscribe(username, commId)) {
-                btnSubs.isEnabled = false
-                btnUnsubs.isEnabled = true
+        btnSubs.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                getSubscribers(commId)
+                //Toast.makeText(baseContext, "suan text: " + btnSubs.text + "ve isInComm: " + isSubscribed, Toast.LENGTH_LONG).show()
+                if (btnSubs.text == getText(R.string.unsubscribe)) {
+                    if (isSubscribed) {
+                        unsubscribe(userId, commId)
+                    }
+                    btnSubs.text = getText(R.string.subscribe)
+                } else {
+                    if (!isSubscribed) {
+                        subscribe(userId, commId)
+                    }
+                    btnSubs.text = getText(R.string.unsubscribe)
+                }
             }
-        }
-
-        btnUnsubs.setOnClickListener {
-            getSubscribers(commId)
-            if (unsubscribe(username, commId)) {
-                btnSubs.isEnabled = true
-                btnUnsubs.isEnabled = false
-            }
-        }
+        })
 
 
         // val infos = intent.getSerializableExtra("keys") as HashMap<String, String>
@@ -178,9 +182,8 @@ class CommunityPageActivity : AppCompatActivity() {
         //Toast.makeText(this, "uyeler: " + CommunitySubs.toString(), Toast.LENGTH_LONG).show()
     }
 
-    private fun subscribe(userId: String, commId: String): Boolean{
+    private fun subscribe(userId: String, commId: String) {
         val url = Data().getUrl("subscribetocommunity")
-        var success: Boolean = false
         val params: MutableMap<String, String> = HashMap()
         params["@usertoken"] = userId
         params["communityId"] = commId
@@ -193,7 +196,7 @@ class CommunityPageActivity : AppCompatActivity() {
                     val jsonObject = JSONObject(response)
                     error = jsonObject
                     if (jsonObject["@success"] == "True") {
-                        success = true
+                        isSubscribed = true
                         Toast.makeText(this, "user with id $userId subscribed successfully!", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: JSONException) {
@@ -210,12 +213,10 @@ class CommunityPageActivity : AppCompatActivity() {
         }
         val requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(stringRequest)
-        return success
     }
 
-    private fun unsubscribe(userId: String, commId: String): Boolean{
+    private fun unsubscribe(userId: String, commId: String) {
         val url = Data().getUrl("unsubscribecommunity")
-        var success: Boolean = false
         val params: MutableMap<String, String> = HashMap()
         params["@usertoken"] = userId
         params["communityId"] = commId
@@ -228,7 +229,7 @@ class CommunityPageActivity : AppCompatActivity() {
                     val jsonObject = JSONObject(response)
                     error = jsonObject
                     if (jsonObject["@success"] == "True") {
-                        success = true
+                        isSubscribed = false
                         Toast.makeText(this, "user with id $userId unsubscribed successfully!", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: JSONException) {
@@ -245,7 +246,6 @@ class CommunityPageActivity : AppCompatActivity() {
         }
         val requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(stringRequest)
-        return success
     }
 
     private fun getPost(post: JSONObject){
