@@ -19,7 +19,6 @@
         android:theme="@style/Theme.FaceSpace"
         android:usesCleartextTraffic="true">
         <activity
-<<<<<<< HEAD
             android:name=".CreatePost"
             android:exported="false" />
         <activity
@@ -32,11 +31,6 @@
             android:name=".Post"
             android:exported="false" />
         <activity
-=======
-            android:name=".ProfilePage"
-            android:exported="true" />
-        <activity
->>>>>>> 98e7128ea7b8e9fbb696d31b8e80e09e8a78e2f3
             android:name=".HomePageActivity"
             android:exported="true" />
         <activity
