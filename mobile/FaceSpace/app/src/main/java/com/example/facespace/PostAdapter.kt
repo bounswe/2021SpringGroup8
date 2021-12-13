@@ -112,23 +112,10 @@ class PostAdapter (
     }
 
     private fun helper(res: JSONObject) {
-
-        val infos:MutableMap<String,String> = HashMap()
-
-        val tempDate: JSONObject = res["creationTime"] as JSONObject
-        val tempBy: JSONObject = res["postedBy"] as JSONObject
-
-        infos["title"] = res["postTitle"].toString()
-        infos["desc"] = res["description"].toString()
-        infos["date"] = tempDate["_isoformat"].toString().substring(0,10)
-        infos["by"] = tempBy["username"].toString()
-
-        Toast.makeText(mContext,"helalbeee", Toast.LENGTH_SHORT).show()
-        val intent: Intent = Intent(mContext, CommunityPageActivity::class.java)
-        intent.putExtra("keys", infos as Serializable)
+        Toast.makeText(mContext,"helalbeee " + res.toString(), Toast.LENGTH_SHORT).show()
+        val intent: Intent = Intent(mContext, InsidePost::class.java)
         intent.putExtra("result", res.toString())
         mContext.startActivity(intent)
-
     }
 
 }

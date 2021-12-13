@@ -7,9 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +24,7 @@ import org.json.JSONObject
 import java.io.Serializable
 
 class CommunityPageActivity : AppCompatActivity() {
+    var result : String = ""
     private lateinit var postAdapter: PostAdapter
     private val username = Data().getUsername()
     private val userId = Data().getToken()
@@ -36,7 +35,7 @@ class CommunityPageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_page)
         supportActionBar?.hide()
-        Toast.makeText(this, "HELLOOOOOO", Toast.LENGTH_SHORT).show()
+        getSubscribers(commId)
 
         postAdapter = PostAdapter(mutableListOf())
 
@@ -45,7 +44,13 @@ class CommunityPageActivity : AppCompatActivity() {
         val btnGoHome = findViewById<FloatingActionButton>(R.id.btnGoHome)
         val btnLogout = findViewById<FloatingActionButton>(R.id.btnLogout)
         val btnSubs = findViewById<Button>(R.id.btnSubscribe)
-        //val btnUnsubs = findViewById<Button>(R.id.btnUnsubscribe)
+
+
+        isSubscribed = isInComm(username)
+        if (isSubscribed) {
+            btnSubs.text = getText(R.string.unsubscribe)
+        }
+        else btnSubs.text = getText(R.string.subscribe)
 
         val rvPosts = findViewById<RecyclerView>(R.id.rvPostItems)
 
@@ -56,10 +61,12 @@ class CommunityPageActivity : AppCompatActivity() {
         btnAdd.bringToFront()
         btnGoHome.bringToFront()
         btnLogout.bringToFront()
+        btnSubs.bringToFront()
 
         btnRefresh.setOnClickListener {
             postAdapter.deleteAll()
-            //getPost()
+            val intent = Intent(this, CommunityPageActivity::class.java)
+            startActivity(intent)
         }
 
         btnGoHome.setOnClickListener {
@@ -69,19 +76,13 @@ class CommunityPageActivity : AppCompatActivity() {
         }
 
         btnAdd.setOnClickListener {
-            val dialog = CreatePost()
-            dialog.show(supportFragmentManager, "Create New Post")
+            //val dialog = CreatePost()
+            //dialog.show(supportFragmentManager, "Create New Post")
         }
 
         btnLogout.setOnClickListener {
             val intent = Intent(this, LoginPageActivity::class.java)
             startActivity(intent)
-        }
-
-        getSubscribers(commId)
-        isSubscribed = isInComm(username)
-        if (isSubscribed) {
-            btnSubs.text = getText(R.string.unsubscribe)
         }
 
         btnSubs.setOnClickListener(object : View.OnClickListener {
@@ -107,7 +108,7 @@ class CommunityPageActivity : AppCompatActivity() {
         // var value: Serializable = extras?.
         val intent = intent
         val infos = intent.getSerializableExtra("keys") as HashMap<*, *>?
-        val res = intent.getStringExtra("result").toString()
+        val res = intent.getStringExtra("result")
         infos!!["key"]?.let { Log.v("HashMapTest", it as String) }
 
         val titleTV = findViewById<TextView>(R.id.communityTitle)
@@ -133,8 +134,67 @@ class CommunityPageActivity : AppCompatActivity() {
 
         // From here you continue from here to list posts previews
 
+        val datatypes = JSONArray(resJson["dataTypes"].toString())
+        val typeNames = types(datatypes)
+        val spin = findViewById<Spinner>(R.id.spinnerPosts)
+        spin.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, typeNames)
+        spin.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                result = typeNames[position].toString()
+                if (parent != null) {
+                    // Toast.makeText(parent.context, "$result is seleceted", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        val btnDataType = findViewById<Button>(R.id.dtButton)
+        val btnCreatePost = findViewById<FloatingActionButton>(R.id.createPost)
+        btnCreatePost.bringToFront()
+
+
+        if(Data().getCommunities().contains(commId)) {
+
+            btnDataType.visibility = View.VISIBLE
+        } else {
+            btnDataType.visibility = View.INVISIBLE
+        }
+
+        btnCreatePost.setOnClickListener{
+            val inte = Intent(this,CreatePostPage::class.java)
+            inte.putExtra("commId", commId)
+            inte.putExtra("typeName", result)
+            inte.putExtra("commName", infos["title"].toString())
+            startActivity(inte)
+        }
+
+
+        btnDataType.setOnClickListener{
+            val int = Intent(this, CreateDataType::class.java)
+            int.putExtra("id", commId)
+            startActivity(int)
+        }
 
         // Toast.makeText(this, "magam be", Toast.LENGTH_LONG).show()
+    }
+
+    private fun types(list: JSONArray):MutableList<String> {
+        val liste : MutableList<String> = mutableListOf()
+        for (i in 0 until list.length()) {
+            val currType = list.getJSONObject(i)
+            liste.add(currType["name"] as String)
+
+        }
+        return liste
     }
 
     private fun isInComm(username: String): Boolean {

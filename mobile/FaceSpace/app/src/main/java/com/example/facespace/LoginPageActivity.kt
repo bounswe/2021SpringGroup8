@@ -81,7 +81,7 @@ class LoginPageActivity : AppCompatActivity() {
                         Data().setAll(returns["username"].toString(), returns["email"].toString(),
                             returns["name"].toString(), returns["surname"].toString(),
                             dob.toString().substring(0,10), loc["locname"].toString(), returns["pplink"].toString(),
-                            loc["longitude"] as Double, loc["latitude"] as Double
+                            loc["longitude"] as Double, loc["latitude"] as Double, returns["createdCommunities"].toString()
                         )
                         val intent = Intent(this, HomePageActivity::class.java)
                         intent.putExtra("username", username)

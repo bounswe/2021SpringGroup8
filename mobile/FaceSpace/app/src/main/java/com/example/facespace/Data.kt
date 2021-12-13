@@ -17,6 +17,7 @@ class Data {
         private var latitude = 0.0
         private var pplink = ""
         private var token = ""
+        private var communities = ""
         private var currCommunityId = ""
         private var currCommunityTitle = ""
         private var currCommunityDesc = ""
@@ -28,13 +29,17 @@ class Data {
         private var currPostDate = ""
         private var currPostCreator = ""
     }
+    fun getCommunities(): String {
+        return communities
+    }
+
     fun getUrl(extension:String): String {
         return url+extension
     }
 
     fun setAll(newUsername: String, newEmail:String, newName:String,
                newSurname:String, newBirth:String, newCity:String, newPPLink:String,
-               newLong: Double, newLat: Double) {
+               newLong: Double, newLat: Double, newCommunities: String) {
         username = newUsername
         email = newEmail
         name = newName
@@ -44,6 +49,7 @@ class Data {
         pplink = newPPLink
         longitude = newLong
         latitude = newLat
+        communities = newCommunities
 
     }
 
@@ -68,7 +74,7 @@ class Data {
 
     fun resetAll() {
         setAll("","","","","",
-            "","", 0.0, 0.0)
+            "","", 0.0, 0.0, "")
     }
 
     fun getName(): String {
@@ -143,5 +149,4 @@ class Data {
     fun getLoc(): Location {
         return Location(city, longitude, latitude)
     }
-
 }

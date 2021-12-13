@@ -94,7 +94,7 @@ class CommunityAdapter (
                 setInfo(temp)
                 // Thread.sleep(700)
                 // Toast.makeText(context,"$temp this is under implementation still.",Toast.LENGTH_SHORT).show()
-                // context.startActivity(Intent(context, CommunityPageActivity::class.java))
+
             }
 
 

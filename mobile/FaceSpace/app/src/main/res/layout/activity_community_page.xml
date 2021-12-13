@@ -144,21 +144,21 @@
             android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
             android:background="@color/lightgray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/communityCreator" />
+            app:layout_constraintTop_toBottomOf="@+id/createPost" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPostItems"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view2" />
+            app:layout_constraintTop_toBottomOf="@+id/createPost" />
 
         <TextView
             android:id="@+id/communityTitle"
@@ -171,17 +171,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/communityDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/desc"
-            android:textColor="@color/gray"
-            android:textSize="17sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/communityTitle" />
-
-        <TextView
             android:id="@+id/communityDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -190,30 +179,80 @@
             android:textColor="@color/gray"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/communityDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/communityDescription" />
 
         <TextView
             android:id="@+id/communityCreator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="47dp"
+            android:layout_height="21dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
-            android:text="By Cavus"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/communityDate"
-            app:layout_constraintTop_toBottomOf="@id/communityDescription" />
+            android:text="Cavus"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/textView23"
+            app:layout_constraintTop_toBottomOf="@+id/communityDescription" />
 
         <Button
             android:id="@+id/btnSubscribe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="117dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#CE0BD5"
             android:enabled="true"
-            android:text="@string/subscribe"
+            android:text="@string/unsubscribe"
             android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/communityTitle" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/communityDate" />
 
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:text="Created by:"
+            app:layout_constraintStart_toEndOf="@+id/communityDate"
+            app:layout_constraintTop_toBottomOf="@+id/communityDescription" />
+
+        <TextView
+            android:id="@+id/communityDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/desc"
+            android:textColor="@color/gray"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/communityTitle" />
+
+        <Button
+            android:id="@+id/dtButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create\nDataType"
+            app:layout_constraintBottom_toBottomOf="@+id/communityCreator"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinnerPosts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:gravity="end"
+            app:layout_constraintEnd_toStartOf="@+id/createPost"
+            app:layout_constraintTop_toTopOf="@+id/createPost" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/createPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/green"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dtButton"
+            app:srcCompat="@android:drawable/ic_input_add" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
