@@ -163,7 +163,7 @@ class Community extends Component {
                     <CommunityAbout description={description} moderators={creator}
                                     tags="soccer football "/>
                 </Grid>
-                <BasicSpeedDial owner={owner}/>
+                <BasicSpeedDial owner={owner} communityId={this.props.match.params.id}/>
             </Container>
         );
     }

@@ -18,6 +18,11 @@ input {
     width: 100%;
 }
 
+Field {
+    display: block;
+    width: 100%;
+}
+
 label {
     margin-bottom: 5px;
     height: 22px;

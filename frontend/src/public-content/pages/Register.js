@@ -54,7 +54,6 @@ export default class Register extends React.Component {
                             password,
                             name,
                             surname,
-                            birthdate
                         )
                         .then(
                             response => {
@@ -109,7 +108,7 @@ export default class Register extends React.Component {
                                 {errors.surname && touched.surname && (
                                     <div className="input-feedback">{errors.surname}</div>
                                 )}
-                                <label htmlFor="birthdate">Birth Date</label>
+                                {/*<label htmlFor="birthdate">Birth Date</label>
                                 <input
                                     name="birthdate"
                                     type="date"
@@ -120,7 +119,7 @@ export default class Register extends React.Component {
                                 />
                                 {errors.surname && touched.surname && (
                                     <div className="input-feedback">{errors.surname}</div>
-                                )}
+                                )}*/}
                                 <label htmlFor="username">Username</label>
                                 <input
                                     name="username"
