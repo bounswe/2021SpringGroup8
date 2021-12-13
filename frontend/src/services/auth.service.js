@@ -1,7 +1,7 @@
 import axios from "axios";
 import querystring from "querystring";
 
-const API_URL = "http://3.144.184.237:8080/";
+const API_URL = "http://localhost:8080/";
 
 class AuthService {
     login(username, password) {
