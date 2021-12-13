@@ -42,4 +42,6 @@
     <string name="create_community">New Community</string>
     <string name="log_out">Log Out</string>
     <string name="facesapce">Facesapce</string>
+    <string name="back_to_n_home">Back to \n home</string>
+    <string name="create_post">New Post</string>
 </resources>

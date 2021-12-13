@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.facespaceextenstion.Data
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_create_community.*
 import kotlinx.android.synthetic.main.fragment_create_community.view.*
@@ -48,7 +49,7 @@ class CreateCommunity : DialogFragment() {
     }
 
     private fun sendRequest(tit:String, des:String) {
-        val url = "http://3.144.184.237:8080/createcommunity"
+        val url = Data().getUrl("createcommunity")
 
 
         val params: MutableMap<String, String> = HashMap()

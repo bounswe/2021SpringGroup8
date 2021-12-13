@@ -33,6 +33,8 @@ import java.io.IOException
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
     private var mMap: GoogleMap? = null
+    private var goLon: Double = 0.0
+    private var goLat: Double = 0.0
     private var lastLong: Double = 0.0
     private var lastLat: Double = 0.0
     internal var mCurrLocationMarker: Marker? = null
@@ -46,14 +48,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
         supportActionBar?.hide()
-        /*
+
         val extras = intent.extras
         if (extras != null) {
-            which = extras.getString("whichActivity").toString()
+            goLon = extras.getDouble("lon").toDouble()
+            goLat = extras.getDouble("lat").toDouble()
             //The key argument here must match that used in the other activity
         }
 
-         */
+
 
 
 
@@ -63,14 +66,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
 
         val btn = findViewById<Button>(R.id.btnCancel)
         btn.setOnClickListener {
-            // Toast.makeText(this, city, Toast.LENGTH_LONG).show()
-            /*
-            val intent = Intent(this, which::class.java)
-            intent.putExtra("city", city) // to send parameter to another activity
-            startActivity(intent)
-            */
             val intent = Intent()
             intent.putExtra("city", city)
+            intent.putExtra("lon", lastLong)
+            intent.putExtra("lat", lastLat)
             setResult(RESULT_OK, intent)
             finish()
 
@@ -95,7 +94,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
             mMap!!.isMyLocationEnabled=true
 
         }
-        val ist = LatLng(41.01, 28.97)
+
+
+        var ist = LatLng(41.01, 28.97)
+        if (goLat!=0.0 || goLon!=0.0) {
+            ist = LatLng(goLat, goLon)
+        }
         val markerOption = MarkerOptions().position(ist).title("Current Location")
             .snippet(getAddress(ist.latitude, ist.longitude)).draggable(true)
         mMap!!.animateCamera(CameraUpdateFactory.newLatLng(ist))
@@ -255,6 +259,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
         return addresses[0].thoroughfare + "/" + addresses[0].subAdminArea + "/" + addresses[0].adminArea
 
     }
+
+
 
 
 }

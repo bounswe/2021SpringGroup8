@@ -19,6 +19,18 @@
         android:theme="@style/Theme.FaceSpace"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".CreatePost"
+            android:exported="false" />
+        <activity
+            android:name=".ProfilePage"
+            android:exported="true" />
+        <activity
+            android:name=".PostAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".Post"
+            android:exported="false" />
+        <activity
             android:name=".HomePageActivity"
             android:exported="true" />
         <activity
