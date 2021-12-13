@@ -9,50 +9,53 @@ function CommunityAbout(props) {
 
     return (
         <Grid item xs={12} md={4}>
-            <div style={{backgroundColor: "gray", borderRadius: 10, margin: 10}}>
+            <div style={{backgroundColor: "#e6ecf0", borderRadius: 10, margin: 10}}>
                 <Typography variant="h6" style={{
                     fontWeight: 600,
                     borderTopLeftRadius: 10,
                     borderTopRightRadius: 10,
-                    backgroundColor: "blue",
+                    backgroundColor: "#5f99cf",
                     padding: 5,
                     marginTop: 5,
                     color: "white"
                 }}>
                     About
                 </Typography>
-                <Typography paragraph>{description} </Typography>
+                <div>
+                    <Typography paragraph style={{paddingTop: 10, paddingBottom: 10, paddingInline: 10}}>{description} </Typography>
+                </div>
+
             </div>
 
-            <div style={{backgroundColor: "gray", borderRadius: 10, margin: 10, marginTop: 30}}>
+            <div style={{backgroundColor: "#e6ecf0", borderRadius: 10, margin: 10, marginTop: 30}}>
                 <Typography variant="h6" style={{
                     fontWeight: 600,
                     borderTopLeftRadius: 10,
                     borderTopRightRadius: 10,
-                    backgroundColor: "blue",
+                    backgroundColor: "#5f99cf",
                     padding: 5,
                     marginTop: 5,
                     color: "white"
                 }}>
                     Tags
                 </Typography>
-                <Typography paragraph>{tags} </Typography>
+                <Typography paragraph style={{paddingTop: 10, paddingBottom: 10, paddingInline: 10}}>{tags} </Typography>
             </div>
 
 
-            <div style={{backgroundColor: "gray", borderRadius: 10, margin: 10, marginTop: 30}}>
+            <div style={{backgroundColor: "#e6ecf0", borderRadius: 10, margin: 10, marginTop: 30}}>
                 <Typography variant="h6" style={{
                     fontWeight: 600,
                     borderTopLeftRadius: 10,
                     borderTopRightRadius: 10,
-                    backgroundColor: "blue",
+                    backgroundColor: "#5f99cf",
                     padding: 5,
                     marginTop: 5,
                     color: "white"
                 }}>
                     Moderators
                 </Typography>
-                <Typography paragraph>{moderators} </Typography>
+                <Typography paragraph style={{paddingTop: 10, paddingBottom: 10, paddingInline: 10}}>{moderators} </Typography>
             </div>
         </Grid>
     );

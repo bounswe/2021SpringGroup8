@@ -4,13 +4,14 @@ import UserCommunityService from "../../services/user-community.service";
 import UserService from "../../services/user.service";
 import AuthService from "../../services/auth.service"
 import {withRouter} from 'react-router-dom';
-import {Avatar, Container, Grid} from "@mui/material";
+import {Avatar, Container, Grid, SpeedDial} from "@mui/material";
 import CommunityAbout from "../Components/CommunityAbout";
 import CommunityPosts from "../Components/CommunityPosts";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 import userCommunityService from "../../services/user-community.service";
+import BasicSpeedDial from "../Components/BasicSpeedDial";
 
 class Community extends Component {
 
@@ -26,10 +27,12 @@ class Community extends Component {
             subscribed: false,
             variant: 'contained',
             text: 'Subscribe',
+            owner: false,
             id: ''
         }
         this.subscribe = this.subscribe.bind(this)
     }
+
 
     componentDidMount() {
         console.log(this.props.match.params.id);
@@ -125,6 +128,11 @@ class Community extends Component {
                     id: id
                 });
                 this.checkSubscribeStatus()
+                const myUser = AuthService.getCurrentUser();
+                if (response.data['@return'].createdBy.id === myUser.id) {
+                    this.setState({owner: true})
+                }
+                console.log(response.data['@return'])
             })
             .catch(e => {
                 console.log(e.toString());
@@ -132,7 +140,7 @@ class Community extends Component {
     }
 
     render() {
-        const {posts, creator, description, communityTitle, variant, text} = this.state
+        const {posts, owner, creator, description, communityTitle, variant, text, actions} = this.state
         return (
             <Container maxWidth="md">
                 <Toolbar sx={{height: "100px", borderBottom: 1, borderColor: 'divider'}}>
@@ -155,6 +163,7 @@ class Community extends Component {
                     <CommunityAbout description={description} moderators={creator}
                                     tags="soccer football "/>
                 </Grid>
+                <BasicSpeedDial owner={owner}/>
             </Container>
         );
     }
