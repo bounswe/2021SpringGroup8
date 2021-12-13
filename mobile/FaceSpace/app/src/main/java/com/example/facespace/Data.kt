@@ -1,4 +1,4 @@
-package com.example.facespaceextenstion
+package com.example.facespace
 
 import com.example.facespace.Location
 
