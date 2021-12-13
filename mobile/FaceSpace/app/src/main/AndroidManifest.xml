@@ -19,6 +19,12 @@
         android:theme="@style/Theme.FaceSpace"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".CreateDataType"
+            android:exported="false" />
+        <activity
+            android:name=".PopupUnsubscribedComm"
+            android:exported="false" />
+        <activity
             android:name=".CreatePost"
             android:exported="false" />
         <activity

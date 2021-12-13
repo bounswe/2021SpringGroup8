@@ -27,7 +27,6 @@ class Data {
         private var currPostDesc = ""
         private var currPostDate = ""
         private var currPostCreator = ""
-        private lateinit var dataTypes: JSONArray
     }
     fun getUrl(extension:String): String {
         return url+extension

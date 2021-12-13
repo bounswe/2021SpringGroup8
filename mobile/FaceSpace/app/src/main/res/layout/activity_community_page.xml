@@ -16,26 +16,6 @@
         tools:context=".CommunityPageActivity">
 
 
-        <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/lightgray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/communityCreator" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPostItems"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view2" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottomPanel"
             android:layout_width="match_parent"
@@ -160,6 +140,26 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/lightgray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/communityCreator" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPostItems"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
         <TextView
             android:id="@+id/communityTitle"
             android:layout_width="wrap_content"
@@ -202,6 +202,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/communityDate"
             app:layout_constraintTop_toBottomOf="@id/communityDescription" />
+
+        <Button
+            android:id="@+id/btnSubscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#CE0BD5"
+            android:enabled="true"
+            android:text="@string/subscribe"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/communityTitle" />
+
+        <Button
+            android:id="@+id/btnUnsubscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#CE0BD5"
+            android:enabled="false"
+            android:text="@string/unsubscribe"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSubscribe" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

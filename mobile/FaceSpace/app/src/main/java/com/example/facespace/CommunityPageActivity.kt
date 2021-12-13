@@ -1,5 +1,6 @@
 package com.example.facespace
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,11 @@ import java.io.Serializable
 
 class CommunityPageActivity : AppCompatActivity() {
     private lateinit var postAdapter: PostAdapter
+    private val username = Data().getUsername()
+    private val userId = Data().getToken()
+    private val commId = Data().getCurrentCommunityId()
+    private var CommunitySubs: JSONArray? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_page)
@@ -37,6 +43,8 @@ class CommunityPageActivity : AppCompatActivity() {
         val btnRefresh = findViewById<FloatingActionButton>(R.id.btnRefresh)
         val btnGoHome = findViewById<FloatingActionButton>(R.id.btnGoHome)
         val btnLogout = findViewById<FloatingActionButton>(R.id.btnLogout)
+        val btnSubs = findViewById<Button>(R.id.btnSubscribe)
+        val btnUnsubs = findViewById<Button>(R.id.btnUnsubscribe)
 
         val rvPosts = findViewById<RecyclerView>(R.id.rvPostItems)
 
@@ -68,6 +76,28 @@ class CommunityPageActivity : AppCompatActivity() {
             val intent = Intent(this, LoginPageActivity::class.java)
             startActivity(intent)
         }
+
+        if (true) {
+            btnSubs.isEnabled = false
+            btnUnsubs.isEnabled = true
+        }
+
+        btnSubs.setOnClickListener {
+            getSubscribers(commId)
+            if (subscribe(username, commId)) {
+                btnSubs.isEnabled = false
+                btnUnsubs.isEnabled = true
+            }
+        }
+
+        btnUnsubs.setOnClickListener {
+            getSubscribers(commId)
+            if (unsubscribe(username, commId)) {
+                btnSubs.isEnabled = true
+                btnUnsubs.isEnabled = false
+            }
+        }
+
 
         // val infos = intent.getSerializableExtra("keys") as HashMap<String, String>
         // var value: Serializable = extras?.
@@ -101,6 +131,121 @@ class CommunityPageActivity : AppCompatActivity() {
 
 
         // Toast.makeText(this, "magam be", Toast.LENGTH_LONG).show()
+    }
+
+    private fun isInComm(username: String): Boolean {
+        var res: Boolean = false
+        if (CommunitySubs != null) {
+            for (i in 0 until CommunitySubs!!.length()) {
+                val name = JSONObject(CommunitySubs!!.getJSONObject(i).toString())["username"].toString()
+                if (name == username) {
+                    res = true
+                    break
+                }
+            }
+        }
+        return res
+    }
+
+    private fun getSubscribers(commId: String) {
+        val url = Data().getUrl("getcommunity")
+
+        var error: JSONObject? = null
+
+        val params1: MutableMap<String, String> = HashMap()
+        params1["communityId"] = commId
+
+        val stringRequest: StringRequest = object : StringRequest( Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    //Parse your api responce here
+                    val jsonObject = JSONObject(response)
+                    error = jsonObject
+                    val results = jsonObject["@return"] as JSONObject
+                    CommunitySubs = JSONArray(results["subscribers"].toString())
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener { error ->
+            }) {
+            override fun getParams(): Map<String, String> {
+                return params1
+            }
+        }
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
+        //Toast.makeText(this, "uyeler: " + CommunitySubs.toString(), Toast.LENGTH_LONG).show()
+    }
+
+    private fun subscribe(userId: String, commId: String): Boolean{
+        val url = Data().getUrl("subscribetocommunity")
+        var success: Boolean = false
+        val params: MutableMap<String, String> = HashMap()
+        params["@usertoken"] = userId
+        params["communityId"] = commId
+
+        var error: JSONObject? = null
+
+        val stringRequest: StringRequest = object : StringRequest( Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    val jsonObject = JSONObject(response)
+                    error = jsonObject
+                    if (jsonObject["@success"] == "True") {
+                        success = true
+                        Toast.makeText(this, "user with id $userId subscribed successfully!", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    Toast.makeText(this, (error?.get("@error")) as String, Toast.LENGTH_SHORT).show()
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                return params
+            }
+        }
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
+        return success
+    }
+
+    private fun unsubscribe(userId: String, commId: String): Boolean{
+        val url = Data().getUrl("unsubscribecommunity")
+        var success: Boolean = false
+        val params: MutableMap<String, String> = HashMap()
+        params["@usertoken"] = userId
+        params["communityId"] = commId
+
+        var error: JSONObject? = null
+
+        val stringRequest: StringRequest = object : StringRequest( Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    val jsonObject = JSONObject(response)
+                    error = jsonObject
+                    if (jsonObject["@success"] == "True") {
+                        success = true
+                        Toast.makeText(this, "user with id $userId unsubscribed successfully!", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    Toast.makeText(this, (error?.get("@error")) as String, Toast.LENGTH_SHORT).show()
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                return params
+            }
+        }
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
+        return success
     }
 
     private fun getPost(post: JSONObject){
