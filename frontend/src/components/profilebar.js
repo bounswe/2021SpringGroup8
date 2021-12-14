@@ -36,6 +36,8 @@ class Profilebar extends Component{
         EventBus.on("logout", () => {
             this.logOut();
         });
+
+
     }
 
     componentWillUnmount() {
@@ -50,7 +52,7 @@ class Profilebar extends Component{
     }
 
     render() {
-        const {currentUser, showModeratorBoard, showAdminBoard} = this.state;
+        const {currentUser} = this.state;
 
         return (
             <Router history={history}>
@@ -60,18 +62,22 @@ class Profilebar extends Component{
                             <img src={logo} width="150"
                                  height="100"/>
                         </Link>
+                        {/*{currentUser && (*/}
+                        {/*<Link to="/communities" className="nav-link">*/}
+                        {/*    Communities*/}
+                        {/*</Link>)}*/}
                         {currentUser ? (
                             <div className="navbar-nav ml-auto">
-                                <li className="nav-item">
-                                    <Link to={"/communities"} className="nav-link">
-                                        Communities
-                                    </Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to={"/feed"} className="nav-link">
-                                        Home Feed
-                                    </Link>
-                                </li>
+                                {/*<li className="nav-item">*/}
+                                {/*    <Link to={"/communities"} className="nav-link">*/}
+                                {/*        Communities*/}
+                                {/*    </Link>*/}
+                                {/*</li>*/}
+                                {/*<li className="nav-item">*/}
+                                {/*    <Link to={"/feed"} className="nav-link">*/}
+                                {/*        Home Feed*/}
+                                {/*    </Link>*/}
+                                {/*</li>*/}
                                 <li className="nav-item">
                                     <Link to={"/profile"} className="nav-link">
                                         {currentUser.username}

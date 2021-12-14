@@ -41,7 +41,7 @@ class App extends Component {
             <>
               <Switch>
                 <Route exact path={"/"} component={home}/>
-                <Route exact path={"/home"} component={HomePage}/>
+                {/*<Route exact path={"/home"} component={HomePage}/>*/}
                 <Route exact path={"/profile"} component={Profile}/>
                 <Route exact path={"/posts"} component={PostListComponent} />
                 <Route path="/post/:id" component={PostView}  />

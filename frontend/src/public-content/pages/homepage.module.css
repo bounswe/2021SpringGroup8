@@ -19,7 +19,7 @@
 }
 
 .carouselContainer {
-    --height: 725px;
+    --height: 900px;
     --width: 100%;
 
     height: var(--height);
