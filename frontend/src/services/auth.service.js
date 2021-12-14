@@ -1,7 +1,7 @@
 import axios from "axios";
 import querystring from "querystring";
 
-const API_URL = "http://3.144.184.237:8080/";
+const API_URL = "http://3.145.120.66:8080/";
 
 class AuthService {
     login(username, password) {
@@ -47,6 +47,12 @@ class AuthService {
         if (userStr) return JSON.parse(userStr);
 
         return null;
+    }
+
+    getUserToken () {
+        let token = localStorage.getItem('usertoken')
+        token = token.substring(1, token.length - 1)
+        return token
     }
 }
 

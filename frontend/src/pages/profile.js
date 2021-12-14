@@ -51,7 +51,7 @@ class Profile extends Component {
                     </p>
 
                     <p>
-                        <strong>Birth Date:</strong> {new Date(currentUser.birthdate._isoformat).toLocaleDateString()}
+                        <strong>Birth Date:</strong> {currentUser.birthdate ? new Date(currentUser.birthdate._isoformat).toLocaleDateString() : ""}
                     </p>
 
                     <p>

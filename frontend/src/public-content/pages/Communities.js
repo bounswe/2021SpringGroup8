@@ -52,7 +52,7 @@ class Communities extends Component {
                 {communities && communities.map((community, index) => (
                     <Col md="9">
                         <Card style={{width: "100%"}}>
-                            <Card.Img variant="top" src="holder.js/100px180"/>
+                            <Card.Img variant="top" src={"https://picsum.photos/" +index +"400/200"} height={200}/>
                             <Card.Body >
                                 <Card.Title
                                     onClick={this.goCommunity.bind(this, community.id)}>{community.CommunityTitle}</Card.Title>
