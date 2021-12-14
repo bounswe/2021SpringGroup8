@@ -59,8 +59,8 @@ class Profilebar extends Component{
                 <div>
                     <nav className="navbar navbar-expand navbar-light bg-secondary">
                         <Link to={"/"} className="navbar-brand">
-                            <img src={logo} width="150"
-                                 height="100"/>
+                            <img src={logo} width="50"
+                                 height="35"/>
                         </Link>
 
 

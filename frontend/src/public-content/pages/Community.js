@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 import userCommunityService from "../../services/user-community.service";
 import BasicSpeedDial from "../Components/BasicSpeedDial";
+import Profilebar from "../../components/profilebar";
 
 class Community extends Component {
 
@@ -142,6 +143,8 @@ class Community extends Component {
     render() {
         const {posts, owner, creator, description, communityTitle, variant, text, actions} = this.state
         return (
+            <>
+            <Profilebar/>
             <Container maxWidth="md">
                 <Toolbar sx={{height: "100px", borderBottom: 1, borderColor: 'divider'}}>
                     <Avatar alt={communityTitle} src="https://picsum.photos/200/200" sx={{width: 100, height: 100}}/>
@@ -165,6 +168,7 @@ class Community extends Component {
                 </Grid>
                 <BasicSpeedDial owner={owner} communityId={this.props.match.params.id}/>
             </Container>
+            </>
         );
     }
 

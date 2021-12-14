@@ -4,6 +4,7 @@ import UserCommunityService from "../../services/user-community.service";
 import {withRouter} from 'react-router-dom';
 import {Button, Card, Col, Container} from "react-bootstrap";
 import Header from "../Components/header/header2";
+import Profilebar from "../../components/profilebar";
 
 class Communities extends Component {
 
@@ -47,8 +48,14 @@ class Communities extends Component {
 
         return (
             <>
-            <Header/>
+                <Profilebar/>
+                <Header/>
             <Container fluid="md">
+                <header className="jumbotron">
+                    <h3>
+                        <strong>Enjoy various amazing communities</strong>
+                    </h3>
+                </header>
                 {communities && communities.map((community, index) => (
                     <Col md="9">
                         <Card style={{width: "100%"}}>
