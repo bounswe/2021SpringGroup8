@@ -14,6 +14,7 @@ import Community from "./public-content/pages/Community";
 import home from "./public-content/pages/home";
 import PostView from "./public-content/PostView";
 import CreateDataType from "./public-content/pages/CreateDataType";
+import CreatePost from "./public-content/pages/CreatePost";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -49,6 +50,7 @@ class App extends Component {
                 <Route exact path={"/communities"} component={Communities} />
                 <Route path="/community/:id" component={Community}/>
                 <Route path="/createDataType/:id" component={CreateDataType}/>
+                <Route path="/createPost/:id" component={CreatePost}/>
               </Switch>
             </>
           </div>
