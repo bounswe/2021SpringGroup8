@@ -9,7 +9,7 @@ import Header from "../Components/header/header";
 import {FcAdvance, FcIdea} from "react-icons/fc";
 import {Gi3DStairs} from "react-icons/gi";
 import logo from "../images/logo_t.png";
-import logo2 from "../images/logo.png";
+import logo2 from "../images/facespace_2.png";
 
 
 
@@ -31,26 +31,26 @@ const View = () => {
     const solutions = [{
         keyID: 1,
         icon: <Gi3DStairs/>,
-        header: "First ",
-        content: "I'm a paragraph. Click here to add your own text and edit me. Let your users get to know you.",
+        header: "Join a purposeful community ",
+        content: "Join a purposeful community to easily find like-minded people and do the things you enjoy together  ",
         link: "",
-        backgroundColor: "#097747E6"
+        backgroundColor: "#EE000Ebc"
     },
         {
             keyID: 2,
             icon: <FcIdea />,
-            header: "Second",
-            content: "I'm a paragraph. Click here to add your own text and edit me. Let your users get to know you.",
+            header: "Find out new hobbies ",
+            content: "Find out new hobbies you don't know you always enjoyed.",
             link: "",
             backgroundColor: "#0DB26BE6"
         },
         {
             keyID: 3,
             icon: <FcAdvance />,
-            header: "Third",
-            content: "I'm a paragraph. Click here to add your own text and edit me. Let your users get to know you.",
+            header: "Follow the updated events ",
+            content: "Follow all the new events as soon as they occur with the ease of FaceSpace",
             link: "/aboutus",
-            backgroundColor: "#6DCCA3E6"
+            backgroundColor: "#878501bc "
         }
     ];
 

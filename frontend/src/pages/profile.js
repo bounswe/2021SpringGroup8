@@ -58,9 +58,9 @@ class Profile extends Component {
                         <strong>Profile Picture:</strong> {currentUser.pplink}
                     </p>
 
-                    <p>
-                        <strong>Token:</strong> {currentToken}
-                    </p>
+                    {/*<p>*/}
+                    {/*    <strong>Token:</strong> {currentToken}*/}
+                    {/*</p>*/}
 
 
 
