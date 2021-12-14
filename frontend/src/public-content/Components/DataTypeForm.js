@@ -1,9 +1,11 @@
 import React from 'react';
 import {useFormik, Field, Form, Formik, FormikProps, FormikProvider} from 'formik';
 import userCommunityService from "../../services/user-community.service";
+import {useHistory} from "react-router-dom";
 
 export default function DataTypeForm(props) {
     const {communityId} = props;
+    const history = useHistory()
     const formik = useFormik({
         initialValues: {
             fieldName1: '',
@@ -30,11 +32,18 @@ export default function DataTypeForm(props) {
             console.log(json_object)
             userCommunityService.createDataTypeForCommunity(communityId, json_object, name).then(response => {
                 console.log(response)
+                if(response.data['@success'] === "True"){
+                    alert(JSON.stringify({"message": "successfully created data type"}, null, 2));
+                    history.push('/community/' + communityId);
+                }
+                actions.setSubmitting(false);
+                alert(JSON.stringify({"message": response.data['@error'] }, null, 2));
             }).catch(error => {
                 console.log(error)
             })
-            alert(JSON.stringify(json_object, null, 2));
-            actions.setSubmitting(false);
+
+            history.push('/community/' + communityId);
+
         },
     });
     return (

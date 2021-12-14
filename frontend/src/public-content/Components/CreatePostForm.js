@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useFormik, Field, Form, Formik, FormikProps, FormikProvider} from 'formik';
 import PostService from '../../services/post.service'
+import {useHistory} from "react-router-dom";
+
 export default function CreatePostForm(props) {
     const {communityId, dataTypes} = props;
+    const history = useHistory();
     const [i, setI] = useState(0);
     let initialValues = {}
     if (dataTypes.length > 0) {
@@ -39,14 +42,21 @@ export default function CreatePostForm(props) {
                     }
 
                 });
-                console.log(title, datatypename, request_json)
                 PostService.submitPost(communityId,title,datatypename,request_json).then( response => {
                     console.log(response)
+                    if(response.data.success === "True"){
+                        actions.setSubmitting(false);
+                        alert(JSON.stringify({"message": "successfully created post"}, null, 2));
+                        return history.push('/community/' + communityId);
+                    }
+                    alert(JSON.stringify({"message": response.data['@error'] }, null, 2));
+                    actions.setSubmitting(false)
+
                 }).catch(error => {
                     console.log(error)
                 })
             }
-            actions.setSubmitting(false)
+
         },
     });
     useEffect(function () {
