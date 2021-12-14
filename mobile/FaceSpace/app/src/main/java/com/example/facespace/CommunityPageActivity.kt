@@ -28,14 +28,18 @@ class CommunityPageActivity : AppCompatActivity() {
     private lateinit var postAdapter: PostAdapter
     private val username = Data().getUsername()
     private val userId = Data().getToken()
-    private val commId = Data().getCurrentCommunityId()
     private var CommunitySubs: JSONArray? = null
     private var isSubscribed = isInComm(username)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_page)
         supportActionBar?.hide()
-        getSubscribers(commId)
+        val intent = intent
+        val infos = intent.getSerializableExtra("keys") as HashMap<*, *>?
+        val res = intent.getStringExtra("result")
+        infos!!["key"]?.let { Log.v("HashMapTest", it as String) }
+        val commId = infos["id"].toString()
+        CommunitySubs = JSONArray(infos["subscribers"].toString())
 
         postAdapter = PostAdapter(mutableListOf())
 
@@ -64,9 +68,7 @@ class CommunityPageActivity : AppCompatActivity() {
         btnSubs.bringToFront()
 
         btnRefresh.setOnClickListener {
-            postAdapter.deleteAll()
-            val intent = Intent(this, CommunityPageActivity::class.java)
-            startActivity(intent)
+            Toast.makeText(baseContext, "This feature is under construction!", Toast.LENGTH_LONG).show()
         }
 
         btnGoHome.setOnClickListener {
@@ -76,8 +78,7 @@ class CommunityPageActivity : AppCompatActivity() {
         }
 
         btnAdd.setOnClickListener {
-            //val dialog = CreatePost()
-            //dialog.show(supportFragmentManager, "Create New Post")
+            Toast.makeText(baseContext, "This feature is under construction!", Toast.LENGTH_LONG).show()
         }
 
         btnLogout.setOnClickListener {
@@ -106,10 +107,7 @@ class CommunityPageActivity : AppCompatActivity() {
 
         // val infos = intent.getSerializableExtra("keys") as HashMap<String, String>
         // var value: Serializable = extras?.
-        val intent = intent
-        val infos = intent.getSerializableExtra("keys") as HashMap<*, *>?
-        val res = intent.getStringExtra("result")
-        infos!!["key"]?.let { Log.v("HashMapTest", it as String) }
+
 
         val titleTV = findViewById<TextView>(R.id.communityTitle)
         val descTV = findViewById<TextView>(R.id.communityDescription)
@@ -130,12 +128,14 @@ class CommunityPageActivity : AppCompatActivity() {
             getPost(post)
         }
 
-        Toast.makeText(this, posts.toString(), Toast.LENGTH_LONG).show()
+        //Toast.makeText(this, posts.toString(), Toast.LENGTH_LONG).show()
 
         // From here you continue from here to list posts previews
 
         val datatypes = JSONArray(resJson["dataTypes"].toString())
+        //Toast.makeText(this, datatypes.toString(), Toast.LENGTH_LONG).show()
         val typeNames = types(datatypes)
+        //Toast.makeText(this, typeNames.toString(), Toast.LENGTH_SHORT).show()
         val spin = findViewById<Spinner>(R.id.spinnerPosts)
         spin.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, typeNames)
         spin.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -146,9 +146,6 @@ class CommunityPageActivity : AppCompatActivity() {
                 id: Long
             ) {
                 result = typeNames[position].toString()
-                if (parent != null) {
-                    // Toast.makeText(parent.context, "$result is seleceted", Toast.LENGTH_SHORT).show()
-                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -161,9 +158,8 @@ class CommunityPageActivity : AppCompatActivity() {
         val btnCreatePost = findViewById<FloatingActionButton>(R.id.createPost)
         btnCreatePost.bringToFront()
 
-
-        if(Data().getCommunities().contains(commId)) {
-
+        val createdBy = JSONObject(resJson["createdBy"].toString())["username"].toString()
+        if(Data().getUsername().contains(createdBy)) {
             btnDataType.visibility = View.VISIBLE
         } else {
             btnDataType.visibility = View.INVISIBLE
@@ -257,7 +253,7 @@ class CommunityPageActivity : AppCompatActivity() {
                     error = jsonObject
                     if (jsonObject["@success"] == "True") {
                         isSubscribed = true
-                        Toast.makeText(this, "user with id $userId subscribed successfully!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "User with id $userId subscribed successfully!", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -290,7 +286,7 @@ class CommunityPageActivity : AppCompatActivity() {
                     error = jsonObject
                     if (jsonObject["@success"] == "True") {
                         isSubscribed = false
-                        Toast.makeText(this, "user with id $userId unsubscribed successfully!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "User with id $userId unsubscribed successfully!", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()

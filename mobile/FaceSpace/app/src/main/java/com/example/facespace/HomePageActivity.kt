@@ -26,7 +26,7 @@ class HomePageActivity : AppCompatActivity() {
         val logout = findViewById<ImageView>(R.id.imageLogOut)
 
         goProfile.setOnClickListener {
-            Toast.makeText(this, "${username.toString()} wants to go his profile.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${username.toString()} wants to go to his/her profile.", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, ProfilePage::class.java)
             startActivity(intent)
 

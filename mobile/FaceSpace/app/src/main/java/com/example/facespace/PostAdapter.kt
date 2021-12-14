@@ -112,7 +112,7 @@ class PostAdapter (
     }
 
     private fun helper(res: JSONObject) {
-        Toast.makeText(mContext,"helalbeee " + res.toString(), Toast.LENGTH_SHORT).show()
+        //Toast.makeText(mContext,"helalbeee " + res.toString(), Toast.LENGTH_SHORT).show()
         val intent: Intent = Intent(mContext, InsidePost::class.java)
         intent.putExtra("result", res.toString())
         mContext.startActivity(intent)

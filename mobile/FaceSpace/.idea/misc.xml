@@ -17,9 +17,9 @@
         <entry key="app/src/main/res/layout/activity_community_page.xml" value="0.3375" />
         <entry key="app/src/main/res/layout/activity_create_data_type.xml" value="0.1125" />
         <entry key="app/src/main/res/layout/activity_create_post.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_create_post_page.xml" value="0.14427083333333332" />
+        <entry key="app/src/main/res/layout/activity_create_post_page.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_inside_post.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_inside_post.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_list_posts.xml" value="0.11041666666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_login_page.xml" value="0.35572916666666665" />

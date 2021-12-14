@@ -121,7 +121,7 @@ class CommunityAdapter (
                     val jsonObject = JSONObject(response)
                     error = jsonObject
                     val results: JSONObject = jsonObject["@return"] as JSONObject
-                    helper(results)
+                    helper(results, id)
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -136,19 +136,21 @@ class CommunityAdapter (
         requestQueue.add(stringRequest)
 
     }
-    private fun helper(res: JSONObject) {
+    private fun helper(res: JSONObject, id: String) {
 
         val infos:MutableMap<String,String> = HashMap()
 
         val tempDate: JSONObject = res["creationTime"] as JSONObject
         val tempBy: JSONObject = res["createdBy"] as JSONObject
 
+        infos["id"] = id
         infos["title"]  = res["communityTitle"].toString()
         infos["desc"]  = res["description"].toString()
         infos["date"]  = tempDate["_isoformat"].toString().substring(0,10)
         infos["by"]  = tempBy["username"].toString()
+        infos["subscribers"] = res["subscribers"].toString()
 
-        Toast.makeText(mContext,"helalsfsf", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(mContext,"helalsfsf", Toast.LENGTH_SHORT).show()
         val intent: Intent = Intent(mContext, CommunityPageActivity::class.java)
         intent.putExtra("keys", infos as Serializable)
         intent.putExtra("result", res.toString())
