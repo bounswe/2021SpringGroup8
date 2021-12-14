@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import { Redirect } from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 import { connect } from "react-redux";
 import Profilebar from "../components/profilebar";
 import querystring from "querystring";
+import Navbar from "../public-content/Components/navbar";
+import Footer from "../public-content/Components/footer/footer";
+
 
 
 
@@ -21,13 +24,16 @@ class Profile extends Component {
         const { usertoken: currentToken } = this.props;
 
         console.log(currentToken);
+
         if (!currentUser) {
             return <Redirect to="/login"/>;
         }
 
         return (
             <>
+
                 <Profilebar/>
+
                 <div className="container">
                     <header className="jumbotron">
                         <h3>
@@ -64,7 +70,11 @@ class Profile extends Component {
 
 
 
+
+
+
                 </div>
+                <Footer/>
             </>
         );
     }
