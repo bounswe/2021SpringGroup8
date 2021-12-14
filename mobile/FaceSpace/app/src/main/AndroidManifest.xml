@@ -19,8 +19,35 @@
         android:theme="@style/Theme.FaceSpace"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".VariableAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".Variable"
+            android:exported="false" />
+        <activity
+            android:name=".CreatePostPage"
+            android:exported="false" />
+        <activity
+            android:name=".CreateDataType"
+            android:exported="false" />
+        <activity
+            android:name=".InsidePost"
+            android:exported="false" />
+        <activity
+            android:name=".PopupUnsubscribedComm"
+            android:exported="false" />
+        <activity
+            android:name=".CreatePost"
+            android:exported="false" />
+        <activity
             android:name=".ProfilePage"
             android:exported="true" />
+        <activity
+            android:name=".PostAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".Post"
+            android:exported="false" />
         <activity
             android:name=".HomePageActivity"
             android:exported="true" />

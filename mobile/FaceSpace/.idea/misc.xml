@@ -3,32 +3,38 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../layout/custom_preview.xml" value="0.12552083333333333" />
         <entry key="app/src/main/res/drawable-v24/aqua_background.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.371875" />
-        <entry key="app/src/main/res/drawable/circle.xml" value="0.25885416666666666" />
-        <entry key="app/src/main/res/drawable/custom_styles.xml" value="0.371875" />
-        <entry key="app/src/main/res/drawable/halfircle.xml" value="0.2640625" />
+        <entry key="app/src/main/res/drawable/halfircle.xml" value="0.1265625" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.371875" />
-        <entry key="app/src/main/res/drawable/img.xml" value="0.25885416666666666" />
         <entry key="app/src/main/res/drawable/round_button.xml" value="0.20677083333333332" />
         <entry key="app/src/main/res/drawable/round_corners.xml" value="0.371875" />
         <entry key="app/src/main/res/layout-v23/community_item.xml" value="0.29270833333333335" />
         <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.2285809906291834" />
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.266796875" />
-        <entry key="app/src/main/res/layout/activity_communities_page.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_community_page.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_communities_page.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_community_page.xml" value="0.3375" />
+        <entry key="app/src/main/res/layout/activity_create_data_type.xml" value="0.1125" />
+        <entry key="app/src/main/res/layout/activity_create_post.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_create_post_page.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_inside_post.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/activity_list_posts.xml" value="0.11041666666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_login_page.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.19791666666666666" />
-        <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_sign_up_page.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/community_item.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/custom_styles.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/activity_popup_unsubscribed_comm.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_post.xml" value="0.22268907563025211" />
+        <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.19157608695652173" />
+        <entry key="app/src/main/res/layout/activity_sign_up_page.xml" value="0.27644710578842313" />
+        <entry key="app/src/main/res/layout/community_item.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_create_community.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/post_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/sign2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/signup2.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/variable_item.xml" value="0.14427083333333332" />
       </map>
     </option>
   </component>

@@ -62,7 +62,7 @@ class CommunitiesPageActivity : AppCompatActivity() {
 
         btnAdd.setOnClickListener {
 
-            var dialog = CreateCommunity()
+            val dialog = CreateCommunity()
             dialog.show(supportFragmentManager, "Create New Community")
 
         }

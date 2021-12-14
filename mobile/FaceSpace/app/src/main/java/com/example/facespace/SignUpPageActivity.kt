@@ -143,7 +143,7 @@ class SignUpPageActivity : AppCompatActivity() {
                             val id = ((jsonObject["@return"]) as JSONObject)["id"]
                             Data().setUsername(username)
                             Data().setToken((jsonObject["@usertoken"]).toString())
-                            Toast.makeText(this, "Signup Successful. \n ${jsonObject.toString()}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Signup successful. \n ${jsonObject.toString()}", Toast.LENGTH_LONG).show()
                             val intent = Intent(this, HomePageActivity::class.java)
                             intent.putExtra("username", username)
                             startActivity(intent)
@@ -165,7 +165,7 @@ class SignUpPageActivity : AppCompatActivity() {
                 requestQueue.add(stringRequest)
 
             } else {
-                Toast.makeText(this, "Please fill all inputs and read&accept terms. $username" +
+                Toast.makeText(this, "Please fill all inputs and read & accept terms. $username" +
                         "$password $email $name $surname $date $city", Toast.LENGTH_SHORT).show()
             }
         }

@@ -45,7 +45,7 @@ class ProfilePage : AppCompatActivity() {
         }
 
         btnEdit.setOnClickListener{
-            Toast.makeText(this,"This is still under implementation", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"This feature is under construction!", Toast.LENGTH_SHORT).show()
         }
 
         btnMaps.setOnClickListener {

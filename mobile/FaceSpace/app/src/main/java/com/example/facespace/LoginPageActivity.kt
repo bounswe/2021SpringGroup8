@@ -76,12 +76,12 @@ class LoginPageActivity : AppCompatActivity() {
                         val returns = JSONObject(jsonObject["@return"].toString())
                         val dob = (JSONObject(returns["birthdate"].toString()))["_isoformat"]
                         val loc = JSONObject(returns["loc"].toString())
-                        Toast.makeText(this, "$url login Successful. Your Token is : $token", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "$url login successful. Your Token is : $token", Toast.LENGTH_SHORT).show()
                         Data().setToken(token as String)
                         Data().setAll(returns["username"].toString(), returns["email"].toString(),
                             returns["name"].toString(), returns["surname"].toString(),
                             dob.toString().substring(0,10), loc["locname"].toString(), returns["pplink"].toString(),
-                            loc["longitude"] as Double, loc["latitude"] as Double
+                            loc["longitude"] as Double, loc["latitude"] as Double, returns["createdCommunities"].toString()
                         )
                         val intent = Intent(this, HomePageActivity::class.java)
                         intent.putExtra("username", username)
@@ -100,27 +100,16 @@ class LoginPageActivity : AppCompatActivity() {
             }
             val requestQueue = Volley.newRequestQueue(this)
             requestQueue.add(stringRequest)
-
-
-
-
-
-
-
-            // Toast.makeText(this@MainActivity, text, Toast.LENGTH_SHORT).show()
-
         }
 
         btnGoSignUp.setOnClickListener {
             val intent = Intent(this, SignUpPageActivity::class.java)
             startActivity(intent)
-
-
         }
 
         btnForgot.setOnClickListener {
 
-            val toast = Toast.makeText(this, "Sorry to hear that. This feature is still under implementation", Toast.LENGTH_SHORT)
+            val toast = Toast.makeText(this, "This feature is under construction!", Toast.LENGTH_SHORT)
             toast.show()
 
 

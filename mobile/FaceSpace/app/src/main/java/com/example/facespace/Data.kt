@@ -1,6 +1,7 @@
 package com.example.facespaceextenstion
 
 import com.example.facespace.Location
+import org.json.JSONArray
 
 class Data {
 
@@ -16,20 +17,29 @@ class Data {
         private var latitude = 0.0
         private var pplink = ""
         private var token = ""
+        private var communities = ""
         private var currCommunityId = ""
         private var currCommunityTitle = ""
         private var currCommunityDesc = ""
         private var currCommunityDate = ""
         private var currCommunityCreator = ""
-
+        private var currPostId = ""
+        private var currPostTitle = ""
+        private var currPostDesc = ""
+        private var currPostDate = ""
+        private var currPostCreator = ""
     }
+    fun getCommunities(): String {
+        return communities
+    }
+
     fun getUrl(extension:String): String {
         return url+extension
     }
 
     fun setAll(newUsername: String, newEmail:String, newName:String,
                newSurname:String, newBirth:String, newCity:String, newPPLink:String,
-                newLong: Double, newLat: Double) {
+               newLong: Double, newLat: Double, newCommunities: String) {
         username = newUsername
         email = newEmail
         name = newName
@@ -39,6 +49,7 @@ class Data {
         pplink = newPPLink
         longitude = newLong
         latitude = newLat
+        communities = newCommunities
 
     }
 
@@ -63,7 +74,7 @@ class Data {
 
     fun resetAll() {
         setAll("","","","","",
-            "","", 0.0, 0.0)
+            "","", 0.0, 0.0, "")
     }
 
     fun getName(): String {
@@ -81,11 +92,17 @@ class Data {
     fun getToken(): String {
         return token
     }
-    fun setCurrentComunityId(id: String) {
+    fun setCurrentCommunityId(id: String) {
         currCommunityId = id
     }
-    fun getCurrentComunityId(): String {
+    fun getCurrentCommunityId(): String {
         return currCommunityId
+    }
+    fun setCurrentPostId(id: String) {
+        currPostId = id
+    }
+    fun getCurrentPostId(): String {
+        return currPostId
     }
     fun resetFields() {
         username = ""
@@ -107,6 +124,24 @@ class Data {
         infos["desc"] = currCommunityDesc
         infos["by"] = currCommunityCreator
         infos["date"] = currCommunityDate
+
+        return infos
+    }
+
+    fun setPostInfo(title:String, desc:String, by:String, date:String) {
+        currPostCreator = by
+        currPostDesc = desc
+        currPostDate = date
+        currPostTitle = title
+    }
+
+    fun getPostInfo(): MutableMap<String, String> {
+        val infos: MutableMap<String, String> = HashMap()
+
+        infos["title"] = currPostTitle
+        infos["desc"] = currPostDesc
+        infos["by"] = currPostCreator
+        infos["date"] = currPostDate
 
         return infos
     }

@@ -77,7 +77,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        Toast.makeText(this, "on map readye geldi elime", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "on map readye geldi elime", Toast.LENGTH_SHORT).show()
         mMap = googleMap
         mMap!!.uiSettings.isZoomControlsEnabled = true
 
@@ -205,13 +205,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
         var addressList: List<Address>? = null
 
         if (location == null || location == ""){
-            Toast.makeText(this, "provide location", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please provide location.", Toast.LENGTH_SHORT).show()
         }else{
             val geoCoder = Geocoder(this)
             try {
                 addressList = geoCoder.getFromLocationName(location, 1)
             }catch (e: IOException){
-                Toast.makeText(this, "provide correct location", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please provide correct location.", Toast.LENGTH_SHORT).show()
             }
 
             val address = addressList!![0]
