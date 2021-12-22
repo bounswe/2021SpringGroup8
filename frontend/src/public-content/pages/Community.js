@@ -29,7 +29,6 @@ class Community extends Component {
       text: "Subscribe",
       owner: false,
       id: "",
-
     };
     this.subscribe = this.subscribe.bind(this);
   }
