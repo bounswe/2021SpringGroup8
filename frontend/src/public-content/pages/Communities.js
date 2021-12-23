@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import UserCommunityService from "../../services/user-community.service";
 import { withRouter } from "react-router-dom";
 import { Button, Card, Col, Container } from "react-bootstrap";
-import {Grid} from "@mui/material";
+import { Grid } from "@mui/material";
 import Header from "../Components/header/header2";
 import Profilebar from "../../components/profilebar";
 import SearchIcon from "@mui/icons-material/Search";
