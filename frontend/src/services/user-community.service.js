@@ -2,7 +2,7 @@ import authService from "./auth.service";
 import axios from "axios";
 import querystring from "querystring";
 
-
+const API_URL =  "http://3.145.120.66:8080/";
 class UserCommunityService {
 
     getCommunities() {
@@ -80,6 +80,7 @@ class UserCommunityService {
             }))
             let paramStr = 'communityId=' + community_id + '&@usertoken=' + token + "&datatypename=" + name + "&datatypefields=" + something;
             let searchParams = new URLSearchParams(paramStr);
+            console.log("param str is")
             console.log(paramStr)
             return axios.post(`http://3.145.120.66:8080/createdatatype`, paramStr,
                 {
@@ -93,6 +94,41 @@ class UserCommunityService {
         } else {
             return {"response": false, "message": "Needs to be login to use this functionality"};
         }
+    }
+
+    createCommunity(communityTitle, description) {
+        console.log("description is ")
+        console.log(description)
+        const user = authService.getCurrentUser()
+        const token = this.getUserToken()
+        if (user) {
+            let paramStr =  'description='+description+'&@usertoken='+token +'&communityTitle='+communityTitle;
+            let searchParams = new URLSearchParams(paramStr);
+            console.log("param str is")
+            console.log(paramStr)
+            console.log(querystring.stringify({
+                "@usertoken": this.getUserToken(),
+                communityTitle:communityTitle,
+                description:description
+
+            }))
+            return axios.post(`http://3.145.120.66:8080/createcommunity`,
+                searchParams,
+
+                // querystring.
+                // stringify({"@usertoken":token, communityTitle:communityTitle, description:description}),
+
+                // paramStr,
+
+                {
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                });
+        } else {
+            return {"response": false, "message": "Needs to be login to use this functionality"};
+        }
+
     }
 
 
