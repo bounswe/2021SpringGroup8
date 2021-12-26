@@ -40,6 +40,7 @@ class Login extends Component {
     }
 
     onChangePassword(e) {
+
         this.setState({
             password: e.target.value,
         });
@@ -59,6 +60,7 @@ class Login extends Component {
         const { dispatch, history } = this.props;
 
         if (this.checkBtn.context._errors.length === 0) {
+
             dispatch(login(this.state.username, this.state.password))
                 .then(() => {
                     history.push("/profile");
