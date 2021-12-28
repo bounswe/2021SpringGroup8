@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import PostService from '../services/post.service';
+import PostService from '../../services/post.service';
+import Map from "../Components/map";
 
 export default class PostView extends Component {
     constructor(props) {
@@ -41,13 +42,15 @@ export default class PostView extends Component {
     render() {
         const {postTitle, id, postedByID, postedByName, postObject} = this.state
         var rows = [];
-        for(let field in postObject) {
-            if(field !== 'yer') rows.push(<h3>{field} :{postObject[field]} </h3>)
-            else{
-                for(let field2 in postObject[field]){
-                    console.log(field2)
-                    rows.push(<h4>{field2} :{postObject[field][field2]}  </h4>)
-                }
+        for (let field in postObject) {
+            if (!postObject[field]['@type']) {
+                rows.push(<h3>{field} :{postObject[field]} </h3>)
+            } else if (postObject[field]['@type'] === "Location.Object") {
+                rows.push(<h4>Location Name :{postObject[field]["locname"]}  </h4>)
+                rows.push(<h4>Location Longitude :{postObject[field]["longitude"]}  </h4>)
+                rows.push(<h4>Location Latitude :{postObject[field]["latitude"]}  </h4>)
+                rows.push(<div><Map marker={{lat: postObject[field]["latitude"], lng: postObject[field]["longitude"]}}/>
+                </div>)
             }
         }
         return (
@@ -59,6 +62,8 @@ export default class PostView extends Component {
                     Posted By: {postedByName}
                 </h2>
                 {rows}
+
+
             </div>
 
 

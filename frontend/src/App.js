@@ -13,7 +13,7 @@ import Welcome from "./public-content/pages/welcome";
 import Communities from "./public-content/pages/Communities";
 import Community from "./public-content/pages/Community";
 import home from "./public-content/pages/home";
-import PostView from "./public-content/PostView";
+import PostView from "./public-content/pages/PostView";
 import CreateDataType from "./public-content/pages/CreateDataType";
 import CreatePost from "./public-content/pages/CreatePost";
 import { history } from './helpers/history';
