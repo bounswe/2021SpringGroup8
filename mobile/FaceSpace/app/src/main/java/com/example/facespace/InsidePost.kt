@@ -32,11 +32,13 @@ class InsidePost : AppCompatActivity() {
         val btnRefresh = findViewById<FloatingActionButton>(R.id.btnRefreshP)
         val btnGoHome = findViewById<FloatingActionButton>(R.id.btnGoHomeP)
         val btnLogout = findViewById<FloatingActionButton>(R.id.btnLogoutP)
+        val btnMaps = findViewById<Button>(R.id.btnSeeLoc)
 
         btnRefresh.bringToFront()
         btnAdd.bringToFront()
         btnGoHome.bringToFront()
         btnLogout.bringToFront()
+        btnMaps.bringToFront()
 
         btnRefresh.setOnClickListener {
             Toast.makeText(baseContext, "This feature is under construction!", Toast.LENGTH_LONG).show()
@@ -54,6 +56,11 @@ class InsidePost : AppCompatActivity() {
 
         btnLogout.setOnClickListener {
             val intent = Intent(this, LoginPageActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnMaps.setOnClickListener {
+            val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
         }
 
