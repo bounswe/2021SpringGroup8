@@ -24,9 +24,12 @@ const useStyles = makeStyles((theme) => ({
     fieldGroup: {
         display: "flex",
         flexWrap: "wrap",
-        justifyContent: "center",
+        justifyContent: "left",
         alignItems: "center",
         margin: theme.spacing(1)
+    },
+    selectLabel: {
+        margin: 0,
     }
 
 }))
@@ -110,26 +113,21 @@ export default function CreateDataTypeFrom(props) {
                             value={inputField.fieldName}
                             onChange={event => handleChangeInput(index, event)}
                         />
-                        <Select
-                            name="fieldType"
-                            id="demo-simple-select"
-                            value={inputField.fieldType}
-                            label="Field Type"
-                            onChange={event => handleChangeInput(index, event)}
-                        >
-                            <MenuItem value={"str"}>String</MenuItem>
-                            <MenuItem value={"int"}>Integer</MenuItem>
-                            <MenuItem value={"location"}>Location</MenuItem>
-                        </Select>
-                        {/*
-                        <TextField
-                            name="fieldType"
-                            label="Field Type"
-                            variant="filled"
-                            value={inputField.fieldType}
-                            onChange={event => handleChangeInput(index, event)}
-                        />
-                        */}
+                        <row>
+                            <InputLabel id="type-select" className={classes.selectLabel}> Type </InputLabel>
+                            <Select
+                                name="fieldType"
+                                id="type-select"
+                                value={inputField.fieldType}
+                                label="Field Type"
+                                onChange={event => handleChangeInput(index, event)}
+                            >
+                                <MenuItem value={"str"}>String</MenuItem>
+                                <MenuItem value={"int"}>Integer</MenuItem>
+                                <MenuItem value={"location"}>Location</MenuItem>
+                            </Select>
+
+                        </row>
                         <IconButton onClick={() => handleRemoveFields(index)}>
                             <RemoveIcon/>
                         </IconButton>
