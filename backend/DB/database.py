@@ -287,6 +287,28 @@ class DatabaseManager:
             communityReturnList.append(community_dict)
         return communityReturnList
 
+    def post_search(self, communityId, dataTypeName, filters):
+        list = []
+        community = list(self.communityCollection.find({"_id": ObjectId(communityId)}))
+        for post in community["posts"]:
+            if post["dataTypeName"] == dataTypeName:
+                valid = True
+                for filter in filters:
+                    filterName = filter[0]
+                    fieldName = filter[1]
+                    params = filter[2]
+                    if filterName == "search text":
+                        valid = valid and search_text(post["fieldValues"][fieldName], params)
+                        if valid == False : break
+                if valid : list.append(self.get_post_preview(str(post["_id"])))   
+
+    def search_text(fieldValue, params):
+        return params[0] in fieldValue
+                        
+                
+                
+
+
 
 if __name__== "__main__":
     dbm = DatabaseManager()
