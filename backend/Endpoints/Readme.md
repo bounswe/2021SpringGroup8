@@ -174,6 +174,7 @@ There are 5 filters whose filtername's are "search text", "greater", "less", "gr
             "@type": "User.UpdateProfile",
             "@success": "True" or "False",
             "@error": str => if @success is "False",
+            "@return": User.Object
         }
         ```
 
