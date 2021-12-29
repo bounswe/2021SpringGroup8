@@ -14,10 +14,14 @@ class ServerManager:
         self.DatabaseManager = databasemanager
 
     def ClearOldTokens(self):
-
+        
+        delete = []
         for key in self.Tokens:
             if not self.ValidToken(key):
-                del self.Tokens[key]
+                delete.append(key)
+        
+        for key in delete:
+            del self.Tokens[key]
 
     def RegisterToken(self, user_dict):
         self.ClearOldTokens()
