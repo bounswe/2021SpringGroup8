@@ -278,15 +278,23 @@ class DatabaseManager:
         else:
             return False
 
+    def community_name_search(self, name):
+        regex = name
+        communityList = list(self.communityCollection.find({"$or": [{ "communityTitle": { '$regex': regex,'$options':'i'} },{ "description": { '$regex': regex, '$options':'i'}}]}))
+
+        return communityList
+
 
 if __name__== "__main__":
     dbm = DatabaseManager()
+#    print(dbm.get_communuties())
+    print(dbm.community_name_search("DD"))
 #    print(dbm.update_profile("619cdff3bb35199a704b7c9d", {"pplink":"test-pplink"}))
 #    print(dbm.subscribe_community("619cdff3bb35199a704b7c9d", dbm.get_community_preview("619ce04502e2845ef0c47701")))
 #    print(dbm.is_subscribed("619cdff3bb35199a704b7c9d", "619ce04502e2845ef0c47700"))
 #    x = dbm.find_user("61aea3219715d896eb60d145")   
 #    print(x)
-    print(dbm.find_dataType( "NewDataType", dbm.get_community_preview("61b489c3c52c05465a0ced06")))
+#    print(dbm.find_dataType( "NewDataType", dbm.get_community_preview("61b489c3c52c05465a0ced06")))
 #    print(dbm.get_communuties())
 #    change = {}
 #    change["email"] = "backend3@gmail.com"
