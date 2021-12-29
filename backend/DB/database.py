@@ -281,8 +281,11 @@ class DatabaseManager:
     def community_name_search(self, name):
         regex = name
         communityList = list(self.communityCollection.find({"$or": [{ "communityTitle": { '$regex': regex,'$options':'i'} },{ "description": { '$regex': regex, '$options':'i'}}]}))
-
-        return communityList
+        communityReturnList = []
+        for community in communityList:
+            community_dict = self.get_community_preview(str(community["_id"]))
+            communityReturnList.append(community_dict)
+        return communityReturnList
 
 
 if __name__== "__main__":
