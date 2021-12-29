@@ -323,10 +323,10 @@ class DatabaseManager:
         return params[0].lower() in fieldValue.lower()
 
     def search_greater(self, fieldValue, params):
-        return (params[0] > fieldValue)
+        return (params[0] < fieldValue)
     
     def search_less(self, fieldValue, params):
-        return (params[0] < fieldValue)
+        return (params[0] > fieldValue)
 
 
 if __name__== "__main__":
