@@ -68,6 +68,8 @@ def Submit(manager : ServerManager, userid, params):
                 realfieldval = int(str(fieldval))
             elif fieldtype == "str":
                 realfieldval = str(fieldval)
+            elif fieldtype == "float":
+                realfieldval = float(str(fieldval))
             elif fieldtype == "datetime":
                 realfieldval = datetime.fromisoformat(str(fieldval))
             elif fieldtype == "bool":
