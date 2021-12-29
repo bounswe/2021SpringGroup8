@@ -11,7 +11,24 @@ import hashlib
 import re
 from datetime import datetime
 
-POST_FIELD_TYPES = ["str", "int", "bool", "location", "image", "datetime"]
+POST_FIELD_TYPES = ["str", "int", "float", "bool", "location", "image", "datetime"]
+
+def Search(manager : ServerManager, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "Community.Search"
+
+    searchtext = params["searchtext"][0]
+
+    dbres = manager.DatabaseManager.community_name_search(searchtext)
+
+    for res in dbres:
+        res["@type"] = "Community.Object"
+
+    response["@success"] = "True"
+    response["@return"] = dbres
+    return response
+
 
 def CreateDataType(manager : ServerManager, userid, params):
     response = {}

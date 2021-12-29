@@ -191,4 +191,5 @@ def UpdateProfile(manager : ServerManager, userid, params):
         return SetError(response, "Couldn't update profile!")
     
     response["@success"] = "True"
+    response["@return"] = manager.DatabaseManager.find_user(userid)
     return response

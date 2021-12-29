@@ -278,15 +278,86 @@ class DatabaseManager:
         else:
             return False
 
+    def community_name_search(self, name):
+        regex = name
+        communityList = list(self.communityCollection.find({"$or": [{ "communityTitle": { '$regex': regex,'$options':'i'} },{ "description": { '$regex': regex, '$options':'i'}}]}))
+        communityReturnList = []
+        for community in communityList:
+            community_dict = self.get_community_preview(str(community["_id"]))
+            communityReturnList.append(community_dict)
+        return communityReturnList
+
+    def post_search(self, communityId, dataTypeName, filters):
+        post_list = []
+        community = self.get_specific_community(communityId)
+        if community == False:
+            return False
+
+        for post in community["posts"]:
+            if post["dataTypeName"] == dataTypeName:
+                valid = True
+                for filter in filters:
+                    filterName = filter[0]
+                    fieldName = filter[1]
+                    params = filter[2]
+                    if filterName == "search text":
+                        valid = valid and self.search_text(post["fieldValues"][fieldName], params)
+                        if valid == False : break
+                    if filterName == "greater":
+                        valid &= self.search_greater(post["fieldValues"][fieldName], params)
+                        if valid == False : break
+                    if filterName == "greater or equal":
+                        valid &= self.search_greater_equal(post["fieldValues"][fieldName], params)
+                        if valid == False : break
+                    if filterName == "less":
+                        valid &= self.search_less(post["fieldValues"][fieldName], params)
+                        if valid == False : break
+                    if filterName == "less or equal":
+                        valid &= self.search_less_equal(post["fieldValues"][fieldName], params)
+                        if valid == False : break
+                    if filterName == "equal":
+                        valid &= self.search_equal(post["fieldValues"][fieldName], params)
+                        if valid == False : break
+                    if filterName == "checked":
+                        valid &= post["fieldValues"][fieldName]
+                        if valid == False : break
+                    if filterName == "unchecked":
+                        valid &= not(post["fieldValues"][fieldName])
+                        if valid == False : break
+                if valid : post_list.append(post)#self.get_post_preview(post["id"]))   
+        
+        return post_list
+
+    def search_text(self, fieldValue, params):
+        return params[0].lower() in fieldValue.lower()
+
+    def search_greater(self, fieldValue, params):
+        return (params[0] < fieldValue)
+
+    def search_greater_equal(self, fieldValue, params):
+        return (params[0] <= fieldValue)
+    
+    def search_less(self, fieldValue, params):
+        return (params[0] > fieldValue)
+
+    def search_less_equal(self, fieldValue, params):
+        return (params[0] >= fieldValue)
+
+    def search_equal(self, fieldValue, params):
+        return (params[0] == fieldValue)
+
+
 
 if __name__== "__main__":
     dbm = DatabaseManager()
+#    print(dbm.get_communuties())
+    print(dbm.community_name_search("DD"))
 #    print(dbm.update_profile("619cdff3bb35199a704b7c9d", {"pplink":"test-pplink"}))
 #    print(dbm.subscribe_community("619cdff3bb35199a704b7c9d", dbm.get_community_preview("619ce04502e2845ef0c47701")))
 #    print(dbm.is_subscribed("619cdff3bb35199a704b7c9d", "619ce04502e2845ef0c47700"))
 #    x = dbm.find_user("61aea3219715d896eb60d145")   
 #    print(x)
-    print(dbm.find_dataType( "NewDataType", dbm.get_community_preview("61b489c3c52c05465a0ced06")))
+#    print(dbm.find_dataType( "NewDataType", dbm.get_community_preview("61b489c3c52c05465a0ced06")))
 #    print(dbm.get_communuties())
 #    change = {}
 #    change["email"] = "backend3@gmail.com"

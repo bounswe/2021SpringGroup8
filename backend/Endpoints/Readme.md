@@ -1,4 +1,35 @@
 # Objects Definitions
+## Filter.Object
+Attention! This object is an array, not a dictionary or map.
+``` json
+[
+    filtername: str,
+    fieldname: str,
+    params: [param1, param2 ....]
+]
+```
+### Filter Types
+There are 5 filters whose filtername's are "search text", "greater", "less", "greater or equal", "less or equal", "equal", "checked", "unchecked".
+
+    "search text": Searches for a text provided in params, in a given field. Requires 1 param.
+            
+    "greater": if a field value is greater than the parameter given. Requires 1 param.
+
+    "less": if a field value is less than the parameter given. Requires 1 param.
+
+    "greater or equal": if a field value is greater than or equal to the parameter given. Requires 1 param.
+
+    "less or equal": if a field value is less than or equal to the parameter given. Requires 1 param.
+
+    "equal": if a field value is equal to the parameter given. Requires 1 param.
+
+    "checked": if a field value is bool and checked. Requires 0 param.
+            
+    "unchecked": if a field value is bool and unchecked. Requires 0 param.
+            
+
+
+
 ## Date.Object
 ``` json
 {
@@ -143,6 +174,7 @@
             "@type": "User.UpdateProfile",
             "@success": "True" or "False",
             "@error": str => if @success is "False",
+            "@return": User.Object
         }
         ```
 
@@ -388,6 +420,25 @@
         }
         ```
 
+## Search Community
+- Url: http://localhost:8080/searchcommunity
+- Method: POST
+- Request:
+    - Header:
+    - Body:
+        - "searchtext": str
+- Response:
+    - Header:
+    - Body:
+        ``` json
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "Community.Search",
+            "@success": "True" or "False",
+            "@return": [Array of Community.Preview]
+        }
+        ```
+
 
 # Post Functionalities
 
@@ -457,5 +508,31 @@
             "@context": "https://www.w3.org/ns/activitystreams",
             "@type": "Post.Delete",
             "success": "True" or "False"
+        }
+        ```
+
+## Search Post
+- Url: http://localhost:8080/searchpost
+- Method: POST
+- Request:
+    - Header:
+    - Body:
+        - "communityId": str
+        
+        - "datatypename": str
+        - "filters": [Array of Filter.Object] 
+            - example input: 
+                - "communityId": "61b79b8b596357c065841556"
+                - "datatypename": ChampionsLeague
+                - "filters": [["search text","Between", ["f"]]]
+- Response:
+    - Header:
+    - Body:
+        ``` json
+        {
+            "@context": "https://www.w3.org/ns/activitystreams",
+            "@type": "Post.Search",
+            "success": "True",
+            "@return": [Array of Post.Object]
         }
         ```

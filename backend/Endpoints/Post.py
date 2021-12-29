@@ -19,6 +19,25 @@ def SetError(response, err):
     response["@error"] = err
     return response
 
+def Search(manager : ServerManager, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "Post.Search"
+    
+    communityId = params["communityId"][0]
+    datatypename = params["datatypename"][0]
+    filters = json.loads(params["filters"][0])
+
+    dbres = manager.DatabaseManager.post_search(communityId, datatypename, filters)
+
+    if dbres == False:
+        return SetError(response, "Error occured!")
+
+    response["success"] = "True"
+    response["@return"] = dbres
+    return response
+
+
 def Submit(manager : ServerManager, userid, params):
     response = {}
     response["@context"] = "https://www.w3.org/ns/activitystreams"
@@ -68,10 +87,13 @@ def Submit(manager : ServerManager, userid, params):
                 realfieldval = int(str(fieldval))
             elif fieldtype == "str":
                 realfieldval = str(fieldval)
+            elif fieldtype == "float":
+                realfieldval = float(str(fieldval))
             elif fieldtype == "datetime":
                 realfieldval = datetime.fromisoformat(str(fieldval))
             elif fieldtype == "bool":
-                realfieldval = bool(str(fieldval))
+                if isinstance(fieldval, bool):
+                    realfieldval = fieldval
             elif fieldtype == "location":
                 valid, message = CheckLocation(fieldval)
                 if valid:
