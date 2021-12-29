@@ -20,7 +20,6 @@ class ProfilePage : AppCompatActivity() {
         val editProfile = findViewById<ImageView>(R.id.btnEdit)
 
         val btnMaps = findViewById<ImageView>(R.id.imageView6)
-
         val tvusername = findViewById<TextView>(R.id.tvUsername)
         val tvname = findViewById<TextView>(R.id.tvName)
         val tvsurname = findViewById<TextView>(R.id.tvSurname)
@@ -45,7 +44,8 @@ class ProfilePage : AppCompatActivity() {
         }
 
         btnEdit.setOnClickListener{
-            Toast.makeText(this,"This feature is under construction!", Toast.LENGTH_SHORT).show()
+            val dialog = EditProfile()
+            dialog.show(supportFragmentManager, "Edit Profile")
         }
 
         btnMaps.setOnClickListener {

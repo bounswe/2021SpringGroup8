@@ -66,6 +66,8 @@ class Data {
         infos["surname"] = surname
         infos["birthdate"] = birthdate
         infos["city"] = city
+        infos["lon"] = longitude.toString()
+        infos["lat"] = latitude.toString()
         infos["pplink"] = pplink
 
 
