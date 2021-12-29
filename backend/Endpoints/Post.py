@@ -19,6 +19,25 @@ def SetError(response, err):
     response["@error"] = err
     return response
 
+def Search(manager : ServerManager, params):
+    response = {}
+    response["@context"] = "https://www.w3.org/ns/activitystreams"
+    response["@type"] = "Post.Search"
+    
+    communityId = params["communityId"][0]
+    datatypename = params["datatypename"][0]
+    filters = json.loads(params["filters"][0])
+
+    dbres = manager.DatabaseManager.post_search(communityId, datatypename, filters)
+
+    if dbres == False:
+        return SetError(response, "Error occured!")
+
+    response["success"] = "True"
+    response["@return"] = dbres
+    return response
+
+
 def Submit(manager : ServerManager, userid, params):
     response = {}
     response["@context"] = "https://www.w3.org/ns/activitystreams"

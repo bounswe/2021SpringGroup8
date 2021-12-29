@@ -85,6 +85,11 @@ def ProcessNonTokenRequests(self, manager):
         response = Endpoints.Community.Search(manager, params)
         WriteJSON(self, response)
         return True
+    elif self.path == "/searchpost":
+        params = ParsePostBody(self)
+        response = Endpoints.Post.Search(manager, params)
+        WriteJSON(self, response)
+        return True
     else:
         return False
 

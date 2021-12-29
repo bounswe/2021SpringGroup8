@@ -20,12 +20,13 @@ def Search(manager : ServerManager, params):
 
     searchtext = params["searchtext"][0]
 
-    dbres = None
+    dbres = manager.DatabaseManager.community_name_search(searchtext)
 
-    if dbres == False:
-        return SetError(response, "Couldn't !")
+    for res in dbres:
+        res["@type"] = "Community.Object"
 
     response["@success"] = "True"
+    response["@return"] = dbres
     return response
 
 

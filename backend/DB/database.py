@@ -288,8 +288,11 @@ class DatabaseManager:
         return communityReturnList
 
     def post_search(self, communityId, dataTypeName, filters):
-        list = []
-        community = list(self.communityCollection.find({"_id": ObjectId(communityId)}))
+        post_list = []
+        community = self.get_specific_community(communityId)
+        if community == False:
+            return False
+
         for post in community["posts"]:
             if post["dataTypeName"] == dataTypeName:
                 valid = True
@@ -298,12 +301,14 @@ class DatabaseManager:
                     fieldName = filter[1]
                     params = filter[2]
                     if filterName == "search text":
-                        valid = valid and search_text(post["fieldValues"][fieldName], params)
+                        valid = valid and self.search_text(post["fieldValues"][fieldName], params)
                         if valid == False : break
-                if valid : list.append(self.get_post_preview(str(post["_id"])))   
+                if valid : post_list.append(post)#self.get_post_preview(post["id"]))   
+        
+        return post_list
 
-    def search_text(fieldValue, params):
-        return params[0] in fieldValue
+    def search_text(self, fieldValue, params):
+        return params[0].lower() in fieldValue.lower()
                         
                 
                 
