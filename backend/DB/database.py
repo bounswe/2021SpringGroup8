@@ -303,15 +303,48 @@ class DatabaseManager:
                     if filterName == "search text":
                         valid = valid and self.search_text(post["fieldValues"][fieldName], params)
                         if valid == False : break
+                    if filterName == "greater":
+                        valid &= self.search_greater(post["fieldValues"][fieldName], params)
+                        if valid == False : break
+                    if filterName == "greater or equal":
+                        valid &= self.search_greater_equal(post["fieldValues"][fieldName], params)
+                        if valid == False : break
+                    if filterName == "less":
+                        valid &= self.search_less(post["fieldValues"][fieldName], params)
+                        if valid == False : break
+                    if filterName == "less or equal":
+                        valid &= self.search_less_equal(post["fieldValues"][fieldName], params)
+                        if valid == False : break
+                    if filterName == "equal":
+                        valid &= self.search_equal(post["fieldValues"][fieldName], params)
+                        if valid == False : break
+                    if filterName == "checked":
+                        valid &= post["fieldValues"][fieldName]
+                        if valid == False : break
+                    if filterName == "unchecked":
+                        valid &= not(post["fieldValues"][fieldName])
+                        if valid == False : break
                 if valid : post_list.append(post)#self.get_post_preview(post["id"]))   
         
         return post_list
 
     def search_text(self, fieldValue, params):
         return params[0].lower() in fieldValue.lower()
-                        
-                
-                
+
+    def search_greater(self, fieldValue, params):
+        return (params[0] < fieldValue)
+
+    def search_greater_equal(self, fieldValue, params):
+        return (params[0] <= fieldValue)
+    
+    def search_less(self, fieldValue, params):
+        return (params[0] > fieldValue)
+
+    def search_less_equal(self, fieldValue, params):
+        return (params[0] >= fieldValue)
+
+    def search_equal(self, fieldValue, params):
+        return (params[0] == fieldValue)
 
 
 
