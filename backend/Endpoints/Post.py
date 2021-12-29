@@ -92,7 +92,8 @@ def Submit(manager : ServerManager, userid, params):
             elif fieldtype == "datetime":
                 realfieldval = datetime.fromisoformat(str(fieldval))
             elif fieldtype == "bool":
-                realfieldval = bool(str(fieldval))
+                if isinstance(fieldval, bool):
+                    realfieldval = fieldval
             elif fieldtype == "location":
                 valid, message = CheckLocation(fieldval)
                 if valid:
