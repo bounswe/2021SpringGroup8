@@ -53,14 +53,15 @@ class Communities extends Component {
   }
 
   //button => onClick = {onClick}
-  onClick() {
+  onClick(event) {
     // api call or filter
-    window.alert(this.state.searchValue);
+    this.setState({ searchValue: event.target.value });
   }
 
   render() {
-    const { communities } = this.state;
-
+    const { communities, searchValue } = this.state;
+    
+    const filterCommunities = communities.filter((item) => item.CommunityTitle.toLowerCase().includes(searchValue.toLowerCase()) || item.createdBy.username.toLowerCase().includes(searchValue.toLowerCase()));
     return (
       <>
         <Profilebar />
@@ -86,8 +87,8 @@ class Communities extends Component {
               <strong>Enjoy various amazing communities</strong>
             </h3>
           </header>
-          {communities &&
-            communities.map((community, index) => (
+          {filterCommunities &&
+            filterCommunities.map((community, index) => (
               <Col md="9">
                 <Card style={{ width: "100%" }}>
                   <Card.Img
