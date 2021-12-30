@@ -12,7 +12,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { Link } from "react-router-dom";
-
+import "../App.css";
 
 
 class Profile extends Component {
@@ -28,6 +28,9 @@ class Profile extends Component {
         this.setActiveCreationReqNonActive = this.setActiveCreationReqNonActive.bind(this);
         this.setActiveEmailEdit = this.setActiveEmailEdit.bind(this);
         this.setActiveEmailEditFalse = this.setActiveEmailEditFalse.bind(this);
+        this.setSeeSubsCommsActive=this.setSeeSubsCommsActive.bind(this);
+        this.setSeeSubsCommsActiveFalse=this.setSeeSubsCommsActiveFalse.bind(this);
+        this.unsubToComm= this.unsubToComm.bind(this);
         this.state = {
             communityTitle: "",
             description: "",
@@ -35,7 +38,52 @@ class Profile extends Component {
             communityCreationReq: true,
             emailEdit : true,
             email:"",
+            seeSubsComms:true,
+            seeMyComms:true,
+            currCommId:null
         };
+
+    }
+    unsubToComm(){
+
+    }
+    setSeeSubsCommsActive() {
+        this.setState({
+            seeSubsComms: true,
+        });
+        window.location.reload(false);
+
+    }
+    setSeeSubsCommsActiveFalse() {
+
+        ProfileService.getMyProfile().then(
+            response => {
+                if (response.data['@success'] !== 'False') {
+                    console.log(response.data['@return']);
+
+                    localStorage.removeItem("user");
+                    localStorage.setItem("user", JSON.stringify(response.data['@return']));
+
+
+                    this.setState({
+                        seeSubsComms: false,
+                    });
+                } else {
+                    console.log(response.data['@error']);
+                    alert(response.data['@error']);
+                }
+            })
+            .catch(
+                error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                    console.log(resMessage);
+                }
+            );
 
     }
     setActiveEmailEdit() {
@@ -104,7 +152,6 @@ class Profile extends Component {
                     response => {
                         if (response.data['@success'] !== 'False') {
                             console.log(response.data['@return']);
-
                             history.push('/communities');
                         } else {
                             console.log(response.data['@error']);
@@ -142,8 +189,6 @@ class Profile extends Component {
         const { history} = this.props;
 
         if (this.checkBtn.context._errors.length === 0) {
-            console.log("email is ")
-            console.log(this.email)
             ProfileService
                 .updateEmail(
                     this.state.email,
@@ -152,15 +197,10 @@ class Profile extends Component {
                 .then(
                     response => {
                         if (response.data['@success'] !== 'False') {
-                            console.log(response.data['@return']);
-
-                            var usr = localStorage.getItem('user')
-                            //console.log(usr)
-                            //console.log("user['email'] is ")
-                            //console.log(this.state.email)
-                            localStorage.setItem('user', usr)
+                            localStorage.removeItem("user");
+                            localStorage.setItem("user", JSON.stringify(response.data['@return']));
                             this.setActiveEmailEdit();
-
+                            window.location.reload(false);
                         } else {
                             console.log(response.data['@error']);
                             alert(response.data['@error']);
@@ -187,7 +227,7 @@ class Profile extends Component {
 
 
     render() {
-        const {communityCreationReq : communityCreationReq , emailEdit: emailEdit} = this.state;
+        const {communityCreationReq : communityCreationReq , emailEdit: emailEdit, seeSubsComms: seeSubsComms} = this.state;
 
         const { user: currentUser } = this.props;
 
@@ -212,19 +252,13 @@ class Profile extends Component {
                             <strong>{currentUser.username}</strong> Profile
                         </h3>
                     </header>
+                    {/*<p>*/}
+                    {/*    <strong>Id:</strong> {currentUser.id}*/}
+                    {/*</p>*/}
                     <p>
-                        <strong>Id:</strong> {currentUser.id}
-                    </p>
-                    <p>
-                        {/*<strong>Email:</strong> {currentUser.email}*/}
-                        {/*<button*/}
-                        {/*    onClick={this.setActiveEmailEditFalse}*/}
-                        {/*    className="badge badge-warning"*/}
-                        {/*>*/}
-                        {/*    Edit*/}
-                        {/*</button>*/}
-                        <div className="col-md-6">
-                            { emailEdit ?(
+
+
+                            {emailEdit?(
                                 <p>
                                 <strong>Email:</strong> {currentUser.email}
                                 <button
@@ -240,6 +274,7 @@ class Profile extends Component {
                                         this.form = c;
                                     }}
                                 >
+                                    <>
                                     <div className="form-group">
                                         <label htmlFor="email">Email</label>
                                         <Input
@@ -251,19 +286,6 @@ class Profile extends Component {
 
                                         />
                                     </div>
-
-                                    {/*<div className="form-group">*/}
-                                    {/*    <label htmlFor="description">description</label>*/}
-                                    {/*    <Input*/}
-                                    {/*        type="text"*/}
-                                    {/*        className="form-control"*/}
-                                    {/*        name="description"*/}
-                                    {/*        value={this.state.description}*/}
-                                    {/*        onChange={this.onChangeDescription}*/}
-
-                                    {/*    />*/}
-                                    {/*</div>*/}
-
                                     <div className="form-group">
                                         <button
                                             className="btn btn-outline-secondary btn-group-toggle"
@@ -275,21 +297,10 @@ class Profile extends Component {
                                             <span>Update Email</span>
                                         </button>
                                     </div>
-                                    {message && (
-                                        <div className="form-group">
-                                            <div className="alert alert-danger" role="alert">
-                                                {message}
-                                            </div>
-                                        </div>
-                                    )}
-                                    <CheckButton
-                                        style={{ display: "none" }}
-                                        ref={(c) => {
-                                            this.checkBtn = c;
-                                        }}
-                                    />
+                                    </>
+
                                 </Form> ) }
-                        </div>
+
                         { emailEdit ? (
                             <h4></h4>
                         ) : (
@@ -309,6 +320,7 @@ class Profile extends Component {
                         >
                             Edit
                         </Link>
+
                     </p>
                     <p>
                         <strong>Surname:</strong> {currentUser.surname}
@@ -338,15 +350,102 @@ class Profile extends Component {
                             Edit
                         </Link>
                     </p>
+                    { seeSubsComms?(
+                        <p>
+                            <strong>Subscribed Communities :</strong>
+                            <button
+                                onClick={this.setSeeSubsCommsActiveFalse}
+                                className="badge badge-pill"
+                            >
+                                Expand
+                            </button>
+                        </p>) : (
+                        <>
+                            <strong>Subscribed Communities :</strong>
+                            <button
+                                onClick={this.setSeeSubsCommsActive}
+                                className="badge badge-secondary"
+                            >
+                                Collapse
+                            </button>
+                            {currentUser.subscribes.map(function (subcom) {
+                                return  <div className="list row">
+                                    <div className="col-md-12">
+                                        <div className="input-group mb-1">
+                                            <div className="input-group-append">
 
-                    <p>
-                        <strong>Profile Picture:</strong> {currentUser.pplink}
-                    </p>
+                                                <Link
+                                                    to={"/community/"+subcom.id}
+                                                    className="badge badge-info mb-1 col-md-12"
+                                                ><div className="my-cls"> <h5 className="my-cls"><strong>{subcom.CommunityTitle}</strong></h5> </div>
+                                                    <h6 className="my-cls">{subcom.description}</h6>
+                                                    <button
+                                                        className="badge badge-warning"
+                                                    >
+                                                        Unsubscribe
+                                                    </button>
+                                                </Link>
 
-                    <p>
-                        <strong>Token:</strong> {currentToken}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>;
 
-                    </p>
+                            })
+                            }
+                        </>
+                         ) }
+
+                    { seeSubsComms?(
+                        <p>
+                            <strong>My Communities :</strong>
+                            <button
+                                onClick={this.setSeeSubsCommsActiveFalse}
+                                className="badge badge-pill"
+                            >
+                                Expand
+                            </button>
+                        </p>) : (
+                        <>
+                            <strong>My Communities :</strong>
+                            <button
+                                onClick={this.setSeeSubsCommsActive}
+                                className="badge badge-secondary"
+                            >
+                                Collapse
+                            </button>
+                            {currentUser.createdCommunities.map(function (subcom) {
+                                return  <div className="list row">
+                                    <div className="col-md-12">
+                                        <div className="input-group mb-1">
+                                            <div className="input-group-append">
+
+                                                <Link
+                                                    to={"/community/"+subcom.id}
+                                                    className="badge badge-info mb-1 col-md-12"
+                                                ><div className="my-cls2"> <h5><strong>{subcom.CommunityTitle}</strong></h5> </div>
+                                                    <h6>{ subcom.description}</h6>
+                                                    <button
+                                                        className="badge badge-danger"
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </Link>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>;
+
+                            })
+                            }
+                        </>
+                    ) }
+
+                    {/*<p>*/}
+                    {/*    <strong>Token:</strong> {currentToken}*/}
+
+                    {/*</p>*/}
                     <div className="col-md-6">
                         { communityCreationReq ?(<h4></h4>) : (
                             <Form
@@ -361,7 +460,7 @@ class Profile extends Component {
                                         type="text"
                                         className="form-control"
                                         name="communityTitle"
-                                        value={this.state.communityTitle}
+                                        value={this.state.CommunityTitle}
                                         onChange={this.onChangeCommunityTitle}
 
                                     />

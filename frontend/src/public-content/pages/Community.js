@@ -91,6 +91,7 @@ class Community extends Component {
                         variant: 'contained',
                         text: 'Subscribe'
                     })
+
                 } else {
                     console.log(response.data['@error'])
                     alert(response.data['@error'])

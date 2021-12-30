@@ -13,6 +13,31 @@ class ProfileService {
         return token
     }
 
+    getMyProfile(){
+
+        const user = authService.getCurrentUser()
+        const token = this.getUserToken()
+        if (user) {
+            let paramStr =  '&@usertoken='+token ;
+            let searchParams = new URLSearchParams(paramStr);
+            console.log("param str is")
+            console.log(paramStr)
+            console.log(querystring.stringify({
+                "@usertoken": this.getUserToken(),
+            }))
+            return axios.post(`http://3.145.120.66:8080/getmyprofile`,
+                searchParams,
+                {
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                });
+        } else {
+            return {"response": false, "message": "Needs to be login to use this functionality"};
+        }
+
+    }
+
 
 
     updateEmail(email) {
