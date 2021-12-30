@@ -19,6 +19,9 @@
         android:theme="@style/Theme.FaceSpace"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SearchPosts"
+            android:exported="true" />
+        <activity
             android:name=".MyCommunities"
             android:exported="false" />
         <activity

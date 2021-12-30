@@ -46,6 +46,7 @@ class CommunityPageActivity : AppCompatActivity() {
         val btnAdd = findViewById<FloatingActionButton>(R.id.btnAdd)
         val btnRefresh = findViewById<FloatingActionButton>(R.id.btnRefresh)
         val btnGoHome = findViewById<FloatingActionButton>(R.id.btnGoHome)
+        val btnSearch = findViewById<FloatingActionButton>(R.id.btnSearch)
         val btnLogout = findViewById<FloatingActionButton>(R.id.btnLogout)
         val btnSubs = findViewById<Button>(R.id.btnSubscribe)
 
@@ -66,6 +67,7 @@ class CommunityPageActivity : AppCompatActivity() {
         btnGoHome.bringToFront()
         btnLogout.bringToFront()
         btnSubs.bringToFront()
+        btnSearch.bringToFront()
 
         btnRefresh.setOnClickListener {
             Toast.makeText(baseContext, "This feature is under construction!", Toast.LENGTH_LONG).show()
@@ -83,6 +85,12 @@ class CommunityPageActivity : AppCompatActivity() {
 
         btnLogout.setOnClickListener {
             val intent = Intent(this, LoginPageActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnSearch.setOnClickListener {
+            val intent = Intent(this, SearchPosts::class.java)
+            intent.putExtra("result", res.toString())
             startActivity(intent)
         }
 
