@@ -34,9 +34,9 @@ import kotlin.collections.HashMap
  * create an instance of this fragment.
  */
 class EditProfile : DialogFragment() {
-    val infos: MutableMap<String, String> = Data().getAll()
-    var lon: Double? = (infos["lon"])?.toDouble()
-    var lat: Double? = (infos["lat"])?.toDouble()
+    val loc: Location = Data().getLoc()
+    var lon: Double = loc.longitude
+    var lat: Double = loc.latitude
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +47,7 @@ class EditProfile : DialogFragment() {
 
 
 
-
+        val infos: MutableMap<String, String> = Data().getAll()
         rootView.newName.setText(infos["name"])
         rootView.newSurname.setText(infos["surname"])
         rootView.newEmail.setText(infos["email"])
@@ -68,11 +68,11 @@ class EditProfile : DialogFragment() {
             val name = rootView.newName.text.toString()
             val surname = rootView.newSurname.text.toString()
             val email = rootView.newEmail.text.toString()
-            val loc = rootView.newCity.text.toString()
+            val city = rootView.newCity.text.toString()
             val date = rootView.newDate.text.toString()
             val pplink = rootView.newLink.text.toString()
 
-            // sendRequest(title, desc)
+            sendRequest(token, name, surname, email, city, lon, lat, date, pplink)
 
         }
 
@@ -123,16 +123,29 @@ class EditProfile : DialogFragment() {
         }
     }
 
-    private fun sendRequest(tit:String, des:String) {
+    private fun sendRequest(token:String, name:String, surname:String, email:String,
+                city:String, lon:Double, lat:Double, date:String, link:String) {
         val url = Data().getUrl("updateprofile")
 
 
         val params: MutableMap<String, String> = HashMap()
 
         //Change with your post params
-        params["communityTitle"] = tit
-        params["description"] = des
-        params["@usertoken"] = Data().getToken()
+        params["@usertoken"] = token
+        params["name"] = name
+        params["surname"] = surname
+        params["email"] = email
+        params["birthdate"] = date
+        params["pplink"] = link
+        var loc = JSONObject()
+        loc.put("locname", city)
+        loc.put("longitude", lon)
+        loc.put("latitude", lat)
+
+
+        params["loc"] = loc.toString()
+
+
 
 
         var error: JSONObject? = null
@@ -144,8 +157,8 @@ class EditProfile : DialogFragment() {
                     //Parse your api responce here
                     val jsonObject = JSONObject(response)
                     error = jsonObject
-                    val id = JSONObject((jsonObject["@return"]).toString())["id"]
-                    Toast.makeText(context, "Community with id $id crated successfully", Toast.LENGTH_SHORT).show()
+                    Data().update(email,name, surname, date, city, link, lon, lat)
+                    Toast.makeText(context, "Profile is updated successfully", Toast.LENGTH_SHORT).show()
                 } catch (e: JSONException) {
                     e.printStackTrace()
                     Toast.makeText(context, (error?.get("@error")) as String, Toast.LENGTH_SHORT).show()
