@@ -63,11 +63,11 @@ export default function CreateDataTypeFrom(props) {
         console.log(communityId, json_object, typeName)
         userCommunityService.createDataTypeForCommunity(communityId, json_object, typeName).then(response => {
             console.log(response)
-            if(response.data['@success'] === "True"){
+            if (response.data['@success'] === "True") {
                 alert(JSON.stringify({"message": "successfully created data type"}, null, 2));
                 history.push('/community/' + communityId);
             }
-            alert(JSON.stringify({"message": response.data['@error'] }, null, 2));
+            alert(JSON.stringify({"message": response.data['@error']}, null, 2));
         }).catch(error => {
             console.log(error)
         })
@@ -107,6 +107,7 @@ export default function CreateDataTypeFrom(props) {
                 {inputFields.map((inputField, index) => (
                     <div key={index} className={classes.fieldGroup}>
                         <TextField
+                            data-testid={index +'#fieldName'}
                             name="fieldName"
                             label="Field Name"
                             variant="outlined"
@@ -128,11 +129,11 @@ export default function CreateDataTypeFrom(props) {
                             </Select>
 
                         </row>
-                        <IconButton onClick={() => handleRemoveFields(index)}>
+                        <IconButton data-testid={index+'#removeFieldGroup'} onClick={() => handleRemoveFields(index)}>
                             <RemoveIcon/>
                         </IconButton>
 
-                        <IconButton onClick={() => handleAddFields()}>
+                        <IconButton data-testid={index+'#addFieldGroup'} onClick={() => handleAddFields()}>
                             <AddIcon/>
                         </IconButton>
                     </div>

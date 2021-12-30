@@ -7,7 +7,7 @@ import PrintIcon from '@mui/icons-material/Print';
 import ShareIcon from '@mui/icons-material/Share';
 import {useHistory} from "react-router-dom";
 const user_actions = [
-    {icon: <ShareIcon/>, name: 'Share Post'},
+    {icon: <ShareIcon/>, name: 'Share Post', operation: "post"},
 ];
 
 const owner_actions = [
@@ -27,8 +27,10 @@ export default function BasicSpeedDial(props) {
         if(operation === 'type'){
             console.log(operation)
             history.push('/createDataType/' + communityId)
-        }else {
+            return
+        }else if(operation === 'post'){
             history.push('/createPost/' + communityId)
+            return
         }
 
     }
@@ -44,13 +46,14 @@ export default function BasicSpeedDial(props) {
             zIndex: 999
         }}>
             <SpeedDial
-                ariaLabel="SpeedDial basic example"
+                ariaLabel="SpeedDial"
                 sx={{position: 'absolute', bottom: 16, right: 16}}
-                onClick={handleClick}
+                onClick={(event) => handleClick(event, null)}
                 icon={<SpeedDialIcon/>}
             >
                 {actions.map((action) => (
                         <SpeedDialAction
+                            data-testid={action.operation}
                             key={action.name}
                             icon={action.icon}
                             tooltipTitle={action.name}
