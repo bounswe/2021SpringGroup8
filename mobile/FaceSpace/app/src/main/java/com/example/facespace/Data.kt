@@ -149,4 +149,18 @@ class Data {
     fun getLoc(): Location {
         return Location(city, longitude, latitude)
     }
+
+    fun update(newEmail:String, newName:String,
+               newSurname:String, newBirth:String, newCity:String, newPPLink:String,
+               newLong: Double, newLat: Double) {
+        email = newEmail
+        name = newName
+        surname = newSurname
+        birthdate = newBirth
+        city = newCity
+        pplink = newPPLink
+        longitude = newLong
+        latitude = newLat
+
+    }
 }

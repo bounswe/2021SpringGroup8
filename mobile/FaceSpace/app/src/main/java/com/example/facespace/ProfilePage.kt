@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.facespaceextenstion.Data
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_profile_page.*
 
 class ProfilePage : AppCompatActivity() {
@@ -17,10 +18,11 @@ class ProfilePage : AppCompatActivity() {
         setContentView(R.layout.activity_profile_page)
         supportActionBar?.hide()
         val btnGohome = findViewById<Button>(R.id.btnBackHome)
+        val refresh = findViewById<FloatingActionButton>(R.id.refresh)
+        refresh.bringToFront()
         val editProfile = findViewById<ImageView>(R.id.btnEdit)
 
         val btnMaps = findViewById<ImageView>(R.id.imageView6)
-
         val tvusername = findViewById<TextView>(R.id.tvUsername)
         val tvname = findViewById<TextView>(R.id.tvName)
         val tvsurname = findViewById<TextView>(R.id.tvSurname)
@@ -38,6 +40,17 @@ class ProfilePage : AppCompatActivity() {
         tvcity.text = infos["city"]
 
 
+        refresh.setOnClickListener {
+            val infos: MutableMap<String, String> = Data().getAll()
+
+            tvusername.text = "@${infos["username"]}"
+            tvname.text = infos["name"]
+            tvsurname.text = infos["surname"]
+            tvemail.text = infos["email"]
+            tvbirth.text = infos["birthdate"]
+            tvcity.text = infos["city"]
+        }
+
 
         btnGohome.setOnClickListener{
             val intent = Intent(this, HomePageActivity::class.java)
@@ -45,7 +58,9 @@ class ProfilePage : AppCompatActivity() {
         }
 
         btnEdit.setOnClickListener{
-            Toast.makeText(this,"This feature is under construction!", Toast.LENGTH_SHORT).show()
+            val dialog = EditProfile()
+            dialog.show(supportFragmentManager, "Edit Profile")
+
         }
 
         btnMaps.setOnClickListener {
@@ -56,4 +71,6 @@ class ProfilePage : AppCompatActivity() {
             startActivityForResult(intent, 2)
         }
     }
+
+
 }
