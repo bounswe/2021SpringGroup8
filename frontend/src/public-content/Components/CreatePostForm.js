@@ -10,7 +10,7 @@ export default function CreatePostForm(props) {
     const history = useHistory();
     const [i, setI] = useState(0);
     const containerStyle = {
-        width: '400px',
+        width: '100%',
         height: '400px'
     };
     const center_marker = {
