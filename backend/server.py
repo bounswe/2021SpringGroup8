@@ -331,19 +331,27 @@ class Handler(BaseHTTPRequestHandler):
 class ThreadingSimpleServer(ThreadingMixIn, HTTPServer):
         pass
 
+RUNNING_SERVER = None
+
+databasemanager = None
+manager = None
+
 def run():
+    global databasemanager, manager
+    databasemanager = DatabaseManager()
+    manager = ServerManager(databasemanager)
     server = ThreadingSimpleServer(('0.0.0.0', 8080), Handler)
     if USE_HTTPS:
         import ssl
         server.socket = ssl.wrap_socket(server.socket, keyfile='./key.pem', certfile='./cer.pem', server_side=True)
+    RUNNING_SERVER = server
     server.serve_forever()
 
-databasemanager = DatabaseManager()
-manager = ServerManager(databasemanager)
 
-run()
+if __name__ == "__main__":
+    run()
 
-#sdA12323
-# Token
-# Activity Streams
+    #sdA12323
+    # Token
+    # Activity Streams
 
