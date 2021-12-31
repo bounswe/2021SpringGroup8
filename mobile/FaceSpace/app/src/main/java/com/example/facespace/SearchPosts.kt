@@ -3,10 +3,7 @@ package com.example.facespace
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.SearchView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.allViews
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +20,9 @@ import org.json.JSONObject
 
 class SearchPosts : AppCompatActivity() {
     private lateinit var postAdapter: PostAdapter
+    var fieldNames: MutableList<String> = mutableListOf()
+    var dataType:String = ""
+    var field:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +45,56 @@ class SearchPosts : AppCompatActivity() {
         val searchBar = findViewById<SearchView>(R.id.searchbar)
         val btn = findViewById<Button>(R.id.button)
         val parentLay = findViewById<ConstraintLayout>(R.id.parentLayout)
+
+        val datatypes = JSONArray(resJson["dataTypes"].toString())
+        //Toast.makeText(this, datatypes.toString(), Toast.LENGTH_LONG).show()
+        val typeNames = types(datatypes)
+        //Toast.makeText(this, typeNames.toString(), Toast.LENGTH_SHORT).show()
+        val spin = findViewById<Spinner>(R.id.spinnerDataTypes)
+        val spinFields = findViewById<Spinner>(R.id.spinnerFields)
+        spin.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, typeNames)
+        spin.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+                dataType = typeNames[position]
+                fieldNames = fields(datatypes, dataType)
+                spinFields.adapter = ArrayAdapter(applicationContext, android.R.layout.simple_list_item_1, fieldNames)
+
+
+
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        spinFields.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                field = fieldNames[position]
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+        }
+
+
+
+
         btn.setOnClickListener {
             if(isVisible) {
                 parentLay.removeView(layout1)
@@ -57,12 +107,11 @@ class SearchPosts : AppCompatActivity() {
 
         searchBar.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Toast.makeText(this@SearchPosts,"$query submitted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SearchPosts,"$query submitted datatype:$dataType field:$field", Toast.LENGTH_SHORT).show()
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                Toast.makeText(this@SearchPosts, "$newText changed", Toast.LENGTH_SHORT).show()
                 return false
             }
 
@@ -108,5 +157,29 @@ class SearchPosts : AppCompatActivity() {
         val by = JSONObject(commJson["postedBy"].toString())["username"]
         val post = Post(title as String, by.toString(), "", id.toString(), date)
         postAdapter.addPost(post)
+    }
+
+    private fun types(list: JSONArray):MutableList<String>{
+        val liste : MutableList<String> = mutableListOf()
+        for (i in 0 until list.length()) {
+            val currType = list.getJSONObject(i)
+            liste.add(currType["name"] as String)
+
+        }
+        return liste
+    }
+
+    private fun fields(list: JSONArray, name:String):MutableList<String>{
+        var liste : MutableList<String> = mutableListOf()
+        for (i in 0 until list.length()) {
+            val currType:JSONObject = list.getJSONObject(i)
+            if(currType["name"] as String == name) {
+                val fieldJson:JSONObject = currType["fields"] as JSONObject
+                liste = fieldJson.keys().asSequence().toList() as MutableList<String>
+            }
+
+
+        }
+        return liste
     }
 }
