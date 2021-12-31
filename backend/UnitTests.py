@@ -100,11 +100,10 @@ class BackendTest(unittest.TestCase):
             }
         postreq = requests.post(f"http://127.0.0.1:8080/submitpost", data = dict)
         res = json.loads(postreq.text)
-        print("result:",res)
+        
         self.assertEqual(res["@success"], 'True', "Can't send post!")
     
     def test9_deletecommunity(self):
-        return
         dict = {
             "@usertoken": self.__class__.usertoken,
             "communityId": self.__class__.communityid,
