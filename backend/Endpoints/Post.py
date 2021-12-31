@@ -124,7 +124,7 @@ def Submit(manager : ServerManager, userid, params):
     dbres["postedBy"]["@type"] = "User.Preview"
     dbres["postedAt"]["@type"] = "Community.Preview"
     dbres["postedAt"]["createdBy"]["@type"] = "User.Preview"
-    response["success"] = "True"
+    response["@success"] = "True"
     response["@return"] = dbres
     return response
 
