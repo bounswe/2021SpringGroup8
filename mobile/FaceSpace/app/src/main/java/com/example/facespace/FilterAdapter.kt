@@ -70,14 +70,41 @@ class FilterAdapter(
     override fun getItemCount(): Int {
         return filters.size
     }
-    /*
-    fun getFilters(): String {
+
+    fun getFilters(): JSONObject {
         val retJson = JSONObject()
+        val tirnak = '"'
+        val datatypename = filters[0].datatype
+        retJson.put("datatypename", datatypename)
+        val filterList:MutableList<Any> = mutableListOf()
         for (filter in filters) {
-            retJson.put(filter.name, variable.type)
+
+            val filterType = filter.filtertype
+            val fieldName = filter.field
+            val value = filter.value
+
+            var filterArray:MutableList<String> = mutableListOf()
+            filterArray.add("${tirnak}$filterType${tirnak}")
+            filterArray.add("${tirnak}$fieldName${tirnak}")
+
+
+
+            if(filterType!="checked" && filterType!="unchecked") {
+                if(filterType=="search text") {
+                    filterArray.add(mutableListOf("${tirnak}$value${tirnak}").toString())
+                } else {
+                    filterArray.add(mutableListOf(value).toString())
+                }
+
+            }
+
+
+            filterList.add(filterArray)
         }
-        return retJson.toString()
+        retJson.put("filters", filterList)
+        // Toast.makeText(mContext, retJson.toString().replace('\\', ' '), Toast.LENGTH_SHORT).show()
+        return retJson
     }
 
-     */
+
 }

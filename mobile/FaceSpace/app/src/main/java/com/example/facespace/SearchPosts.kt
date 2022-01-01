@@ -12,6 +12,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.facespaceextenstion.Data
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_search_posts.*
 import kotlinx.android.synthetic.main.activity_search_posts.view.*
 import org.json.JSONArray
@@ -134,11 +135,13 @@ class SearchPosts : AppCompatActivity() {
         btn.setOnClickListener {
             if(isVisible) {
                 parentLay.removeView(layout1)
+                btn.text = "Open Search"
             } else {
                 parentLay.addView(layout1)
+                btn.text = "Hide Search"
             }
             isVisible = !isVisible
-            Toast.makeText(this@SearchPosts,"$dataType and $field and $filterType", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this@SearchPosts,"$dataType and $field and $filterType", Toast.LENGTH_SHORT).show()
         }
 
         val addBtn = findViewById<Button>(R.id.btnAdd)
@@ -151,6 +154,14 @@ class SearchPosts : AppCompatActivity() {
         val resetBtn = findViewById<Button>(R.id.btnReset)
         resetBtn.setOnClickListener{
             filterAdapter.deleteAll()
+        }
+        val searchBtn = findViewById<FloatingActionButton>(R.id.btnSearch)
+        searchBtn.bringToFront()
+        searchBtn.setOnClickListener{
+            val param:JSONObject = filterAdapter.getFilters()
+            param.put("communityId", resJson["id"].toString())
+            // Toast.makeText(this,param.toString().replace('\\', ' '), Toast.LENGTH_SHORT).show()
+            sendRequest(param)
         }
 
     }
@@ -224,4 +235,57 @@ class SearchPosts : AppCompatActivity() {
         }
         return liste
     }
+
+    private fun sendRequest(jsonObj: JSONObject) {
+        val url = Data().getUrl("searchpost")
+        val params: MutableMap<String, String> = HashMap()
+        val iter = jsonObj.keys()
+        while(iter.hasNext()) {
+            val key = iter.next()
+            if(key=="filters") {
+                params[key] = jsonObj[key].toString().replace('\\', ' ')
+                // Toast.makeText(this, jsonObj[key].toString().replace('\\', ' '), Toast.LENGTH_SHORT).show()
+            } else {
+                params[key] = jsonObj[key].toString()
+            }
+
+        }
+
+        Toast.makeText(this, params.toString(), Toast.LENGTH_SHORT).show()
+
+        var error: JSONObject? = null
+
+        val stringRequest: StringRequest = object : StringRequest( Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    val jsonObject = JSONObject(response)
+                    error = jsonObject
+
+                    val posts = JSONArray(jsonObject["@return"].toString())
+                    // Toast.makeText(this, "${jsonObject.toString()} isteği atmış", Toast.LENGTH_SHORT).show()
+                    postAdapter.deleteAll()
+                    for (i in 0 until posts.length()) {
+                        val post = posts.getJSONObject(i)
+                        getPost(post)
+                    }
+
+
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    Toast.makeText(this, (error?.get("@error")) as String, Toast.LENGTH_SHORT).show()
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                return params
+            }
+        }
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
+    }
+
 }

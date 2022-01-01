@@ -31,12 +31,12 @@
             android:id="@+id/layout1"
             android:layout_width="409dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:padding="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView41">
+            app:layout_constraintTop_toBottomOf="@+id/button">
 
             <Spinner
                 android:id="@+id/spinnerFields"
@@ -130,6 +130,17 @@
                 app:layout_constraintStart_toEndOf="@+id/searchbar"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerFields" />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="@+id/btnAdd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnAdd"
+                app:srcCompat="@android:drawable/ic_search_category_default" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -137,7 +148,7 @@
             android:id="@+id/results"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="60dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout1" />
@@ -146,7 +157,7 @@
             android:id="@+id/button"
             android:layout_width="70dp"
             android:layout_height="43dp"
-            android:text="New Search"
+            android:text="Hide Search"
             android:textSize="10sp"
             app:layout_constraintEnd_toStartOf="@+id/btnReset"
             app:layout_constraintStart_toEndOf="@+id/textView41"
