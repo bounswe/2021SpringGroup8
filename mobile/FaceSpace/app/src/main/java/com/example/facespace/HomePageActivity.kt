@@ -42,5 +42,10 @@ class HomePageActivity : AppCompatActivity() {
             greetingTV.text = "Hello, sadece Cavus!"
             startActivity(intent)
         }
+
+        goMyComm.setOnClickListener {
+            val intent = Intent(this, MyCommunities::class.java)
+            startActivity(intent)
+        }
     }
 }

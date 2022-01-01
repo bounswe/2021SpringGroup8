@@ -47,8 +47,15 @@ def ProcessRequest(self, manager):
     elif ProcessTokenRequests(self, manager):
         return
     else:
-        self.wfile.write("Wrong endpoint!")
-
+        WriteJSON(self, 
+                {
+                    "@context": "https://www.w3.org/ns/activitystreams",
+                    "@type": "NoType",
+                    "@success": "False",
+                    "@error":  "Couldn't find the request " + self.path + " !",
+                }
+            )
+            
 def ProcessNonTokenRequests(self, manager):
     if self.path == "/login":
         params = ParsePostBody(self)
@@ -78,6 +85,16 @@ def ProcessNonTokenRequests(self, manager):
     elif self.path == "/viewpost":
         params = ParsePostBody(self)
         response = Endpoints.Post.View(manager, params)
+        WriteJSON(self, response)
+        return True
+    elif self.path == "/searchcommunity":
+        params = ParsePostBody(self)
+        response = Endpoints.Community.Search(manager, params)
+        WriteJSON(self, response)
+        return True
+    elif self.path == "/searchpost":
+        params = ParsePostBody(self)
+        response = Endpoints.Post.Search(manager, params)
         WriteJSON(self, response)
         return True
     else:

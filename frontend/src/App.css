@@ -111,9 +111,7 @@ label {
   background: #6DCCA3;
   text-align: center;
 }
-.navbar > bg-secondary{
-  color : #9155A7;
-}
+
 .nav-links a {
   display:  -moz-stack;
   text-decoration: none;

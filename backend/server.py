@@ -280,6 +280,37 @@ class Handler(BaseHTTPRequestHandler):
     </html>
             """)
         
+        elif self.path == "/searchcommunity":
+            self.wfile.write(b"""
+    <html>
+        <form action="/searchcommunity" method="POST">
+        
+        <label for="searchtext">searchtext:</label><br>
+        <input type="searchtext" id="searchtext" name="searchtext"><br>
+    
+        <input type="submit" value="Submit">
+        </form>
+    </html>
+            """)
+        elif self.path == "/searchpost":
+            self.wfile.write(b"""
+    <html>
+        <form action="/searchpost" method="POST">
+        
+        <label for="communityId">communityId:</label><br>
+        <input type="communityId" id="communityId" name="communityId"><br>
+    
+        <label for="datatypename">datatypename:</label><br>
+        <input type="datatypename" id="datatypename" name="datatypename"><br>
+    
+        <label for="filters">filters:</label><br>
+        <input type="filters" id="filters" name="filters"><br>
+    
+        <input type="submit" value="Submit">
+        </form>
+    </html>
+            """)
+        
 
     def do_POST(self):
         try:
@@ -300,19 +331,27 @@ class Handler(BaseHTTPRequestHandler):
 class ThreadingSimpleServer(ThreadingMixIn, HTTPServer):
         pass
 
+RUNNING_SERVER = None
+
+databasemanager = None
+manager = None
+
 def run():
+    global databasemanager, manager
+    databasemanager = DatabaseManager()
+    manager = ServerManager(databasemanager)
     server = ThreadingSimpleServer(('0.0.0.0', 8080), Handler)
     if USE_HTTPS:
         import ssl
         server.socket = ssl.wrap_socket(server.socket, keyfile='./key.pem', certfile='./cer.pem', server_side=True)
+    RUNNING_SERVER = server
     server.serve_forever()
 
-databasemanager = DatabaseManager()
-manager = ServerManager(databasemanager)
 
-run()
+if __name__ == "__main__":
+    run()
 
-#sdA12323
-# Token
-# Activity Streams
+    #sdA12323
+    # Token
+    # Activity Streams
 

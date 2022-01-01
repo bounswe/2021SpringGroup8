@@ -19,6 +19,9 @@
         android:theme="@style/Theme.FaceSpace"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MyCommunities"
+            android:exported="false" />
+        <activity
             android:name=".VariableAdapter"
             android:exported="false" />
         <activity
