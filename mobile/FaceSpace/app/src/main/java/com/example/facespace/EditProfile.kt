@@ -146,7 +146,7 @@ class EditProfile : DialogFragment() {
         params["loc"] = loc.toString()
 
 
-
+        Toast.makeText(context, params.toString(),Toast.LENGTH_SHORT).show()
 
         var error: JSONObject? = null
 
