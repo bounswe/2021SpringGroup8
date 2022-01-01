@@ -15,7 +15,7 @@ test('test basic create data type form when add field button pressed ', () => {
     expect(linkNewElement).toBeInTheDocument();
 })
 
-test('test basic create data type form when add field button pressed ', () => {
+test('test basic create data type form when remove field button pressed ', () => {
     render(<CreateDataTypeFrom />)
     const linkElement = screen.getByTestId("0#removeFieldGroup")
     linkElement.click()
