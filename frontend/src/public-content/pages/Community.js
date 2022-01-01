@@ -13,6 +13,9 @@ import Toolbar from "@mui/material/Toolbar";
 import userCommunityService from "../../services/user-community.service";
 import BasicSpeedDial from "../Components/BasicSpeedDial";
 import Profilebar from "../../components/profilebar";
+import SearchIcon from "@mui/icons-material/Search";
+import IconButton from "@mui/material/IconButton";
+import InputBase from "@mui/material/InputBase";
 
 class Community extends Component {
   constructor(props) {
@@ -29,6 +32,8 @@ class Community extends Component {
       text: "Subscribe",
       owner: false,
       id: "",
+      searchValue: "",
+      isLoaded: false,
     };
     this.subscribe = this.subscribe.bind(this);
   }
@@ -40,6 +45,10 @@ class Community extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     this.retrieveCommunity();
+  }
+
+  handleChange(event) {
+    this.setState({ searchValue: event.target.value });
   }
 
   retrieveUsersCommunities() {
@@ -132,6 +141,7 @@ class Community extends Component {
           subscribers: response.data["@return"]["subscribers"],
           posts: response.data["@return"]["posts"],
           id: id,
+          isLoaded: true,
         });
         this.checkSubscribeStatus();
         const myUser = AuthService.getCurrentUser();
@@ -156,7 +166,15 @@ class Community extends Component {
       variant,
       text,
       actions,
+      searchValue,
+      isLoaded,
     } = this.state;
+
+    const filterPosts = posts.filter((item) => item.postTitle.toLowerCase().includes(searchValue.toLowerCase()) ||
+      item.dataTypeName.toLowerCase().includes(searchValue.toLowerCase()) ||
+      item.postedBy.username.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
     return (
       <>
         <Profilebar />
@@ -189,9 +207,26 @@ class Community extends Component {
               {communityTitle}
             </Typography>
           </Toolbar>
+          <InputBase
+            onChange={this.handleChange.bind(this)}
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Search Community"
+          />
+          <IconButton
+            type="submit"
+            sx={{ p: "10px" }}
+            aria-label="search"
+          >
+            <SearchIcon />
+          </IconButton>
           <Grid container direction="row">
 
-            <CommunityPosts description="something" posts={posts} />
+            {isLoaded ? (<CommunityPosts description="something" posts={filterPosts} />) : (
+
+              <Grid item xs={12} md={8}>
+                <div>Loading...</div>
+              </Grid>
+            )}
             <CommunityAbout
               description={description}
               moderators={creator}
