@@ -43,7 +43,7 @@
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnAdd"
+                android:id="@+id/createPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="65dp"
@@ -122,7 +122,7 @@
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView12"
-                app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
+                app:layout_constraintTop_toBottomOf="@+id/createPost" />
 
             <TextView
                 android:id="@+id/textView20"
@@ -144,21 +144,20 @@
             android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_marginEnd="50dp"
             android:background="@color/lightgray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createPost" />
+            tools:layout_editor_absoluteY="170dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPostItems"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createPost" />
+            app:layout_constraintTop_toBottomOf="@+id/btnSubscribe" />
 
         <TextView
             android:id="@+id/communityTitle"
@@ -237,22 +236,10 @@
             android:id="@+id/spinnerPosts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:gravity="end"
-            app:layout_constraintEnd_toStartOf="@+id/createPost"
-            app:layout_constraintTop_toTopOf="@+id/createPost" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/createPost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/green"
-            android:clickable="true"
-            app:fabSize="mini"
+            android:gravity="end"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dtButton"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            app:layout_constraintTop_toBottomOf="@+id/dtButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

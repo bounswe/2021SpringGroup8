@@ -43,7 +43,7 @@ class CommunityPageActivity : AppCompatActivity() {
 
         postAdapter = PostAdapter(mutableListOf())
 
-        val btnAdd = findViewById<FloatingActionButton>(R.id.btnAdd)
+        val btnCreatePost = findViewById<FloatingActionButton>(R.id.createPost)
         val btnRefresh = findViewById<FloatingActionButton>(R.id.btnRefresh)
         val btnGoHome = findViewById<FloatingActionButton>(R.id.btnGoHome)
         val btnLogout = findViewById<FloatingActionButton>(R.id.btnLogout)
@@ -62,23 +62,22 @@ class CommunityPageActivity : AppCompatActivity() {
         rvPosts.layoutManager = LinearLayoutManager(this)
 
         btnRefresh.bringToFront()
-        btnAdd.bringToFront()
+        btnCreatePost.bringToFront()
         btnGoHome.bringToFront()
         btnLogout.bringToFront()
         btnSubs.bringToFront()
 
         btnRefresh.setOnClickListener {
-            Toast.makeText(baseContext, "This feature is under construction!", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, CommunityPageActivity::class.java)
+            intent.putExtra("keys", infos as Serializable)
+            intent.putExtra("result", res.toString())
+            startActivity(intent)
         }
 
         btnGoHome.setOnClickListener {
             val intent = Intent(this, HomePageActivity::class.java)
             intent.putExtra("username", Data().getUsername())
             startActivity(intent)
-        }
-
-        btnAdd.setOnClickListener {
-            Toast.makeText(baseContext, "This feature is under construction!", Toast.LENGTH_LONG).show()
         }
 
         btnLogout.setOnClickListener {
@@ -128,13 +127,9 @@ class CommunityPageActivity : AppCompatActivity() {
             getPost(post)
         }
 
-        //Toast.makeText(this, posts.toString(), Toast.LENGTH_LONG).show()
-
-        // From here you continue from here to list posts previews
-
-        val datatypes = JSONArray(resJson["dataTypes"].toString())
-        //Toast.makeText(this, datatypes.toString(), Toast.LENGTH_LONG).show()
-        val typeNames = types(datatypes)
+        val dataTypes = JSONArray(resJson["dataTypes"].toString())
+        //Toast.makeText(this, dataTypes.toString(), Toast.LENGTH_LONG).show()
+        val typeNames = types(dataTypes)
         //Toast.makeText(this, typeNames.toString(), Toast.LENGTH_SHORT).show()
         val spin = findViewById<Spinner>(R.id.spinnerPosts)
         spin.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, typeNames)
@@ -155,9 +150,6 @@ class CommunityPageActivity : AppCompatActivity() {
         }
 
         val btnDataType = findViewById<Button>(R.id.dtButton)
-        val btnCreatePost = findViewById<FloatingActionButton>(R.id.createPost)
-        btnCreatePost.bringToFront()
-
         val createdBy = JSONObject(resJson["createdBy"].toString())["username"].toString()
         if(Data().getUsername().contains(createdBy)) {
             btnDataType.visibility = View.VISIBLE
@@ -166,11 +158,25 @@ class CommunityPageActivity : AppCompatActivity() {
         }
 
         btnCreatePost.setOnClickListener{
-            val inte = Intent(this,CreatePostPage::class.java)
-            inte.putExtra("commId", commId)
-            inte.putExtra("typeName", result)
-            inte.putExtra("commName", infos["title"].toString())
-            startActivity(inte)
+            var dataTypeFields: JSONObject? = null
+            for (i in 0 until dataTypes.length()) {
+                val currDataType = dataTypes.getJSONObject(i)
+                val currDataTypeName = currDataType["name"]
+                if(currDataTypeName == result) {
+                    dataTypeFields = JSONObject(currDataType["fields"].toString())
+                    break
+                }
+            }
+            if(dataTypeFields == null) {
+                Toast.makeText(this, "There is no data type for this community! You must create a data type before you can create a post.", Toast.LENGTH_LONG).show()
+            }
+            else {
+                val inte = Intent(this,CreatePostPage::class.java)
+                inte.putExtra("commId", commId)
+                inte.putExtra("typeName", result)
+                inte.putExtra("dataTypeFields", dataTypeFields.toString())
+                startActivity(inte)
+            }
         }
 
 
