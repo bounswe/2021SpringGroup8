@@ -7,15 +7,7 @@ label {
   max-width: 350px !important;
   padding: 40px 40px;
 }
-.my-cls > h5 {
-  color: #09008E;
-}
-.my-cls2 > h5 {
-  color: #280458;
-}
-.my-cls > h6 {
-  color: #0DB26B;
-}
+
 .card {
   background-color: #f7f7f7;
   padding: 20px 25px 30px;
