@@ -13,80 +13,125 @@
         tools:context=".SignUpPageActivity"
         >
 
+        <TextView
+            android:id="@+id/textView41"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Search Posts"
+            android:textColor="@color/red"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout1"
             android:layout_width="409dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:padding="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/textView41">
 
             <Spinner
                 android:id="@+id/spinnerFields"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:gravity="end"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView38"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerDataTypes" />
+                app:layout_constraintStart_toEndOf="@+id/spinnerDataTypes"
+                app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
-            <SearchView
+            <EditText
                 android:id="@+id/searchbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:iconifiedByDefault="false"
-                android:queryHint="Enter Query"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:drawableLeft="@drawable/places_ic_search"
+                android:hint="Enter Filter Query"
+                app:layout_constraintBottom_toBottomOf="@+id/btnAdd"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/btnAdd" />
 
             <Spinner
                 android:id="@+id/spinnerDataTypes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:gravity="end"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView38"
-                app:layout_constraintTop_toBottomOf="@+id/searchbar" />
+                app:layout_constraintEnd_toStartOf="@+id/spinnerFields"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
             <TextView
                 android:id="@+id/textView38"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:gravity="center"
                 android:text="Choose DataType"
-                app:layout_constraintBottom_toBottomOf="@+id/spinnerDataTypes"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/spinnerDataTypes" />
+                app:layout_constraintEnd_toEndOf="@+id/spinnerDataTypes"
+                app:layout_constraintStart_toStartOf="@+id/spinnerDataTypes"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView39"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:gravity="center"
                 android:text="Choose Field"
-                app:layout_constraintBottom_toBottomOf="@+id/spinnerFields"
+                app:layout_constraintEnd_toEndOf="@+id/spinnerFields"
+                app:layout_constraintStart_toStartOf="@+id/spinnerFields"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/spinnerFilters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:gravity="end"
+                app:layout_constraintStart_toEndOf="@+id/textView40"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerFields" />
+
+            <TextView
+                android:id="@+id/textView40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="center"
+                android:text="Choose Filter Type"
+                app:layout_constraintBottom_toBottomOf="@+id/spinnerFilters"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/spinnerFields" />
+                app:layout_constraintTop_toTopOf="@+id/spinnerFilters" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFilters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/searchbar" />
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="72dp"
+                android:drawableLeft="@android:drawable/ic_input_add"
+                android:text="Add\nFilter"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@+id/searchbar"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerFields" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="64dp"
-            android:textSize="10sp"
-            android:text="Button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/results"
@@ -96,6 +141,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout1" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="70dp"
+            android:layout_height="43dp"
+            android:text="New Search"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toStartOf="@+id/btnReset"
+            app:layout_constraintStart_toEndOf="@+id/textView41"
+            app:layout_constraintTop_toTopOf="@+id/textView41" />
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/places_ic_clear"
+            android:text="Reset\nFilters"
+            android:backgroundTint="@color/red"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button"
+            app:layout_constraintTop_toTopOf="@+id/textView41" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,12 +32,13 @@
         <entry key="app/src/main/res/layout/activity_search_posts.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_sign_up_page.xml" value="0.27644710578842313" />
         <entry key="app/src/main/res/layout/community_item.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/filter_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_create_community.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/post_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/sign2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/signup2.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/variable_item.xml" value="0.14427083333333332" />
+        <entry key="app/src/main/res/layout/variable_item.xml" value="0.25" />
       </map>
     </option>
   </component>

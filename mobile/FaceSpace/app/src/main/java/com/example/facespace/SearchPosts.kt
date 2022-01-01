@@ -20,9 +20,13 @@ import org.json.JSONObject
 
 class SearchPosts : AppCompatActivity() {
     private lateinit var postAdapter: PostAdapter
+    private lateinit var filterAdapter: FilterAdapter
     var fieldNames: MutableList<String> = mutableListOf()
     var dataType:String = ""
     var field:String = ""
+    var fieldType:String = ""
+    var filterType:String = ""
+    var currentFilterTypes = arrayOf("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,24 +38,32 @@ class SearchPosts : AppCompatActivity() {
         val resJson = JSONObject(res) // it is an Community Object
         val lay = findViewById<ConstraintLayout>(R.id.layout1)
         postAdapter = PostAdapter(mutableListOf())
+        filterAdapter = FilterAdapter(mutableListOf())
         val rvResults = findViewById<RecyclerView>(R.id.results)
+        val rvFilters = findViewById<RecyclerView>(R.id.rvFilters)
         rvResults.adapter = postAdapter
         rvResults.layoutManager = LinearLayoutManager(this)
+        rvFilters.adapter = filterAdapter
+        rvFilters.layoutManager = LinearLayoutManager(this)
         val posts = JSONArray(resJson["posts"].toString())
         for (i in 0 until posts.length()) {
             val post = posts.getJSONObject(i)
             getPost(post)
         }
-        val searchBar = findViewById<SearchView>(R.id.searchbar)
+        val searchBar = findViewById<EditText>(R.id.searchbar)
         val btn = findViewById<Button>(R.id.button)
         val parentLay = findViewById<ConstraintLayout>(R.id.parentLayout)
 
         val datatypes = JSONArray(resJson["dataTypes"].toString())
         //Toast.makeText(this, datatypes.toString(), Toast.LENGTH_LONG).show()
         val typeNames = types(datatypes)
+        val filterTypesNotBool = arrayOf("search text", "greater", "less", "greater or equal",
+            "less or equal", "equal")
+        val filterTypesBool = arrayOf( "checked", "unchecked")
         //Toast.makeText(this, typeNames.toString(), Toast.LENGTH_SHORT).show()
         val spin = findViewById<Spinner>(R.id.spinnerDataTypes)
         val spinFields = findViewById<Spinner>(R.id.spinnerFields)
+        val spinFilters = findViewById<Spinner>(R.id.spinnerFilters)
         spin.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, typeNames)
         spin.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
@@ -64,9 +76,6 @@ class SearchPosts : AppCompatActivity() {
                 dataType = typeNames[position]
                 fieldNames = fields(datatypes, dataType)
                 spinFields.adapter = ArrayAdapter(applicationContext, android.R.layout.simple_list_item_1, fieldNames)
-
-
-
 
             }
 
@@ -83,7 +92,34 @@ class SearchPosts : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                field = fieldNames[position]
+                field = (fieldNames[position]).split("-")[0]
+                fieldType = (fieldNames[position]).split("-")[1]
+                if(fieldType=="bool") {
+                    currentFilterTypes = filterTypesBool
+                    spinFilters.adapter = ArrayAdapter(applicationContext,
+                        android.R.layout.simple_list_item_1, filterTypesBool)
+                } else {
+                    currentFilterTypes = filterTypesNotBool
+                    spinFilters.adapter = ArrayAdapter(applicationContext,
+                        android.R.layout.simple_list_item_1, filterTypesNotBool)
+                }
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+        }
+
+        spinFilters.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                filterType = currentFilterTypes[position]
+
 
             }
 
@@ -102,20 +138,21 @@ class SearchPosts : AppCompatActivity() {
                 parentLay.addView(layout1)
             }
             isVisible = !isVisible
-            Toast.makeText(this@SearchPosts,isVisible.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@SearchPosts,"$dataType and $field and $filterType", Toast.LENGTH_SHORT).show()
         }
 
-        searchBar.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                Toast.makeText(this@SearchPosts,"$query submitted datatype:$dataType field:$field", Toast.LENGTH_SHORT).show()
-                return false
-            }
+        val addBtn = findViewById<Button>(R.id.btnAdd)
+        addBtn.setOnClickListener{
+            val value = searchBar.text.toString()
+            val filter= Filter(dataType,field,filterType,value)
+            filterAdapter.addFilter(filter)
+        }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
+        val resetBtn = findViewById<Button>(R.id.btnReset)
+        resetBtn.setOnClickListener{
+            filterAdapter.deleteAll()
+        }
 
-        })
     }
 
     private fun getPost(post: JSONObject){
@@ -175,7 +212,12 @@ class SearchPosts : AppCompatActivity() {
             val currType:JSONObject = list.getJSONObject(i)
             if(currType["name"] as String == name) {
                 val fieldJson:JSONObject = currType["fields"] as JSONObject
-                liste = fieldJson.keys().asSequence().toList() as MutableList<String>
+                val iter = fieldJson.keys()
+                while (iter.hasNext()) {
+                    val key = iter.next()
+                    val value = fieldJson[key]
+                    liste.add("$key-$value")
+                }
             }
 
 
