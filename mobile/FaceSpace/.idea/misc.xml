@@ -18,6 +18,7 @@
         <entry key="app/src/main/res/layout/activity_create_data_type.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_create_post.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_create_post_page.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_data_type_field_adapter.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_inside_post.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_list_posts.xml" value="0.11041666666666666" />
@@ -28,15 +29,17 @@
         <entry key="app/src/main/res/layout/activity_my_communities.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_popup_unsubscribed_comm.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_post.xml" value="0.22268907563025211" />
-        <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.19157608695652173" />
+        <entry key="app/src/main/res/layout/activity_search_posts.xml" value="0.140625" />
         <entry key="app/src/main/res/layout/activity_sign_up_page.xml" value="0.27644710578842313" />
         <entry key="app/src/main/res/layout/community_item.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/data_type_field_item.xml" value="0.45" />
         <entry key="app/src/main/res/layout/fragment_create_community.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.140625" />
         <entry key="app/src/main/res/layout/post_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/sign2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/signup2.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/variable_item.xml" value="0.14427083333333332" />
+        <entry key="app/src/main/res/layout/variable_item.xml" value="0.25" />
       </map>
     </option>
   </component>

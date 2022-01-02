@@ -84,6 +84,10 @@ def CreateCommunity(manager : ServerManager, userid, params):
         response["@error"] = "Couldn't create a community!"
         return response
 
+    #also subscribe to the new community
+
+    manager.DatabaseManager.subscribe_community(userid, manager.DatabaseManager.get_community_preview(dbresult["id"]))
+
     response["@success"] = "True"
     dbresult["@type"] = "Community.Object"
     dbresult["creationTime"] = dbresult["creationTime"]

@@ -26,29 +26,40 @@ import java.io.Serializable
 class CommunityPageActivity : AppCompatActivity() {
     var result : String = ""
     private lateinit var postAdapter: PostAdapter
+    private lateinit var commAdapter: CommunityAdapter
     private val username = Data().getUsername()
     private val userId = Data().getToken()
     private var CommunitySubs: JSONArray? = null
     private var isSubscribed = isInComm(username)
+    private var comm_obj = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_page)
         supportActionBar?.hide()
         val intent = intent
-        val infos = intent.getSerializableExtra("keys") as HashMap<*, *>?
-        val res = intent.getStringExtra("result")
-        infos!!["key"]?.let { Log.v("HashMapTest", it as String) }
-        val commId = infos["id"].toString()
-        CommunitySubs = JSONArray(infos["subscribers"].toString())
+        comm_obj = intent.getStringExtra("result").toString()
+        val res = JSONObject(comm_obj)
+        val comm_creator = JSONObject(res["createdBy"].toString())["username"].toString()
+        val commId = res["id"].toString()
+        CommunitySubs = JSONArray(res["subscribers"].toString())
 
         postAdapter = PostAdapter(mutableListOf())
+        commAdapter = CommunityAdapter(mutableListOf())
 
-        val btnAdd = findViewById<FloatingActionButton>(R.id.btnAdd)
+        val btnCreatePost = findViewById<FloatingActionButton>(R.id.createPost)
         val btnRefresh = findViewById<FloatingActionButton>(R.id.btnRefresh)
         val btnGoHome = findViewById<FloatingActionButton>(R.id.btnGoHome)
         val btnLogout = findViewById<FloatingActionButton>(R.id.btnLogout)
         val btnSubs = findViewById<Button>(R.id.btnSubscribe)
+        val btnDeleteComm = findViewById<Button>(R.id.btnDeleteComm)
 
+        if (Data().getUsername() == comm_creator) {
+            btnDeleteComm.visibility = View.VISIBLE
+            btnDeleteComm.bringToFront()
+        }
+        else {
+            btnDeleteComm.visibility = View.INVISIBLE
+        }
 
         isSubscribed = isInComm(username)
         if (isSubscribed) {
@@ -62,23 +73,21 @@ class CommunityPageActivity : AppCompatActivity() {
         rvPosts.layoutManager = LinearLayoutManager(this)
 
         btnRefresh.bringToFront()
-        btnAdd.bringToFront()
+        btnCreatePost.bringToFront()
         btnGoHome.bringToFront()
         btnLogout.bringToFront()
         btnSubs.bringToFront()
 
         btnRefresh.setOnClickListener {
-            Toast.makeText(baseContext, "This feature is under construction!", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, CommunityPageActivity::class.java)
+            intent.putExtra("result", res.toString())
+            startActivity(intent)
         }
 
         btnGoHome.setOnClickListener {
             val intent = Intent(this, HomePageActivity::class.java)
             intent.putExtra("username", Data().getUsername())
             startActivity(intent)
-        }
-
-        btnAdd.setOnClickListener {
-            Toast.makeText(baseContext, "This feature is under construction!", Toast.LENGTH_LONG).show()
         }
 
         btnLogout.setOnClickListener {
@@ -104,37 +113,40 @@ class CommunityPageActivity : AppCompatActivity() {
             }
         })
 
+        btnDeleteComm.setOnClickListener {
+            deleteComm(commId, res)
+            val intent = Intent(this, HomePageActivity::class.java)
+            intent.putExtra("username", username)
+            startActivity(intent)
+        }
 
-        // val infos = intent.getSerializableExtra("keys") as HashMap<String, String>
-        // var value: Serializable = extras?.
-
+        val btnSearch = findViewById<FloatingActionButton>(R.id.btnSearch)
+        btnSearch.bringToFront()
+        btnSearch.setOnClickListener {
+            val intent = Intent(this, SearchPosts::class.java)
+            intent.putExtra("result", res.toString())
+            startActivity(intent)
+        }
 
         val titleTV = findViewById<TextView>(R.id.communityTitle)
         val descTV = findViewById<TextView>(R.id.communityDescription)
         val byTV = findViewById<TextView>(R.id.communityCreator)
         val dateTV = findViewById<TextView>(R.id.communityDate)
 
-        // val infos: MutableMap<String, String> = Data().getCommInfo()
+        titleTV.text = res["communityTitle"].toString()
+        descTV.text = res["description"].toString()
+        byTV.text = JSONObject(res["createdBy"].toString())["username"].toString()
+        dateTV.text = JSONObject(res["creationTime"].toString())["_isoformat"].toString().substring(0,10)
 
-        titleTV.text = infos["title"].toString()
-        descTV.text = infos["desc"].toString()
-        byTV.text = infos["by"].toString()
-        dateTV.text = infos["date"].toString()
-
-        val resJson = JSONObject(res)
-        val posts = JSONArray(resJson["posts"].toString())
+        val posts = JSONArray(res["posts"].toString())
         for (i in 0 until posts.length()) {
             val post = posts.getJSONObject(i)
             getPost(post)
         }
 
-        //Toast.makeText(this, posts.toString(), Toast.LENGTH_LONG).show()
-
-        // From here you continue from here to list posts previews
-
-        val datatypes = JSONArray(resJson["dataTypes"].toString())
-        //Toast.makeText(this, datatypes.toString(), Toast.LENGTH_LONG).show()
-        val typeNames = types(datatypes)
+        val dataTypes = JSONArray(res["dataTypes"].toString())
+        //Toast.makeText(this, dataTypes.toString(), Toast.LENGTH_LONG).show()
+        val typeNames = types(dataTypes)
         //Toast.makeText(this, typeNames.toString(), Toast.LENGTH_SHORT).show()
         val spin = findViewById<Spinner>(R.id.spinnerPosts)
         spin.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, typeNames)
@@ -155,10 +167,7 @@ class CommunityPageActivity : AppCompatActivity() {
         }
 
         val btnDataType = findViewById<Button>(R.id.dtButton)
-        val btnCreatePost = findViewById<FloatingActionButton>(R.id.createPost)
-        btnCreatePost.bringToFront()
-
-        val createdBy = JSONObject(resJson["createdBy"].toString())["username"].toString()
+        val createdBy = JSONObject(res["createdBy"].toString())["username"].toString()
         if(Data().getUsername().contains(createdBy)) {
             btnDataType.visibility = View.VISIBLE
         } else {
@@ -166,11 +175,25 @@ class CommunityPageActivity : AppCompatActivity() {
         }
 
         btnCreatePost.setOnClickListener{
-            val inte = Intent(this,CreatePostPage::class.java)
-            inte.putExtra("commId", commId)
-            inte.putExtra("typeName", result)
-            inte.putExtra("commName", infos["title"].toString())
-            startActivity(inte)
+            var dataTypeFields: JSONObject? = null
+            for (i in 0 until dataTypes.length()) {
+                val currDataType = dataTypes.getJSONObject(i)
+                val currDataTypeName = currDataType["name"]
+                if(currDataTypeName == result) {
+                    dataTypeFields = JSONObject(currDataType["fields"].toString())
+                    break
+                }
+            }
+            if(dataTypeFields == null) {
+                Toast.makeText(this, "There is no data type for this community! You must create a data type before you can create a post.", Toast.LENGTH_LONG).show()
+            }
+            else {
+                val inte = Intent(this,CreatePostPage::class.java)
+                inte.putExtra("commId", commId)
+                inte.putExtra("typeName", result)
+                inte.putExtra("dataTypeFields", dataTypeFields.toString())
+                startActivity(inte)
+            }
         }
 
 
@@ -306,7 +329,6 @@ class CommunityPageActivity : AppCompatActivity() {
 
     private fun getPost(post: JSONObject){
         val url = Data().getUrl("viewpost")
-
         val params: MutableMap<String, String> = HashMap()
         params["postId"] = post["id"].toString()
 
@@ -332,7 +354,6 @@ class CommunityPageActivity : AppCompatActivity() {
         }
         val requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(stringRequest)
-
     }
 
     fun helper(elm: JSONObject) {
@@ -340,14 +361,47 @@ class CommunityPageActivity : AppCompatActivity() {
         val title = commJson["postTitle"]
         val id = commJson["id"]
         val date = JSONObject(commJson["creationTime"].toString())["_isoformat"].toString().substring(0,10)
-        //val desc = commJson["description"]
         val by = JSONObject(commJson["postedBy"].toString())["username"]
-        //val commID = JSONObject(commJson["postedAt"].toString())["id"].toString()
-        // val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        // val formatted = since.format(formatter) as String
-        val post = Post(title as String, by.toString(), "", id.toString(), date)
+        val post = Post(title as String, by.toString(), id.toString(), date, comm_obj)
         postAdapter.addPost(post)
     }
 
+    private fun deleteComm(comm_id: String, comm_data: JSONObject) {
+        val url = Data().getUrl("deletecommunity")
 
+        var error: JSONObject? = null
+
+        val params1: MutableMap<String, String> = HashMap()
+        params1["communityId"] = comm_id
+        params1["@usertoken"] = Data().getToken()
+
+        val stringRequest: StringRequest = object : StringRequest( Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    val jsonObject = JSONObject(response)
+                    error = jsonObject
+                    val success = jsonObject["@success"].toString()
+                    Toast.makeText(baseContext, "Deletion of the community is $success", Toast.LENGTH_LONG).show()
+                } catch (e: JSONException) {
+                    Toast.makeText(this, (error?.get("@error")) as String, Toast.LENGTH_SHORT).show()
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                return params1
+            }
+        }
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
+        val title = comm_data["communityTitle"].toString()
+        val date = JSONObject(comm_data["creationTime"].toString())["_isoformat"].toString().substring(0,10)
+        val desc = comm_data["description"].toString()
+        val by = JSONObject(comm_data["createdBy"].toString())["username"].toString()
+        val comm = Community(title, by, desc, comm_data["subscribers"] as JSONArray,
+            comm_data["posts"] as JSONArray, comm_data["dataTypes"] as JSONArray, date, comm_id)
+        commAdapter.deleteComm(comm)
+    }
 }

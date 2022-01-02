@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:backgroundTint="@color/red"
+        android:backgroundTint="@android:color/holo_green_dark"
         android:drawableStart="@android:drawable/ic_dialog_map"
         android:drawablePadding="5dp"
         android:text="See Location"
@@ -21,6 +21,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descPostP" />
+
+    <Button
+        android:id="@+id/btnDeletePost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/red"
+        android:drawablePadding="5dp"
+        android:text="Delete Post"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateFieldP" />
 
     <TextView
         android:id="@+id/titlePostP"
