@@ -19,10 +19,15 @@
         android:theme="@style/Theme.FaceSpace"
         android:usesCleartextTraffic="true">
         <activity
-
+            android:name=".FieldObject"
+            android:exported="false" />
+        <activity
+            android:name=".FieldObjectAdapter"
+            android:exported="false" />
+        <activity
             android:name=".SearchPosts"
             android:exported="true" />
-      <activity
+        <activity
             android:name=".DataTypeField"
             android:exported="false" />
         <activity

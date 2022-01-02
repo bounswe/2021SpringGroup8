@@ -77,7 +77,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        //Toast.makeText(this, "on map readye geldi elime", Toast.LENGTH_SHORT).show()
         mMap = googleMap
         mMap!!.uiSettings.isZoomControlsEnabled = true
 
