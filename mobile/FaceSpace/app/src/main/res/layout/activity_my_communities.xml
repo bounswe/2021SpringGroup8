@@ -9,9 +9,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMyCommItems"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="100dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/crtdComms" />
@@ -25,11 +24,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnRefreshM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
+            android:layout_marginStart="40dp"
             android:backgroundTint="@color/white"
             android:clickable="true"
             android:focusable="true"
@@ -41,12 +41,27 @@
             app:srcCompat="@android:drawable/ic_popup_sync"
             app:tint="@color/gray" />
 
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnAddM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="65dp"
+            android:layout_marginStart="40dp"
+            android:backgroundTint="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:fabSize="mini"
+            app:layout_constraintStart_toEndOf="@+id/btnAddM2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_input_add"
+            app:tint="@color/gray" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnAddM2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="39dp"
             android:backgroundTint="@color/white"
             android:clickable="true"
             android:focusable="true"
@@ -55,7 +70,7 @@
             app:fabSize="mini"
             app:layout_constraintStart_toEndOf="@+id/btnRefreshM"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_input_add"
+            app:srcCompat="@android:drawable/ic_menu_search"
             app:tint="@color/gray" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -77,14 +92,12 @@
             android:id="@+id/btnLogoutM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="45dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
             android:backgroundTint="@color/white"
             android:clickable="true"
             app:borderWidth="0dp"
             app:elevation="0dp"
             app:fabSize="mini"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView19"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logout"
@@ -105,7 +118,7 @@
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
+            android:layout_marginStart="40dp"
             android:layout_marginBottom="8dp"
             android:text="Refresh"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -113,22 +126,34 @@
             app:layout_constraintTop_toBottomOf="@+id/btnRefreshM" />
 
         <TextView
+            android:id="@+id/textView45"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginBottom="8dp"
+            android:text="Search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView12"
+            app:layout_constraintTop_toBottomOf="@+id/btnRefreshM" />
+
+        <TextView
             android:id="@+id/textView19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
+            android:layout_marginStart="27dp"
             android:layout_marginBottom="8dp"
             android:text="Create New\nCommunity"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView12"
-            app:layout_constraintTop_toBottomOf="@+id/btnAddM" />
+            app:layout_constraintStart_toEndOf="@+id/textView45"
+            app:layout_constraintTop_toBottomOf="@+id/btnAddM"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="24dp"
             android:layout_marginBottom="8dp"
             android:text="Logout"
             app:layout_anchor="@id/btnLogoutM"
