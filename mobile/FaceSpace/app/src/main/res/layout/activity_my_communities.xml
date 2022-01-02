@@ -218,8 +218,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Enter Query"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColor="@color/black"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
