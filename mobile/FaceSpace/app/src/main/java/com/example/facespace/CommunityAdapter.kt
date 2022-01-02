@@ -85,6 +85,12 @@ class CommunityAdapter (
         }
     }
 
+    fun deleteComm(comm: Community) {
+        val index = communities.indexOf(comm)
+        communities.remove(comm)
+        notifyItemRemoved(index)
+    }
+
     override fun getItemCount(): Int {
         return communities.size
     }

@@ -26,6 +26,7 @@ import java.io.Serializable
 class CommunityPageActivity : AppCompatActivity() {
     var result : String = ""
     private lateinit var postAdapter: PostAdapter
+    private lateinit var commAdapter: CommunityAdapter
     private val username = Data().getUsername()
     private val userId = Data().getToken()
     private var CommunitySubs: JSONArray? = null
@@ -38,18 +39,27 @@ class CommunityPageActivity : AppCompatActivity() {
         val intent = intent
         comm_obj = intent.getStringExtra("result").toString()
         val res = JSONObject(comm_obj)
-
+        val comm_creator = JSONObject(res["createdBy"].toString())["username"].toString()
         val commId = res["id"].toString()
         CommunitySubs = JSONArray(res["subscribers"].toString())
 
         postAdapter = PostAdapter(mutableListOf())
+        commAdapter = CommunityAdapter(mutableListOf())
 
         val btnCreatePost = findViewById<FloatingActionButton>(R.id.createPost)
         val btnRefresh = findViewById<FloatingActionButton>(R.id.btnRefresh)
         val btnGoHome = findViewById<FloatingActionButton>(R.id.btnGoHome)
         val btnLogout = findViewById<FloatingActionButton>(R.id.btnLogout)
         val btnSubs = findViewById<Button>(R.id.btnSubscribe)
+        val btnDeleteComm = findViewById<Button>(R.id.btnDeleteComm)
 
+        if (Data().getUsername() == comm_creator) {
+            btnDeleteComm.visibility = View.VISIBLE
+            btnDeleteComm.bringToFront()
+        }
+        else {
+            btnDeleteComm.visibility = View.INVISIBLE
+        }
 
         isSubscribed = isInComm(username)
         if (isSubscribed) {
@@ -102,6 +112,13 @@ class CommunityPageActivity : AppCompatActivity() {
                 }
             }
         })
+
+        btnDeleteComm.setOnClickListener {
+            deleteComm(commId, res)
+            val intent = Intent(this, HomePageActivity::class.java)
+            intent.putExtra("username", username)
+            startActivity(intent)
+        }
 
         val btnSearch = findViewById<FloatingActionButton>(R.id.btnSearch)
         btnSearch.bringToFront()
@@ -347,5 +364,44 @@ class CommunityPageActivity : AppCompatActivity() {
         val by = JSONObject(commJson["postedBy"].toString())["username"]
         val post = Post(title as String, by.toString(), id.toString(), date, comm_obj)
         postAdapter.addPost(post)
+    }
+
+    private fun deleteComm(comm_id: String, comm_data: JSONObject) {
+        val url = Data().getUrl("deletecommunity")
+
+        var error: JSONObject? = null
+
+        val params1: MutableMap<String, String> = HashMap()
+        params1["communityId"] = comm_id
+        params1["@usertoken"] = Data().getToken()
+
+        val stringRequest: StringRequest = object : StringRequest( Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    val jsonObject = JSONObject(response)
+                    error = jsonObject
+                    val success = jsonObject["@success"].toString()
+                    Toast.makeText(baseContext, "Deletion of the community is $success", Toast.LENGTH_LONG).show()
+                } catch (e: JSONException) {
+                    Toast.makeText(this, (error?.get("@error")) as String, Toast.LENGTH_SHORT).show()
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                return params1
+            }
+        }
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
+        val title = comm_data["communityTitle"].toString()
+        val date = JSONObject(comm_data["creationTime"].toString())["_isoformat"].toString().substring(0,10)
+        val desc = comm_data["description"].toString()
+        val by = JSONObject(comm_data["createdBy"].toString())["username"].toString()
+        val comm = Community(title, by, desc, comm_data["subscribers"] as JSONArray,
+            comm_data["posts"] as JSONArray, comm_data["dataTypes"] as JSONArray, date, comm_id)
+        commAdapter.deleteComm(comm)
     }
 }
