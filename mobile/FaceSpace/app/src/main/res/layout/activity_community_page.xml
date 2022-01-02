@@ -154,6 +154,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/createPost"
                 app:layout_constraintVertical_bias="0.0" />
 
+
             <TextView
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
@@ -174,11 +175,10 @@
             android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_marginTop="7dp"
             android:background="@color/lightgray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnSubscribe" />
+            tools:layout_editor_absoluteY="170dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPostItems"

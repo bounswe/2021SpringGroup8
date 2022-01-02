@@ -210,6 +210,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
             val geoCoder = Geocoder(this)
             try {
                 addressList = geoCoder.getFromLocationName(location, 1)
+                while(addressList!!.isEmpty()) {
+                    addressList = geoCoder.getFromLocationName(location, 1)
+                }
             }catch (e: IOException){
                 Toast.makeText(this, "Please provide correct location.", Toast.LENGTH_SHORT).show()
             }
@@ -235,8 +238,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
 
     private fun updateMarker(latlong:LatLng) {
         mCurrLocationMarker?.hideInfoWindow()
-        val geoCoder = Geocoder(this)
-        val addresses = geoCoder.getFromLocation(latlong.latitude, latlong.longitude, 1)[0]
+        //val geoCoder = Geocoder(this)
+        //val addresses = geoCoder.getFromLocation(latlong.latitude, latlong.longitude, 1)[0]
         // val markerOption = MarkerOptions().position(latlong).title("Current Loc")
         // .snippet(getAddress(latlong.latitude, latlong.longitude)).draggable(true)
         val snippet = getAddress(latlong.latitude, latlong.longitude)

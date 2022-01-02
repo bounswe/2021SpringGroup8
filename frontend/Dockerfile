@@ -13,5 +13,6 @@ ENV GENERATE_SOURCEMAP false
 RUN npm run build
 
 FROM nginx:1.17.1-alpine
-
+RUN rm  /etc/nginx/conf.d/default.conf
+COPY conf/conf.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /opt/web/build /usr/share/nginx/html
