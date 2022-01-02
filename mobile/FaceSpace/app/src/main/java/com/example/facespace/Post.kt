@@ -4,7 +4,7 @@ data class Post
     (
     val title: String,
     val by: String,
-    val desc: String,
     var id: String,
-    var date: String
+    var date: String,
+    var comm_obj: String
 )

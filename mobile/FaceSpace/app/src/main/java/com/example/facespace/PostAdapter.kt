@@ -55,18 +55,24 @@ class PostAdapter (
         notifyItemInserted(posts.size-1)
     }
 
+    fun deletePost(pos: Post) {
+        val index = posts.indexOf(pos)
+        posts.remove(pos)
+        notifyItemRemoved(index)
+    }
+
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val currPost = posts[position]
         holder.itemView.apply {
             TitlePost.text = currPost.title
-            DescPost.text = currPost.desc
             ByPost.text = "by " + currPost.by
             DateField.text = currPost.date
 
             btnOpenPost.setOnClickListener {
                 val temp: String = currPost.id
                 Data().setCurrentPostId(temp)
-                setInfo(temp)
+                val comm_obj = currPost.comm_obj
+                setInfo(temp, comm_obj)
                 //Thread.sleep(700)
                 // Toast.makeText(context,"$temp this is under implementation still.",Toast.LENGTH_SHORT).show()
                 //context.startActivity(Intent(context, CommunityPageActivity::class.java))
@@ -80,8 +86,7 @@ class PostAdapter (
         return posts.size
     }
 
-    private fun setInfo(id:String) {
-
+    private fun setInfo(id:String, comm:String) {
         val url = Data().getUrl("viewpost")
 
         var error: JSONObject? = null
@@ -95,7 +100,7 @@ class PostAdapter (
                     val jsonObject = JSONObject(response)
                     error = jsonObject
                     val results: JSONObject = jsonObject["@return"] as JSONObject
-                    helper(results)
+                    helper(results, comm)
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -111,10 +116,10 @@ class PostAdapter (
 
     }
 
-    private fun helper(res: JSONObject) {
-        //Toast.makeText(mContext,"helalbeee " + res.toString(), Toast.LENGTH_SHORT).show()
+    private fun helper(res: JSONObject, comm: String) {
         val intent: Intent = Intent(mContext, InsidePost::class.java)
         intent.putExtra("result", res.toString())
+        intent.putExtra("comm_obj", comm)
         mContext.startActivity(intent)
     }
 

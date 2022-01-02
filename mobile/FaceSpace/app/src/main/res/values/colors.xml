@@ -23,6 +23,7 @@
     <color name="cansu2">#91AA9D</color>
     <color name="yellow"> #adff2f </color>
     <color name="darkgray">#6F7378</color>
+    <color name="trans">#FFFFFFFF</color>
 
 
 </resources>
