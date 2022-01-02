@@ -49,7 +49,6 @@ class MyCommunities : AppCompatActivity() {
         val searchPanel = findViewById<ConstraintLayout>(R.id.searchPanel)
         val btnSearch = findViewById<FloatingActionButton>(R.id.btnSearch)
         btnSearch.bringToFront()
-        parentLay.removeView(searchPanel)
         btnSearch.setOnClickListener {
             if(isOpen) {
                 parentLay.removeView(searchPanel)
@@ -58,6 +57,13 @@ class MyCommunities : AppCompatActivity() {
             }
             isOpen = !isOpen
             // Toast.makeText(this@SearchPosts,"$dataType and $field and $filterType", Toast.LENGTH_SHORT).show()
+        }
+
+        val btnEnterSearch = findViewById<Button>(R.id.enterSearch)
+        val etQuery = findViewById<EditText>(R.id.etQuery)
+        btnEnterSearch.setOnClickListener{
+            val query:String = etQuery.text.toString()
+            getMyCommunities(query)
         }
 
         if(onlyCreated) {
@@ -82,7 +88,6 @@ class MyCommunities : AppCompatActivity() {
 
 
         btnRefresh.setOnClickListener {
-            commAdapter.deleteAll()
             getMyCommunities()
         }
 
@@ -106,18 +111,17 @@ class MyCommunities : AppCompatActivity() {
             intent.putExtra("onlyCreated", !onlyCreated)
             startActivity(intent)
         }
+        parentLay.removeView(searchPanel)
 
     }
 
-    private fun getMyCommunities(){
+    private fun getMyCommunities(query:String=""){
         val params: MutableMap<String, String> = HashMap()
-
         params["@usertoken"] = Data().getToken()
         val token = params["@usertoken"]
 
         val url = Data().getUrl("getmyprofile")
         var error: JSONObject? = null
-
         val stringRequest: StringRequest = @RequiresApi(Build.VERSION_CODES.O)
         object : StringRequest( Method.POST, url,
             Response.Listener { response ->
@@ -126,11 +130,11 @@ class MyCommunities : AppCompatActivity() {
                     error = jsonObject
                     if(onlyCreated) {
                         val subs: JSONArray = JSONObject((jsonObject["@return"]).toString())["createdCommunities"] as JSONArray
-                        if (subs.length() != 0)  helper(subs)
+                        if (subs.length() != 0)  helper(subs, query)
                     }
                     else {
                         val subs: JSONArray = JSONObject((jsonObject["@return"]).toString())["subscribes"] as JSONArray
-                        if (subs.length() != 0)  helper(subs)
+                        if (subs.length() != 0)  helper(subs, query)
                     }
 
                 } catch (e: JSONException) {
@@ -150,7 +154,8 @@ class MyCommunities : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun helper(list: JSONArray) {
+    fun helper(list: JSONArray, query:String="") {
+        commAdapter.deleteAll()
         for (i in 0 until list.length()) {
             val commJson = list.getJSONObject(i)
             val title = commJson["CommunityTitle"]
@@ -161,7 +166,12 @@ class MyCommunities : AppCompatActivity() {
             val time:String = since.toString()
             val comm = Community(title.toString(), by.toString(), desc.toString(),null,
                 null,null, time.substring(0,10), id.toString())
-            commAdapter.addComm(comm)
+            if(query=="") {
+                commAdapter.addComm(comm)
+            } else if(title.toString().contains(query, ignoreCase = true)) {
+                commAdapter.addComm(comm)
+            }
+
         }
     }
 }

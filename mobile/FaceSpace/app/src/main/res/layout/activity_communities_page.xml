@@ -184,7 +184,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/etQuery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Enter Query"
@@ -201,7 +201,7 @@
             android:layout_marginStart="46dp"
             android:text="Search"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
+            app:layout_constraintStart_toEndOf="@+id/etQuery"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

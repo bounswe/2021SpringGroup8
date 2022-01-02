@@ -3,6 +3,7 @@ package com.example.facespace
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -46,7 +47,6 @@ class CommunitiesPageActivity : AppCompatActivity() {
         val parentLay = findViewById<ConstraintLayout>(R.id.parentLayout)
         val btnSearch = findViewById<FloatingActionButton>(R.id.btnSearch)
         btnSearch.bringToFront()
-        parentLay.removeView(searchPanel)
         btnSearch.setOnClickListener {
             if(isOpen) {
                 parentLay.removeView(searchPanel)
@@ -65,9 +65,14 @@ class CommunitiesPageActivity : AppCompatActivity() {
         btnGoHome.bringToFront()
         btnLogout.bringToFront()
 
+        val btnEnterSearch = findViewById<Button>(R.id.enterSearch)
+        val etQuery = findViewById<EditText>(R.id.etQuery)
+        btnEnterSearch.setOnClickListener{
+            val query:String = etQuery.text.toString()
+            searchCommunities(query)
+        }
 
         btnRefresh.setOnClickListener {
-            commAdapter.deleteAll()
             getCommunities()
         }
 
@@ -87,6 +92,43 @@ class CommunitiesPageActivity : AppCompatActivity() {
             val intent = Intent(this, LoginPageActivity::class.java)
             startActivity(intent)
         }
+        parentLay.removeView(searchPanel)
+
+    }
+
+    private fun searchCommunities(query:String) {
+
+        val params: MutableMap<String, String> = HashMap()
+
+        val url = Data().getUrl("searchcommunity")
+        params["searchtext"] = query
+
+        var error: JSONObject? = null
+        val stringRequest: StringRequest = @RequiresApi(Build.VERSION_CODES.O)
+        object : StringRequest( Method.POST, url,
+            Response.Listener { response ->
+
+                try {
+                    //Parse your api responce here
+                    val jsonObject = JSONObject(response)
+                    error = jsonObject
+                    val communities :JSONArray = jsonObject["@return"] as JSONArray
+                    helper(communities)
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    Toast.makeText(this, (error?.get("@error")) as String, Toast.LENGTH_SHORT).show()
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(this, params.toString()+error.toString(), Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                return params
+            }
+        }
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
 
     }
 
@@ -129,6 +171,7 @@ class CommunitiesPageActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun helper(list: JSONArray) {
+        commAdapter.deleteAll()
         print(list.toString())
         for (i in 0 until list.length()) {
             // val current = list.getJSONObject(i)
