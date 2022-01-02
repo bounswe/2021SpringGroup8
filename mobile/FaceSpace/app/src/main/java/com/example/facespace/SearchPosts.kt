@@ -35,7 +35,7 @@ class SearchPosts : AppCompatActivity() {
         supportActionBar?.hide()
         var isVisible:Boolean  = true
         val intent = intent
-        val res = intent.getStringExtra("result")
+        val res = intent.getStringExtra("result").toString()
         val resJson = JSONObject(res) // it is an Community Object
         val lay = findViewById<ConstraintLayout>(R.id.layout1)
         postAdapter = PostAdapter(mutableListOf())
@@ -49,7 +49,7 @@ class SearchPosts : AppCompatActivity() {
         val posts = JSONArray(resJson["posts"].toString())
         for (i in 0 until posts.length()) {
             val post = posts.getJSONObject(i)
-            getPost(post)
+            getPost(post, res)
         }
         val searchBar = findViewById<EditText>(R.id.searchbar)
         val btn = findViewById<Button>(R.id.button)
@@ -161,12 +161,12 @@ class SearchPosts : AppCompatActivity() {
             val param:JSONObject = filterAdapter.getFilters()
             param.put("communityId", resJson["id"].toString())
             // Toast.makeText(this,param.toString().replace('\\', ' '), Toast.LENGTH_SHORT).show()
-            sendRequest(param)
+            sendRequest(param, res)
         }
 
     }
 
-    private fun getPost(post: JSONObject){
+    private fun getPost(post: JSONObject, res: String){
         val url = Data().getUrl("viewpost")
 
         val params: MutableMap<String, String> = HashMap()
@@ -179,7 +179,7 @@ class SearchPosts : AppCompatActivity() {
                 try {
                     val jsonObject = JSONObject(response)
                     error = jsonObject
-                    helper(post)
+                    helper(post, res)
                 } catch (e: JSONException) {
                     e.printStackTrace()
                     Toast.makeText(this, (error?.get("@error")) as String, Toast.LENGTH_SHORT).show()
@@ -197,13 +197,13 @@ class SearchPosts : AppCompatActivity() {
 
     }
 
-    fun helper(elm: JSONObject) {
+    fun helper(elm: JSONObject, res: String) {
         val commJson = JSONObject(elm.toString())
         val title = commJson["postTitle"]
         val id = commJson["id"]
         val date = JSONObject(commJson["creationTime"].toString())["_isoformat"].toString().substring(0,10)
         val by = JSONObject(commJson["postedBy"].toString())["username"]
-        val post = Post(title as String, by.toString(), "", id.toString(), date)
+        val post = Post(title as String, by.toString(), id.toString(), date, res)
         postAdapter.addPost(post)
     }
 
@@ -236,7 +236,7 @@ class SearchPosts : AppCompatActivity() {
         return liste
     }
 
-    private fun sendRequest(jsonObj: JSONObject) {
+    private fun sendRequest(jsonObj: JSONObject, res: String) {
         val url = Data().getUrl("searchpost")
         val params: MutableMap<String, String> = HashMap()
         val iter = jsonObj.keys()
@@ -266,7 +266,7 @@ class SearchPosts : AppCompatActivity() {
                     postAdapter.deleteAll()
                     for (i in 0 until posts.length()) {
                         val post = posts.getJSONObject(i)
-                        getPost(post)
+                        getPost(post, res)
                     }
 
 
