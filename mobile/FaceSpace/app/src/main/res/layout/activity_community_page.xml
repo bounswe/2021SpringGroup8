@@ -30,16 +30,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="37dp"
+                android:layout_marginEnd="15dp"
                 android:backgroundTint="@color/white"
                 android:clickable="true"
                 android:focusable="true"
                 app:borderWidth="0dp"
                 app:elevation="0dp"
                 app:fabSize="mini"
+                app:layout_constraintEnd_toStartOf="@+id/createPost"
                 app:layout_constraintStart_toEndOf="@+id/btnRefresh"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/places_ic_search"
                 app:tint="@color/gray" />
+
+
+
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="132dp"
+                android:layout_marginBottom="8dp"
+                android:text="Search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView11"
+                app:layout_constraintTop_toBottomOf="@+id/btnRefresh" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnRefresh"
@@ -59,17 +74,17 @@
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnAdd"
+                android:id="@+id/createPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="46dp"
+                android:layout_marginStart="28dp"
                 android:backgroundTint="@color/white"
                 android:clickable="true"
                 android:focusable="true"
                 app:borderWidth="0dp"
                 app:elevation="0dp"
                 app:fabSize="mini"
-                app:layout_constraintEnd_toStartOf="@+id/btnLogout"
+                app:layout_constraintStart_toEndOf="@+id/btnSearch"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@android:drawable/ic_input_add"
                 app:tint="@color/gray" />
@@ -127,31 +142,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/btnRefresh" />
 
             <TextView
-                android:id="@+id/textView31"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="132dp"
-                android:layout_marginBottom="8dp"
-                android:text="Search"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView11"
-                app:layout_constraintTop_toBottomOf="@+id/btnRefresh" />
-
-            <TextView
                 android:id="@+id/textView19"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="18dp"
+                android:layout_marginStart="27dp"
+                android:layout_marginBottom="8dp"
                 android:text="Create\nNew Post"
                 android:textAlignment="center"
-                app:layout_constraintEnd_toStartOf="@+id/textView20"
-                app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView31"
+                app:layout_constraintTop_toBottomOf="@+id/createPost"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="21dp"
                 android:layout_marginBottom="8dp"
                 android:text="Logout"
                 app:layout_anchor="@id/btnLogout"
@@ -167,21 +174,21 @@
             android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_marginEnd="50dp"
+            android:layout_marginTop="7dp"
             android:background="@color/lightgray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createPost" />
+            app:layout_constraintTop_toBottomOf="@+id/btnSubscribe" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPostItems"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createPost" />
+            app:layout_constraintTop_toBottomOf="@+id/btnSubscribe" />
 
         <TextView
             android:id="@+id/communityTitle"
@@ -260,22 +267,10 @@
             android:id="@+id/spinnerPosts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:gravity="end"
-            app:layout_constraintEnd_toStartOf="@+id/createPost"
-            app:layout_constraintTop_toTopOf="@+id/createPost" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/createPost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/green"
-            android:clickable="true"
-            app:fabSize="mini"
+            android:gravity="end"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dtButton"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            app:layout_constraintTop_toBottomOf="@+id/dtButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
