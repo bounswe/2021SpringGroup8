@@ -103,6 +103,14 @@ class CommunityPageActivity : AppCompatActivity() {
             }
         })
 
+        val btnSearch = findViewById<FloatingActionButton>(R.id.btnSearch)
+        btnSearch.bringToFront()
+        btnSearch.setOnClickListener {
+            val intent = Intent(this, SearchPosts::class.java)
+            intent.putExtra("result", res.toString())
+            startActivity(intent)
+        }
+
 
         // val infos = intent.getSerializableExtra("keys") as HashMap<String, String>
         // var value: Serializable = extras?.
