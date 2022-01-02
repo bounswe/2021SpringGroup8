@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Response
@@ -14,13 +15,14 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.facespaceextenstion.Data
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_my_communities.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
 class CommunitiesPageActivity : AppCompatActivity() {
     private lateinit var commAdapter: CommunityAdapter
-
+    var isOpen:Boolean = false
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,6 +42,20 @@ class CommunitiesPageActivity : AppCompatActivity() {
 
         rvComms.adapter = commAdapter
         rvComms.layoutManager = LinearLayoutManager(this)
+
+        val parentLay = findViewById<ConstraintLayout>(R.id.parentLayout)
+        val btnSearch = findViewById<FloatingActionButton>(R.id.btnSearch)
+        btnSearch.bringToFront()
+        parentLay.removeView(searchPanel)
+        btnSearch.setOnClickListener {
+            if(isOpen) {
+                parentLay.removeView(searchPanel)
+            } else {
+                parentLay.addView(searchPanel)
+            }
+            isOpen = !isOpen
+            // Toast.makeText(this@SearchPosts,"$dataType and $field and $filterType", Toast.LENGTH_SHORT).show()
+        }
 
         val editTitle = findViewById<EditText>(R.id.Title)
         val editDesc = findViewById<EditText>(R.id.Desc)
