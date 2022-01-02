@@ -30,16 +30,17 @@ class CommunityPageActivity : AppCompatActivity() {
     private val userId = Data().getToken()
     private var CommunitySubs: JSONArray? = null
     private var isSubscribed = isInComm(username)
+    private var comm_obj = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_page)
         supportActionBar?.hide()
         val intent = intent
-        val infos = intent.getSerializableExtra("keys") as HashMap<*, *>?
-        val res = intent.getStringExtra("result")
-        infos!!["key"]?.let { Log.v("HashMapTest", it as String) }
-        val commId = infos["id"].toString()
-        CommunitySubs = JSONArray(infos["subscribers"].toString())
+        comm_obj = intent.getStringExtra("result").toString()
+        val res = JSONObject(comm_obj)
+
+        val commId = res["id"].toString()
+        CommunitySubs = JSONArray(res["subscribers"].toString())
 
         postAdapter = PostAdapter(mutableListOf())
 
@@ -69,7 +70,6 @@ class CommunityPageActivity : AppCompatActivity() {
 
         btnRefresh.setOnClickListener {
             val intent = Intent(this, CommunityPageActivity::class.java)
-            intent.putExtra("keys", infos as Serializable)
             intent.putExtra("result", res.toString())
             startActivity(intent)
         }
@@ -111,31 +111,23 @@ class CommunityPageActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-        // val infos = intent.getSerializableExtra("keys") as HashMap<String, String>
-        // var value: Serializable = extras?.
-
-
         val titleTV = findViewById<TextView>(R.id.communityTitle)
         val descTV = findViewById<TextView>(R.id.communityDescription)
         val byTV = findViewById<TextView>(R.id.communityCreator)
         val dateTV = findViewById<TextView>(R.id.communityDate)
 
-        // val infos: MutableMap<String, String> = Data().getCommInfo()
+        titleTV.text = res["communityTitle"].toString()
+        descTV.text = res["description"].toString()
+        byTV.text = JSONObject(res["createdBy"].toString())["username"].toString()
+        dateTV.text = JSONObject(res["creationTime"].toString())["_isoformat"].toString().substring(0,10)
 
-        titleTV.text = infos["title"].toString()
-        descTV.text = infos["desc"].toString()
-        byTV.text = infos["by"].toString()
-        dateTV.text = infos["date"].toString()
-
-        val resJson = JSONObject(res)
-        val posts = JSONArray(resJson["posts"].toString())
+        val posts = JSONArray(res["posts"].toString())
         for (i in 0 until posts.length()) {
             val post = posts.getJSONObject(i)
             getPost(post)
         }
 
-        val dataTypes = JSONArray(resJson["dataTypes"].toString())
+        val dataTypes = JSONArray(res["dataTypes"].toString())
         //Toast.makeText(this, dataTypes.toString(), Toast.LENGTH_LONG).show()
         val typeNames = types(dataTypes)
         //Toast.makeText(this, typeNames.toString(), Toast.LENGTH_SHORT).show()
@@ -158,7 +150,7 @@ class CommunityPageActivity : AppCompatActivity() {
         }
 
         val btnDataType = findViewById<Button>(R.id.dtButton)
-        val createdBy = JSONObject(resJson["createdBy"].toString())["username"].toString()
+        val createdBy = JSONObject(res["createdBy"].toString())["username"].toString()
         if(Data().getUsername().contains(createdBy)) {
             btnDataType.visibility = View.VISIBLE
         } else {
@@ -320,7 +312,6 @@ class CommunityPageActivity : AppCompatActivity() {
 
     private fun getPost(post: JSONObject){
         val url = Data().getUrl("viewpost")
-
         val params: MutableMap<String, String> = HashMap()
         params["postId"] = post["id"].toString()
 
@@ -346,7 +337,6 @@ class CommunityPageActivity : AppCompatActivity() {
         }
         val requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(stringRequest)
-
     }
 
     fun helper(elm: JSONObject) {
@@ -354,14 +344,8 @@ class CommunityPageActivity : AppCompatActivity() {
         val title = commJson["postTitle"]
         val id = commJson["id"]
         val date = JSONObject(commJson["creationTime"].toString())["_isoformat"].toString().substring(0,10)
-        //val desc = commJson["description"]
         val by = JSONObject(commJson["postedBy"].toString())["username"]
-        //val commID = JSONObject(commJson["postedAt"].toString())["id"].toString()
-        // val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        // val formatted = since.format(formatter) as String
-        val post = Post(title as String, by.toString(), "", id.toString(), date)
+        val post = Post(title as String, by.toString(), id.toString(), date, comm_obj)
         postAdapter.addPost(post)
     }
-
-
 }

@@ -77,27 +77,11 @@ class CommunityAdapter (
             Desc.text = currComm.desc
             By.text = "by " + currComm.by
             since.text = currComm.since
-            /*
-            joinBox.isChecked = currComm.isJoined
-            changeText(joinBox, currComm.isJoined)
-
-
-            joinBox.setOnCheckedChangeListener { joinbox, isJoined ->
-                changeText(joinBox as CheckBox, isJoined)
-                currComm.isJoined = !currComm.isJoined
-
-            }
-             */
             btnOpenComm.setOnClickListener {
                 val temp: String = currComm.id
                 Data().setCurrentCommunityId(temp)
                 setInfo(temp)
-                // Thread.sleep(700)
-                // Toast.makeText(context,"$temp this is under implementation still.",Toast.LENGTH_SHORT).show()
-
             }
-
-
         }
     }
 
@@ -106,7 +90,6 @@ class CommunityAdapter (
     }
 
     private fun setInfo(id:String) {
-
         val url = Data().getUrl("getcommunity")
 
         var error: JSONObject? = null
@@ -121,7 +104,7 @@ class CommunityAdapter (
                     val jsonObject = JSONObject(response)
                     error = jsonObject
                     val results: JSONObject = jsonObject["@return"] as JSONObject
-                    helper(results, id)
+                    helper(results)
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -136,26 +119,20 @@ class CommunityAdapter (
         requestQueue.add(stringRequest)
 
     }
-    private fun helper(res: JSONObject, id: String) {
+    private fun helper(res: JSONObject) {
 
         val infos:MutableMap<String,String> = HashMap()
 
-        val tempDate: JSONObject = res["creationTime"] as JSONObject
-        val tempBy: JSONObject = res["createdBy"] as JSONObject
-
-        infos["id"] = id
+        infos["id"] = res["id"].toString()
         infos["title"]  = res["communityTitle"].toString()
         infos["desc"]  = res["description"].toString()
-        infos["date"]  = tempDate["_isoformat"].toString().substring(0,10)
-        infos["by"]  = tempBy["username"].toString()
+        infos["date"]  = (res["creationTime"] as JSONObject).toString().substring(0,10)
+        infos["by"]  = (res["createdBy"] as JSONObject).toString()
         infos["subscribers"] = res["subscribers"].toString()
 
         //Toast.makeText(mContext,"helalsfsf", Toast.LENGTH_SHORT).show()
         val intent: Intent = Intent(mContext, CommunityPageActivity::class.java)
-        intent.putExtra("keys", infos as Serializable)
         intent.putExtra("result", res.toString())
         mContext.startActivity(intent)
-
     }
-
 }
