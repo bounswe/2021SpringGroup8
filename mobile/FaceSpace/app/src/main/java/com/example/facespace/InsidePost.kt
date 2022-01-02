@@ -19,9 +19,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import android.R.attr.data
 
-
-
-
 class InsidePost : AppCompatActivity() {
     private lateinit var postAdapter: PostAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,8 +34,6 @@ class InsidePost : AppCompatActivity() {
         val post_creator = JSONObject(post_data["postedBy"].toString())["username"].toString()
         val comm_creator = JSONObject(comm_data["createdBy"].toString())["username"].toString()
         val postId = post_data["id"].toString()
-        val commId = comm_data["id"].toString()
-        Toast.makeText(this,"BURADAYIM BU DA COMMID: $commId", Toast.LENGTH_SHORT).show()
 
         val btnAdd = findViewById<FloatingActionButton>(R.id.btnAddP)
         val btnRefresh = findViewById<FloatingActionButton>(R.id.btnRefreshP)
