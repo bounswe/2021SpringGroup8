@@ -16,6 +16,36 @@
         app:layout_constraintStart_toStartOf="parent">
 
 
+        <Button
+            android:id="@+id/btnEnterDate2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/cansu"
+            android:text="@string/select_date"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <Button
+            android:id="@+id/btnSelectCity2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/yellow"
+            android:drawableStart="@android:drawable/ic_dialog_map"
+            android:drawablePadding="5dp"
+            android:text="Select City"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -53,7 +83,7 @@
             android:id="@+id/spinner2"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -134,6 +164,7 @@
         android:layout_marginTop="5dp"
         android:hint="Title of the Post"
         android:inputType="textPersonName"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView30" />
