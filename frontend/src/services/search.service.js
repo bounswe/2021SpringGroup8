@@ -13,7 +13,7 @@ class SearchService {
         filters.map((item, index) => {
             let new_filter_object = []
             if (item.fieldType === 'str' && item.fieldValue !== "") {
-                new_filter_object = ['search_text', item.fieldName, [item.fieldValue]]
+                new_filter_object = ['search text', item.fieldName, [item.fieldValue]]
                 filter_array.push(new_filter_object)
             } else if (item.fieldType === 'int' && item.fieldValue !== "") {
                 new_filter_object = [item.fieldOperator, item.fieldName, [item.fieldValue]]
