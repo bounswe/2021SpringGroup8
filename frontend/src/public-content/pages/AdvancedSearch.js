@@ -1,17 +1,13 @@
 import React, {Component} from "react";
 
 import UserCommunityService from "../../services/user-community.service";
-import {withRouter} from "react-router-dom";
-import {Container} from "react-bootstrap";
-import {Grid} from "@mui/material";
 import Header from "../Components/header/header2";
 import Profilebar from "../../components/profilebar";
-import SearchIcon from "@mui/icons-material/Search";
-import IconButton from "@mui/material/IconButton";
-import InputBase from "@mui/material/InputBase";
-import AdvancedSearchForm from "../Components/AdvancedSearchForm";
-import {InputLabel, MenuItem, Select, Button} from "@material-ui/core";
+import {InputLabel, MenuItem, Select, Button, Container} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
+import SearchService from "../../services/search.service";
+import CommunityPosts from "../Components/CommunityPosts";
+import {Grid} from "@mui/material";
 
 export default class AdvancedSearch extends Component {
     constructor(props) {
@@ -23,7 +19,8 @@ export default class AdvancedSearch extends Component {
             dataType: "",
             fields: {},
             fieldValues: [],
-            isLoaded: false,
+            filteredPosts: [],
+            isLoaded: true,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSearchButton = this.handleSearchButton.bind(this)
@@ -39,7 +36,7 @@ export default class AdvancedSearch extends Component {
             .then((response) => {
                 this.setState({
                     communities: response.data["@return"],
-                    isLoaded: true,
+                    isLoading: true,
                 });
                 console.log(response.data);
             })
@@ -48,15 +45,6 @@ export default class AdvancedSearch extends Component {
             });
     }
 
-
-    goCommunity(event) {
-        console.log(event);
-    }
-
-    goProfile(id) {
-        console.log(id);
-        this.props.history.push("/profile/" + id);
-    }
 
     // text box => onchange = {handleChange}
     handleChange(event) {
@@ -69,7 +57,6 @@ export default class AdvancedSearch extends Component {
                 this.setState({
                     dataTypes: response.data['@return'].dataTypes,
                 })
-                console.log(this.state.dataTypes)
             })
             .catch((e) => {
                 console.log(e.toString());
@@ -85,7 +72,6 @@ export default class AdvancedSearch extends Component {
 
     handleChangeInput(index, event) {
         const values = [...this.state.fieldValues];
-        console.log(values)
         values[index][event.target.name] = event.target.value;
         this.setState({fieldValues: values});
     }
@@ -124,11 +110,18 @@ export default class AdvancedSearch extends Component {
 
     handleSearchButton() {
         //TODO add search service
-        console.log(this.state)
+        this.setState({isLoaded: false})
+        SearchService.search(this.state.communityId, this.state.dataTypes[this.state.dataType].name, this.state.fieldValues)
+            .then(response => {
+                this.setState({
+                    filteredPosts: response.data["@return"],
+                    isLoaded: true,
+                })
+            })
     }
 
     render() {
-        const {communities, dataTypes, dataType, fieldValues, isLoaded, communityId} = this.state;
+        const {communities, dataTypes, dataType, fieldValues, isLoaded, communityId, filteredPosts} = this.state;
         let communities_render = communities.length > 0
             && communities.map((item, index) => {
                 return (
@@ -183,18 +176,32 @@ export default class AdvancedSearch extends Component {
                                 onChange={event => this.handleChangeInput(index, event)}
                             >
                                 <MenuItem key="greater" value="greater">Greater</MenuItem>
-                                <MenuItem key="smaller" value="smaller">Smaller</MenuItem>
-                                <MenuItem key="equals" value="equals">Equals</MenuItem>
+                                <MenuItem key="less" value="less">Smaller</MenuItem>
+                                <MenuItem key="equal" value="equal">Equals</MenuItem>
                             </Select>
                         </div>
 
 
                     </Container>)
-                } else if (item.fieldType === 'location') {
-
+                } else if (item.fieldType === 'bool') {
+                    return (
+                        <Container>
+                            <div>
+                                <InputLabel id={index.toString()}> {item.fieldName} </InputLabel>
+                                <Select
+                                    name="fieldValue"
+                                    id={index.toString()}
+                                    value={item.fieldValue}
+                                    onChange={event => this.handleChangeInput(index, event)}
+                                >
+                                    <MenuItem key="true" value="1">True</MenuItem>
+                                    <MenuItem key="false" value="0">False</MenuItem>
+                                </Select>
+                            </div>
+                        </Container>
+                    )
                 }
             }, this);
-
 
 
         return (
@@ -203,7 +210,7 @@ export default class AdvancedSearch extends Component {
                 <Header/>
 
 
-                <Container fluid="md">
+                <Container maxWidth="md">
                     <Container>
                         <InputLabel id="community"> Community </InputLabel>
                         <Select
@@ -239,8 +246,18 @@ export default class AdvancedSearch extends Component {
                         <Button type="submit" variant="contained"
                                 onClick={this.handleSearchButton}> Search </Button>
                     </Container>
-
+                    {isLoaded ? (
+                        <Container>
+                            <CommunityPosts description="something" posts={filteredPosts}/>
+                        </Container>
+                    ) : (
+                        <Grid item xs={12} md={8}>
+                            <div>Loading...</div>
+                        </Grid>
+                    )}
                 </Container>
+
+
             </>
         );
     }
