@@ -28,7 +28,7 @@ function Map(props) {
     }, [])
 
     const onClick = React.useCallback(function callback(map) {
-        setCenter({lat:map.latLng.lat(), lng: map.latLng.lng() })
+        setCenter({lat: map.latLng.lat(), lng: map.latLng.lng()})
     }, [])
 
     return isLoaded ? (

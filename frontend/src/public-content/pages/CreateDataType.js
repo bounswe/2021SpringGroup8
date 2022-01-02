@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import Navbar from "../Components/navbar";
 import {withRouter} from "react-router-dom";
-import DataTypeForm from "../Components/DataTypeForm"
 import CreateDataTypeForm from "../Components/CreateDataTypeForm";
 
 class CreateDataType extends Component {

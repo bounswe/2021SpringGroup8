@@ -8,7 +8,6 @@ import {
 } from "./types";
 
 import RegisterService from "../services/register.service";
-import * as querystring from "querystring";
 
 export const register = (username, email, password) => (dispatch) => {
     return RegisterService.register(username, email, password).then(
@@ -16,7 +15,6 @@ export const register = (username, email, password) => (dispatch) => {
             dispatch({
                 type: REGISTER_SUCCESS,
             });
-
 
 
             return Promise.resolve();
@@ -38,17 +36,16 @@ export const register = (username, email, password) => (dispatch) => {
 export const login = (username, password) => (dispatch) => {
     return RegisterService.login(username, password).then(
         response => {
-            if(response.data['@success'] !== 'False'){
-                console.log(response.data['@return']);
+            if (response.data['@success'] !== 'False') {
 
                 localStorage.setItem("user", JSON.stringify(response.data['@return']));
                 console.log(JSON.stringify(response.data['@return']));
                 dispatch({
                     type: LOGIN_SUCCESS,
-                    payload: { user: response.data },
+                    payload: {user: response.data},
                 });
                 return Promise.resolve();
-            }else{
+            } else {
                 console.log(response.data['@error']);
                 alert(response.data['@error']);
                 dispatch({
@@ -64,10 +61,7 @@ export const login = (username, password) => (dispatch) => {
                     error.response.data.message) ||
                 error.message ||
                 error.toString();
-            console.log(resMessage);
-        }
-    )
-    ;
+        });
 };
 
 export const login2 = (username, password) => (dispatch) => {

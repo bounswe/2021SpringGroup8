@@ -3,17 +3,8 @@ import PostService from '../../services/post.service';
 import Map from "../Components/map";
 import Container from "@material-ui/core/Container";
 import Profilebar from "../../components/profilebar";
-import {OutlinedInput} from '@mui/material';
-import {makeStyles} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";
 
-const useStyles = makeStyles({
-    customInputLabel: {
-        "& legend": {
-            visibility: "visible"
-        }
-    }
-});
 export default class PostView extends Component {
     constructor(props) {
         super(props);
@@ -52,7 +43,7 @@ export default class PostView extends Component {
     }
 
     render() {
-        const {postTitle, id, postedByID, postedByName, postObject, classes} = this.state
+        const {postTitle, postedByName, postObject} = this.state
         let rows = [];
         for (let field in postObject) {
             if (!postObject[field]['@type']) {
