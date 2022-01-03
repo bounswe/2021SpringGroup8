@@ -23,7 +23,10 @@ class CreatePost extends Component {
         UserCommunityService.getCommunityById(id)
             .then(response => {
                 const data = response.data['@return'];
+                console.log("data.dataTypes")
+                console.log(data.dataTypes)
                 this.setState({
+
                     dataTypes:data.dataTypes,
                 })
             })

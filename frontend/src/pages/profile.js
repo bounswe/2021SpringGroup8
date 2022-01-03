@@ -9,6 +9,8 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import { Link } from "react-router-dom";
 import "../App.css";
+import CreatePostForm from "../public-content/Components/CreatePostForm";
+import ProfileCityEdit from "../components/ProfileCityEdit";
 
 
 
@@ -64,8 +66,10 @@ class Profile extends Component {
             birthdate:"",
             seeSubsComms:true,
             seeSubsComms2:true,
+            dataTypes:[],
         };
     }
+
     unsubToComm(id){
         UserCommunityService.unsubscribeCommunity(
             id
@@ -259,27 +263,27 @@ class Profile extends Component {
 
         const { history} = this.props;
 
-            console.log("Desc is ")
-            console.log(this.description)
-            UserCommunityService
-                .createCommunity(
-                    this.state.communityTitle,
-                    this.state.description,
-                )
-                .then(
-                    response => {
-                        if (response.data['@success'] !== 'False') {
-                            console.log(response.data['@return']);
-                            history.push('/communities');
-                        } else {
-                            console.log(response.data['@error']);
-                            alert(response.data['@error']);
-                            this.setState({
-                                loading: false,
-                            });
-                        }
-                    })
-                .catch();
+        console.log("Desc is ")
+        console.log(this.description)
+        UserCommunityService
+            .createCommunity(
+                this.state.communityTitle,
+                this.state.description,
+            )
+            .then(
+                response => {
+                    if (response.data['@success'] !== 'False') {
+                        console.log(response.data['@return']);
+                        history.push('/communities');
+                    } else {
+                        console.log(response.data['@error']);
+                        alert(response.data['@error']);
+                        this.setState({
+                            loading: false,
+                        });
+                    }
+                })
+            .catch();
     }
 
     editEmail(e) {
@@ -287,25 +291,25 @@ class Profile extends Component {
         this.setState({
             loading: true,
         });
-            ProfileService
-                .updateEmail(
-                    this.state.email,
-                )
-                .then(
-                    response => {
-                        if (response.data['@success'] !== 'False') {
-                            localStorage.removeItem("user");
-                            localStorage.setItem("user", JSON.stringify(response.data['@return']));
-                            this.setActiveEmailEdit();
-                            window.location.reload(false);
-                        } else {
-                            this.setState({
-                                loading: false,
-                            });
-                            console.log(response.data['@error']);
-                            alert(response.data['@error']);
-                        }
-                    });
+        ProfileService
+            .updateEmail(
+                this.state.email,
+            )
+            .then(
+                response => {
+                    if (response.data['@success'] !== 'False') {
+                        localStorage.removeItem("user");
+                        localStorage.setItem("user", JSON.stringify(response.data['@return']));
+                        this.setActiveEmailEdit();
+                        window.location.reload(false);
+                    } else {
+                        this.setState({
+                            loading: false,
+                        });
+                        console.log(response.data['@error']);
+                        alert(response.data['@error']);
+                    }
+                });
     }
 
     editName(e) {
@@ -313,105 +317,114 @@ class Profile extends Component {
         this.setState({
             loading: true,
         });
-            ProfileService
-                .updateName(
-                    this.state.name,
-                )
-                .then(
-                    response => {
-                        if (response.data['@success'] !== 'False') {
-                            localStorage.removeItem("user");
-                            localStorage.setItem("user", JSON.stringify(response.data['@return']));
-                            window.location.reload(false);
-                        } else {
-                            console.log(response.data['@error']);
-                            this.setState({
-                                loading: false,
-                            });
-                            alert(response.data['@error']);
-                        }
-                    });
+        ProfileService
+            .updateName(
+                this.state.name,
+            )
+            .then(
+                response => {
+                    if (response.data['@success'] !== 'False') {
+                        localStorage.removeItem("user");
+                        localStorage.setItem("user", JSON.stringify(response.data['@return']));
+                        window.location.reload(false);
+                    } else {
+                        console.log(response.data['@error']);
+                        this.setState({
+                            loading: false,
+                        });
+                        alert(response.data['@error']);
+                    }
+                });
     }
     editSurname(e) {
         e.preventDefault();
         this.setState({
             loading: true,
         });
-            ProfileService
-                .updateSurname(
-                    this.state.surname,
-                )
-                .then(
-                    response => {
-                        if (response.data['@success'] !== 'False') {
-                            localStorage.removeItem("user");
-                            localStorage.setItem("user", JSON.stringify(response.data['@return']));
-                            window.location.reload(false);
-                        } else {
-                            this.setState({
-                                loading: false,
-                            });
-                            console.log(response.data['@error']);
-                            alert(response.data['@error']);
-                        }
-                    });
+        ProfileService
+            .updateSurname(
+                this.state.surname,
+            )
+            .then(
+                response => {
+                    if (response.data['@success'] !== 'False') {
+                        localStorage.removeItem("user");
+                        localStorage.setItem("user", JSON.stringify(response.data['@return']));
+                        window.location.reload(false);
+                    } else {
+                        this.setState({
+                            loading: false,
+                        });
+                        console.log(response.data['@error']);
+                        alert(response.data['@error']);
+                    }
+                });
     }
     editCity(e) {
         e.preventDefault();
         this.setState({
             loading: true,
         });
-            ProfileService
-                .updateSurname(
-                    this.state.surname,
-                )
-                .then(
-                    response => {
-                        if (response.data['@success'] !== 'False') {
-                            localStorage.removeItem("user");
-                            localStorage.setItem("user", JSON.stringify(response.data['@return']));
-                            window.location.reload(false);
-                        } else {
-                            this.setState({
-                                loading: false,
-                            });
-                            console.log(response.data['@error']);
-                            alert(response.data['@error']);
-                        }
-                    });
+        ProfileService
+            .updateCity(
+                this.state.city,-0.37319183349609375, 0.77319183349609375
+            )
+            .then(
+                response => {
+                    if (response.data['@success'] !== 'False') {
+                        console.log(response.data['@return'])
+                        console.log("Success")
+                        localStorage.removeItem("user");
+                        localStorage.setItem("user", JSON.stringify(response.data['@return']));
+                        window.location.reload(false);
+                    } else {
+                        console.log(response.data)
+                        this.setState({
+                            loading: false,
+                        });
+                        console.log(response.data['@error']);
+                        alert(response.data['@error']);
+                    }
+                });
     }
     editBirthdate(e) {
         e.preventDefault();
         this.setState({
             loading: true,
         });
-            ProfileService
-                .updateSurname(
-                    this.state.surname,
-                )
-                .then(
-                    response => {
-                        if (response.data['@success'] !== 'False') {
-                            localStorage.removeItem("user");
-                            localStorage.setItem("user", JSON.stringify(response.data['@return']));
-                            window.location.reload(false);
-                        } else {
-                            console.log(response.data['@error']);
-                            this.setState({
-                                loading: false,
-                            });
-                            alert(response.data['@error']);
-                        }
-                    });
+        var d = new Date(this.state.birthdate)
+        var isodate = d.toISOString();
+        ProfileService
+            .updateBirthdate(
+                isodate,
+            )
+            .then(
+                response => {
+                    if (response.data['@success'] !== 'False') {
+                        console.log("-*************")
+                        console.log(response.data['@return'])
+                        localStorage.removeItem("user");
+                        localStorage.setItem("user", JSON.stringify(response.data['@return']));
+                        window.location.reload(false);
+                    } else {
+                        console.log(response.data['@error']);
+                        this.setState({
+                            loading: false,
+                        });
+                        alert(response.data['@error']);
+                    }
+                });
     }
     render() {
         const {communityCreationReq : communityCreationReq , emailEdit: emailEdit, seeSubsComms: seeSubsComms,
             seeSubsComms2: seeSubsComms2 , nameEdit:nameEdit, surnameEdit:surnameEdit,
             cityEdit:cityEdit, birthdateEdit:birthdateEdit} = this.state;
         const { user: currentUser } = this.props;
+        const { dataTypes} = this.state;
         const { usertoken: currentToken } = this.props;
         const {message} = this.props;
         if (!currentUser) {
+
             return <Redirect to="/login"/>;
         }
         return (
@@ -424,18 +437,18 @@ class Profile extends Component {
                         </h3>
                     </header>
                     <p>
-                            {emailEdit?(
-                                <p>
+                        {emailEdit?(
+                            <p>
                                 <strong>Email:</strong> {currentUser.email}
                                 <button
-                                onClick={this.setActiveEmailEditFalse}
-                                className="badge badge-warning"
-                                data-testid={"email-edit"}
+                                    onClick={this.setActiveEmailEditFalse}
+                                    className="badge badge-warning"
+                                    data-testid={"email-edit"}
                                 >
-                                Edit
+                                    Edit
                                 </button>
-                                </p>) : (
-                                    <p> <div className="col-md-4">
+                            </p>) : (
+                            <p> <div className="col-md-4">
                                 <Form
                                     onSubmit={this.editEmail}
                                 >
@@ -460,12 +473,12 @@ class Profile extends Component {
                                             <span>Update Email</span>
                                         </button>
                                     </div>
-                                        <button
-                                            className="m-3 btn btn-sm btn-danger"
-                                            onClick={this.setActiveEmailEdit}
-                                        >
-                                            Abort
-                                        </button>
+                                    <button
+                                        className="m-3 btn btn-sm btn-danger"
+                                        onClick={this.setActiveEmailEdit}
+                                    >
+                                        Abort
+                                    </button>
                                 </Form></div></p> ) }
                     </p>
                     <p>
@@ -557,7 +570,7 @@ class Profile extends Component {
                     <p>
                         {cityEdit?(
                             <p>
-                                <strong>City:</strong> {currentUser.city}
+                                <strong>City:</strong> {currentUser.loc ? currentUser.loc.locname : ""}
                                 <button
                                     onClick={this.setActiveCityEditFalse}
                                     className="badge badge-warning"
@@ -566,6 +579,7 @@ class Profile extends Component {
                                 </button>
                             </p>) : (
                             <p> <div className="col-md-4">
+                                {/*<ProfileCityEdit dataTypes={dataTypes} />*/}
                                 <Form
                                     onSubmit={this.editCity}
                                 >
@@ -609,8 +623,9 @@ class Profile extends Component {
                                 </button>
                             </p>) : (
                             <p> <div className="col-md-4">
+                                Example : 2000-04-03
                                 <Form
-                                    onSubmit={this.editName}
+                                    onSubmit={this.editBirthdate}
                                 >
                                     <div className="form-group">
                                         <label htmlFor="birthdate">Birthdate</label>
@@ -692,7 +707,7 @@ class Profile extends Component {
                             }, this)
                             }
                         </>
-                         ) }
+                    ) }
                     { seeSubsComms2?(
                         <p>
                             <strong>My Communities :</strong>
@@ -797,7 +812,7 @@ class Profile extends Component {
                             className="m-3 btn btn-sm btn-danger"
                             onClick={this.setActiveCreationReqNonActive}
                         >
-                             Abort
+                            Abort
                         </button>)
                     }
                 </div>
