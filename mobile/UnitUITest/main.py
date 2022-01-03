@@ -79,7 +79,42 @@ class MobileUITests(unittest.TestCase):
             self.driver.find_element(by=AppiumBy.ID, value="com.example.signin_signup:id/btnForgot")
                 .get_attribute("text"), "Forgot Password?")
 
-    
+    def test_open_my_communities(self):
+        self.driver.find_element(by=AppiumBy.ID, value="com.example.signin_signup:id/btnIn").click()
+        time.sleep(1)
+        self.driver.find_element(by=AppiumBy.ID, value="com.example.signin_signup:id/inputUsername") \
+            .send_keys(self.USER_NAME)
+        self.driver.find_element(by=AppiumBy.ID, value="com.example.signin_signup:id/inputPassword") \
+            .send_keys(self.PASSWORD)
+        self.driver.find_element(by=AppiumBy.ID, value="com.example.signin_signup:id/btnSignIn").click()
+        time.sleep(1)
+        self.driver.find_element(by=AppiumBy.ID, value="com.example.signin_signup:id/imageMyComm").click()
+        time.sleep(0.5)
+        self.assertEqual(self.driver.find_element(AppiumBy.ID,
+                                                  "com.example.signin_signup:id/textView24").get_attribute("text"),
+                         "Currently Viewing")
+
+    def test_open_all_communities(self):
+        self.driver.find_element(by=AppiumBy.ID, value="com.example.signin_signup:id/btnIn").click()
+        time.sleep(1)
+        self.driver.find_element(by=AppiumBy.ID, value="com.example.signin_signup:id/inputUsername") \
+            .send_keys(self.USER_NAME)
+        self.driver.find_element(by=AppiumBy.ID, value="com.example.signin_signup:id/inputPassword") \
+            .send_keys(self.PASSWORD)
+        self.driver.find_element(by=AppiumBy.ID, value="com.example.signin_signup:id/btnSignIn").click()
+        time.sleep(1)
+        self.driver.find_element(by=AppiumBy.ID, value="com.example.signin_signup:id/imageAllComm").click()
+        time.sleep(0.5)
+        self.assertEqual(self.driver.find_element(AppiumBy.ID,
+                                                  "com.example.signin_signup:id/textView19").get_attribute("text"),
+                         "Create New\nCommunity")
+        try:
+            self.driver.find_element(by=AppiumBy.ID, value="com.example.signin_signup:id/textView24")
+            self.assertEqual("", "a", "This is myCommunities page, not All Communities")
+        except:
+            self.assertEqual("", "")
+
+        time.sleep(0.5)
 
 
 if __name__ == '__main__':
