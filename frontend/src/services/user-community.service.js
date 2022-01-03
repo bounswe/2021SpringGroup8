@@ -164,6 +164,13 @@ class UserCommunityService {
 
     }
 
+    searchCommunity(searchtext) {
+        let paramStr =  'searchtext='+ searchtext
+        let searchParams = new URLSearchParams(paramStr);
+        return axios.post(`http://3.145.120.66:8080/searchcommunity`, searchParams)
+
+    }
+
 
 }
 

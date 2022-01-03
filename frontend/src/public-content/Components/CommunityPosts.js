@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import { Grid, Card, Paper } from "@mui/material";
 import Post from "./Post";
-import FlipMove from "react-flip-move";
 import CommunityPost from "./CommunityPost";
 
 function CommunityPosts(props) {
