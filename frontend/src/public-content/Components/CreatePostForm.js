@@ -96,7 +96,7 @@ export default function CreatePostForm(props) {
         if (dataTypes.length > 0) {
             Object.keys(dataTypes[i].fields).map(field => {
                 const field_type = dataTypes[i].fields[field]
-                if (field_type === "str" || field_type === "int") {
+                if (field_type === "str" || field_type === "int" || field_type === "bool") {
                     initialValues[field] = ''
                 } else {
                     initialValues['locname'] = ''
@@ -159,6 +159,14 @@ export default function CreatePostForm(props) {
                                     onChange={formik.handleChange}
                                     value={formik.values.name}
                                 />
+                            </div>
+                        }else if (field_type === "bool") {
+                            return <div>
+                                <label htmlFor={field}>{field}</label>
+                                <Field as="select" name="dataType" onChange={formik.handleChange} fullWidth>
+                                    <option value="true"> True </option>
+                                    <option value="false"> False </option>
+                                </Field>
                             </div>
                         } else if (field_type === "location") {
                             return (<div style={{marginTop: 10}}>
