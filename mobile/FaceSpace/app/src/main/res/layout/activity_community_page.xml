@@ -66,10 +66,11 @@
 
             <TextView
                 android:id="@+id/communityCreator"
-                android:layout_width="47dp"
-                android:layout_height="21dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Cavus"
+                android:maxWidth="80dp"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/communityDate"
                 app:layout_constraintStart_toEndOf="@+id/textView23"
@@ -113,6 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:maxWidth="300dp"
                 android:text="@string/desc"
                 android:textColor="@color/gray"
                 android:textSize="17sp"

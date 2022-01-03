@@ -161,7 +161,7 @@ class SignUpPageActivity : AppCompatActivity() {
                         }
                     },
                     Response.ErrorListener { error ->
-                        Toast.makeText(this, params.toString()+error.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show()
                     }) {
                     override fun getParams(): Map<String, String> {
                         return params
