@@ -156,9 +156,12 @@ class CommunityPageActivity : AppCompatActivity() {
         val btnSearch = findViewById<FloatingActionButton>(R.id.btnSearch)
         btnSearch.bringToFront()
         btnSearch.setOnClickListener {
+
             val intent = Intent(this, SearchPosts::class.java)
             intent.putExtra("result", res.toString())
             startActivity(intent)
+
+
         }
 
         val titleTV = findViewById<TextView>(R.id.communityTitle)
@@ -221,7 +224,10 @@ class CommunityPageActivity : AppCompatActivity() {
                     break
                 }
             }
-            if(dataTypeFields == null) {
+            if(btnSubs.text == getText(R.string.subscribe)) {
+                Toast.makeText(this, "First, you have to subscribe.",Toast.LENGTH_SHORT).show()
+            }
+            else if(dataTypeFields == null) {
                 Toast.makeText(this, "There is no data type for this community! " +
                         "You must create a data type before you can create a post.",
                         Toast.LENGTH_LONG).show()
@@ -315,7 +321,7 @@ class CommunityPageActivity : AppCompatActivity() {
                     error = jsonObject
                     if (jsonObject["@success"] == "True") {
                         isSubscribed = true
-                        Toast.makeText(this, "User with id $userId subscribed successfully!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Subscribed successfully!", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -348,7 +354,7 @@ class CommunityPageActivity : AppCompatActivity() {
                     error = jsonObject
                     if (jsonObject["@success"] == "True") {
                         isSubscribed = false
-                        Toast.makeText(this, "User with id $userId unsubscribed successfully!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Unsubscribed successfully!", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
