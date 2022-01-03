@@ -3,22 +3,19 @@ import React, {Component} from "react";
 import UserCommunityService from "../../services/user-community.service";
 import Header from "../Components/header/header2";
 import Profilebar from "../../components/profilebar";
-import SearchIcon from "@mui/icons-material/Search";
-import IconButton from "@mui/material/IconButton";
-import InputBase from "@mui/material/InputBase";
-//import AdvancedSearchForm from "../Components/AdvancedSearchForm";
-import {InputLabel, MenuItem, Select, Button, Container} from "@material-ui/core";
+import {InputLabel, MenuItem, Select, Button, Container, Paper} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import SearchService from "../../services/search.service";
 import CommunityPosts from "../Components/CommunityPosts";
 import {Grid} from "@mui/material";
 
-export default class AdvancedSearch extends Component {
+export default class AdvancedSearchInCommunity extends Component {
     constructor(props) {
         super(props);
+        const {communityID} = props
+        console.log(communityID)
         this.state = {
-            communities: [],
-            communityId: "",
+            communityId: communityID,
             dataTypes: [],
             dataType: "",
             fields: {},
@@ -32,25 +29,9 @@ export default class AdvancedSearch extends Component {
     }
 
     componentDidMount() {
-        this.retrieveCommunities();
+        this.retrieveCommunity(this.state.communityId);
     }
 
-    retrieveCommunities() {
-        UserCommunityService.getCommunities()
-            .then((response) => {
-                this.setState({
-                    communities: response.data["@return"],
-                    isLoading: true,
-                });
-                console.log(response.data);
-            })
-            .catch((e) => {
-                console.log(e.toString());
-            });
-    }
-
-
-    // text box => onchange = {handleChange}
     handleChange(event) {
         this.setState({searchValue: event.target.value});
     }
@@ -125,13 +106,7 @@ export default class AdvancedSearch extends Component {
     }
 
     render() {
-        const {communities, dataTypes, dataType, fieldValues, isLoaded, communityId, filteredPosts} = this.state;
-        let communities_render = communities.length > 0
-            && communities.map((item, index) => {
-                return (
-                    <MenuItem key={item.id} value={item.id}>{item.CommunityTitle}</MenuItem>
-                )
-            }, this);
+        const {dataTypes, dataType, fieldValues, isLoaded, communityId, filteredPosts} = this.state;
 
         let dataTypes_render = dataTypes.length > 0
             && dataTypes.map((item, index) => {
@@ -139,6 +114,7 @@ export default class AdvancedSearch extends Component {
                     <MenuItem value={index}>{item.name}</MenuItem>
                 )
             }, this);
+
         let fieldValues_render = fieldValues.length > 0
             && fieldValues.map((item, index) => {
                 if (item.fieldType === 'str') {
@@ -210,29 +186,11 @@ export default class AdvancedSearch extends Component {
 
         return (
             <>
-                <Profilebar/>
-                <Header/>
-
-
-                <Container maxWidth="md">
-                    <Container>
-                        <InputLabel id="community"> Community </InputLabel>
-                        <Select
-                            name="community"
-                            id="community"
-                            value={communityId}
-                            label="community"
-                            onChange={event => this.handleChangeCommunity(event)}
-                        >
-                            {communities_render}
-                        </Select>
-
-                    </Container>
-
-
-                    <Container>
+                <div>
+                    <Container style={{margin: 10}}>
                         <InputLabel id="dataType"> Data Type </InputLabel>
                         <Select
+                            fullWidth
                             name="dataType"
                             id="dataType"
                             value={dataType}
@@ -246,8 +204,9 @@ export default class AdvancedSearch extends Component {
 
                     {fieldValues_render}
 
-                    <Container>
+                    <Container style={{margin: 10}}>
                         <Button type="submit" variant="contained"
+                                fullWidth
                                 onClick={this.handleSearchButton}> Search </Button>
                     </Container>
                     {isLoaded ? (
@@ -255,11 +214,11 @@ export default class AdvancedSearch extends Component {
                             <CommunityPosts description="something" posts={filteredPosts}/>
                         </Container>
                     ) : (
-                        <Grid item xs={12} md={8}>
-                            <div>Loading...</div>
-                        </Grid>
+
+                        <Paper style={{textAlign: "center"}}>                     ...Loading                                    </Paper>
+
                     )}
-                </Container>
+                </div>
 
 
             </>
