@@ -71,6 +71,7 @@ class FilterAdapter(
         return filters.size
     }
 
+
     fun getFilters(): JSONObject {
         val retJson = JSONObject()
         val tirnak = '"'
@@ -96,6 +97,8 @@ class FilterAdapter(
                     filterArray.add(mutableListOf(value).toString())
                 }
 
+            } else {
+                filterArray.add(mutableListOf("").toString())
             }
 
 

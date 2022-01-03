@@ -13,8 +13,10 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.facespaceextenstion.Data
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_community_page.*
 import kotlinx.android.synthetic.main.activity_search_posts.*
 import kotlinx.android.synthetic.main.activity_search_posts.view.*
+import kotlinx.android.synthetic.main.filter_item.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -37,7 +39,7 @@ class SearchPosts : AppCompatActivity() {
         val intent = intent
         val res = intent.getStringExtra("result").toString()
         val resJson = JSONObject(res) // it is an Community Object
-        val lay = findViewById<ConstraintLayout>(R.id.layout1)
+        // val lay = findViewById<ConstraintLayout>(R.id.layout1)
         postAdapter = PostAdapter(mutableListOf())
         filterAdapter = FilterAdapter(mutableListOf())
         val rvResults = findViewById<RecyclerView>(R.id.results)
@@ -56,12 +58,11 @@ class SearchPosts : AppCompatActivity() {
         val parentLay = findViewById<ConstraintLayout>(R.id.parentLayout)
 
         val datatypes = JSONArray(resJson["dataTypes"].toString())
-        //Toast.makeText(this, datatypes.toString(), Toast.LENGTH_LONG).show()
         val typeNames = types(datatypes)
-        val filterTypesNotBool = arrayOf("search text", "greater", "less", "greater or equal",
+        val filterTypesInt = arrayOf("greater", "less", "greater or equal",
             "less or equal", "equal")
+        val filterTypesText = arrayOf("search text")
         val filterTypesBool = arrayOf( "checked", "unchecked")
-        //Toast.makeText(this, typeNames.toString(), Toast.LENGTH_SHORT).show()
         val spin = findViewById<Spinner>(R.id.spinnerDataTypes)
         val spinFields = findViewById<Spinner>(R.id.spinnerFields)
         val spinFilters = findViewById<Spinner>(R.id.spinnerFilters)
@@ -76,6 +77,13 @@ class SearchPosts : AppCompatActivity() {
 
                 dataType = typeNames[position]
                 fieldNames = fields(datatypes, dataType)
+                if(fieldNames.isEmpty()) {
+                    field=""
+                    currentFilterTypes = arrayOf()
+                    spinFilters.adapter = ArrayAdapter(applicationContext,
+                        android.R.layout.simple_list_item_1, arrayOf<String>())
+                    filterType=""
+                }
                 spinFields.adapter = ArrayAdapter(applicationContext, android.R.layout.simple_list_item_1, fieldNames)
 
             }
@@ -93,16 +101,28 @@ class SearchPosts : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                field = (fieldNames[position]).split("-")[0]
-                fieldType = (fieldNames[position]).split("-")[1]
+                fieldType=""
+                if(!fieldNames.isEmpty()) {
+                    field = (fieldNames[position]).split("-")[0]
+                    fieldType = (fieldNames[position]).split("-")[1]
+                }
+
                 if(fieldType=="bool") {
                     currentFilterTypes = filterTypesBool
                     spinFilters.adapter = ArrayAdapter(applicationContext,
                         android.R.layout.simple_list_item_1, filterTypesBool)
-                } else {
-                    currentFilterTypes = filterTypesNotBool
+                } else if(fieldType=="str") {
+                    currentFilterTypes = filterTypesText
                     spinFilters.adapter = ArrayAdapter(applicationContext,
-                        android.R.layout.simple_list_item_1, filterTypesNotBool)
+                        android.R.layout.simple_list_item_1, filterTypesText)
+                } else if (fieldType=="int"){
+                    currentFilterTypes = filterTypesInt
+                    spinFilters.adapter = ArrayAdapter(applicationContext,
+                        android.R.layout.simple_list_item_1, filterTypesInt)
+                } else {
+                    currentFilterTypes = arrayOf()
+                    spinFilters.adapter = ArrayAdapter(applicationContext,
+                        android.R.layout.simple_list_item_1, arrayOf<String>())
                 }
 
             }
@@ -119,7 +139,11 @@ class SearchPosts : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                filterType = currentFilterTypes[position]
+                if(!currentFilterTypes.isEmpty()) {
+                    filterType = currentFilterTypes[position]
+                } else {
+                    filterType = ""
+                }
 
 
             }
@@ -131,13 +155,17 @@ class SearchPosts : AppCompatActivity() {
 
 
 
-
+        val params = rvResults.layoutParams as ConstraintLayout.LayoutParams
+        val layoutTitle = findViewById<ConstraintLayout>(R.id.layoutTitle)
         btn.setOnClickListener {
             if(isVisible) {
                 parentLay.removeView(layout1)
+                params.topToBottom = layoutTitle.id
                 btn.text = "Open Search"
+                postAdapter.dummy()
             } else {
                 parentLay.addView(layout1)
+                params.topToBottom = layout1.id
                 btn.text = "Hide Search"
             }
             isVisible = !isVisible
@@ -146,22 +174,38 @@ class SearchPosts : AppCompatActivity() {
 
         val addBtn = findViewById<Button>(R.id.btnAdd)
         addBtn.setOnClickListener{
-            val value = searchBar.text.toString()
-            val filter= Filter(dataType,field,filterType,value)
-            filterAdapter.addFilter(filter)
+            if(dataType=="" || field=="" || filterType=="") {
+                 Toast.makeText(this, "Not a valid filter. Try again.", Toast.LENGTH_SHORT).show()
+            } else {
+                val value = searchBar.text.toString()
+                val filter= Filter(dataType,field,filterType,value)
+                filterAdapter.addFilter(filter)
+            }
+
         }
 
         val resetBtn = findViewById<Button>(R.id.btnReset)
         resetBtn.setOnClickListener{
             filterAdapter.deleteAll()
+            postAdapter.deleteAll()
+            for (i in 0 until posts.length()) {
+                val post = posts.getJSONObject(i)
+                getPost(post, res)
+            }
+
         }
         val searchBtn = findViewById<FloatingActionButton>(R.id.btnSearch)
         searchBtn.bringToFront()
         searchBtn.setOnClickListener{
-            val param:JSONObject = filterAdapter.getFilters()
-            param.put("communityId", resJson["id"].toString())
-            // Toast.makeText(this,param.toString().replace('\\', ' '), Toast.LENGTH_SHORT).show()
-            sendRequest(param, res)
+            if(filterAdapter.itemCount==0) {
+                Toast.makeText(this, "There are no filters.", Toast.LENGTH_SHORT).show()
+            } else {
+                val param:JSONObject = filterAdapter.getFilters()
+                param.put("communityId", resJson["id"].toString())
+                // Toast.makeText(this,param.toString().replace('\\', ' '), Toast.LENGTH_SHORT).show()
+                sendRequest(param, res)
+            }
+
         }
 
     }
@@ -227,7 +271,9 @@ class SearchPosts : AppCompatActivity() {
                 while (iter.hasNext()) {
                     val key = iter.next()
                     val value = fieldJson[key]
-                    liste.add("$key-$value")
+                    if(value=="str" || value=="int" || value=="bool" ) {
+                        liste.add("$key-$value")
+                    }
                 }
             }
 
@@ -251,7 +297,7 @@ class SearchPosts : AppCompatActivity() {
 
         }
 
-        Toast.makeText(this, params.toString(), Toast.LENGTH_SHORT).show()
+        // Toast.makeText(this, params.toString(), Toast.LENGTH_SHORT).show()
 
         var error: JSONObject? = null
 
@@ -268,9 +314,6 @@ class SearchPosts : AppCompatActivity() {
                         val post = posts.getJSONObject(i)
                         getPost(post, res)
                     }
-
-
-
 
                 } catch (e: JSONException) {
                     e.printStackTrace()
