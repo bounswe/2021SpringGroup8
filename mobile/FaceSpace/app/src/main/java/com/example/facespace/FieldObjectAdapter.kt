@@ -23,8 +23,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.Serializable
 import android.app.Activity
-
-
+import androidx.core.app.ActivityCompat.startActivityForResult
 
 
 class FieldObjectAdapter (
@@ -96,6 +95,7 @@ class FieldObjectAdapter (
                 intent.putExtra("lon", lon)
                 intent.putExtra("lat", lat)
                 mContext.startActivity(intent)
+                // startActivityForResult(mContext as Activity, intent, 5, null)
             }
         }
     }
