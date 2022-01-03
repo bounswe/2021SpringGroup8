@@ -92,7 +92,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
+            android:layout_marginBottom="8dp"
             android:text="Home"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnGoHome" />
 
@@ -101,7 +103,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="57dp"
+            android:layout_marginBottom="8dp"
             android:text="Refresh"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView11"
             app:layout_constraintTop_toBottomOf="@+id/btnRefresh" />
 
@@ -109,9 +113,11 @@
             android:id="@+id/textView19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="46dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginBottom="8dp"
             android:text="Create\nNew Post"
             android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView12"
             app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
 
@@ -119,10 +125,12 @@
             android:id="@+id/textView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
+            android:layout_marginStart="49dp"
+            android:layout_marginBottom="8dp"
             android:text="Logout"
             app:layout_anchor="@id/btnLogout"
             app:layout_anchorGravity="bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView19"
             app:layout_constraintTop_toBottomOf="@+id/btnLogout" />
 

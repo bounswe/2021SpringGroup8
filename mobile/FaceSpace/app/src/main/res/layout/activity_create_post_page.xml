@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:backgroundTint="@color/yellow"
+            android:backgroundTint="@color/teal_200"
             android:drawableStart="@android:drawable/ic_dialog_map"
             android:drawablePadding="5dp"
             android:text="Select City"

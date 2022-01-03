@@ -185,8 +185,10 @@
                 android:id="@+id/textView31"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginBottom="8dp"
                 android:text="Search"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView12"
                 app:layout_constraintTop_toBottomOf="@+id/btnSearch" />
 
@@ -268,7 +270,7 @@
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="37dp"
+                android:layout_marginStart="35dp"
                 android:layout_marginBottom="8dp"
                 android:text="Refresh"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -285,8 +287,7 @@
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView31"
-                app:layout_constraintTop_toBottomOf="@+id/createPost"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/createPost" />
 
 
             <TextView
@@ -294,9 +295,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
+                android:layout_marginBottom="8dp"
                 android:text="Logout"
                 app:layout_anchor="@id/btnLogout"
                 app:layout_anchorGravity="bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView19"
                 app:layout_constraintTop_toBottomOf="@+id/btnLogout" />
 
