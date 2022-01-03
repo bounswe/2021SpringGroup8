@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import UserCommunityService from "../../services/user-community.service";
 import Header from "../Components/header/header2";
 import Profilebar from "../../components/profilebar";
-import {InputLabel, MenuItem, Select, Button, Container} from "@material-ui/core";
+import {InputLabel, MenuItem, Select, Button, Container, Paper} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import SearchService from "../../services/search.service";
 import CommunityPosts from "../Components/CommunityPosts";
@@ -186,10 +186,11 @@ export default class AdvancedSearchInCommunity extends Component {
 
         return (
             <>
-                <Grid item xs={12} md={12}>
-                    <Container>
+                <div>
+                    <Container style={{margin: 10}}>
                         <InputLabel id="dataType"> Data Type </InputLabel>
                         <Select
+                            fullWidth
                             name="dataType"
                             id="dataType"
                             value={dataType}
@@ -203,8 +204,9 @@ export default class AdvancedSearchInCommunity extends Component {
 
                     {fieldValues_render}
 
-                    <Container>
+                    <Container style={{margin: 10}}>
                         <Button type="submit" variant="contained"
+                                fullWidth
                                 onClick={this.handleSearchButton}> Search </Button>
                     </Container>
                     {isLoaded ? (
@@ -213,10 +215,10 @@ export default class AdvancedSearchInCommunity extends Component {
                         </Container>
                     ) : (
 
-                        <div>Loading...</div>
+                        <Paper style={{textAlign: "center"}}>                     ...Loading                                    </Paper>
 
                     )}
-                </Grid>
+                </div>
 
 
             </>

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-
+import CloseIcon from '@mui/icons-material/Close';
 import UserCommunityService from "../../services/user-community.service";
 import UserService from "../../services/user.service";
 import AuthService from "../../services/auth.service";
@@ -15,6 +15,8 @@ import BasicSpeedDial from "../Components/BasicSpeedDial";
 import Profilebar from "../../components/profilebar";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+
 import InputBase from "@mui/material/InputBase";
 import AdvancedSearchInCommunity from "../Components/AdvancedSearchInCommunity";
 
@@ -31,6 +33,7 @@ class Community extends Component {
             subscribed: false,
             dataTypes: [],
             variant: "contained",
+            advancedSearchOpen: false,
             text: "Subscribe",
             owner: false,
             id: "",
@@ -38,6 +41,8 @@ class Community extends Component {
             isLoaded: false,
         };
         this.subscribe = this.subscribe.bind(this);
+
+
     }
 
     componentDidMount() {
@@ -159,6 +164,14 @@ class Community extends Component {
             });
     }
 
+    openAdvancedSearch() {
+        if (this.state.advancedSearchOpen) {
+            this.setState({advancedSearchOpen: false})
+        } else {
+            this.setState({advancedSearchOpen: true})
+        }
+
+    }
 
     render() {
         const {
@@ -169,13 +182,13 @@ class Community extends Component {
             communityTitle,
             variant,
             text,
-            actions,
+            advancedSearchOpen,
             searchValue,
             isLoaded,
             id,
             dataTypes
         } = this.state;
-        console.log(id, dataTypes)
+        console.log(advancedSearchOpen)
 
         const filterPosts = posts.filter((item) => item.postTitle.toLowerCase().includes(searchValue.toLowerCase()) ||
             item.dataTypeName.toLowerCase().includes(searchValue.toLowerCase()) ||
@@ -227,27 +240,37 @@ class Community extends Component {
                         <SearchIcon/>
                     </IconButton>
 
+                    <IconButton
+                        onClick={this.openAdvancedSearch.bind(this)}
+                        aria-label="advanced search"
+                        aria-valuetext="advanced search"
+                    >
+                        {advancedSearchOpen ? (<CloseIcon/>) : (<ManageSearchIcon/>)}
+                    </IconButton>
 
                     <Grid container direction="row">
+                        <Grid item xs={8}>
+                            {isLoaded ? (
+                                <div>
+                                    {advancedSearchOpen ? (
+                                        <AdvancedSearchInCommunity communityID={id} dataTypes={dataTypes}/>
+                                    ) : (
+                                        <CommunityPosts description="something" posts={filterPosts}/>
+                                    )}
+                                </div>
 
-
-                        {isLoaded ? (
-                            <div>
-                                <AdvancedSearchInCommunity communityID={id} dataTypes={dataTypes}/>
-                                <CommunityPosts description="something" posts={filterPosts}/>
-                            </div>
-
-                        ) : (
-
-                            <Grid item xs={12} md={8}>
+                            ) : (
                                 <div>Loading...</div>
-                            </Grid>
-                        )}
-                        <CommunityAbout
-                            description={description}
-                            moderators={creator}
-                            tags="soccer football "
-                        />
+                            )}
+                        </Grid>
+                        <Grid item xs={4}>
+                            <CommunityAbout
+                                description={description}
+                                moderators={creator}
+                                tags="soccer football "
+                            />
+                        </Grid>
+
                     </Grid>
                     <BasicSpeedDial
                         owner={owner}

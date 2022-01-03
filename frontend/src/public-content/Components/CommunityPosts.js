@@ -1,28 +1,20 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@mui/material/Typography';
-import { Grid, Card, Paper } from "@mui/material";
-import Post from "./Post";
-import FlipMove from "react-flip-move";
+import {Grid, Card, Paper} from "@mui/material";
 import CommunityPost from "./CommunityPost";
+import Box from "@mui/material/Box";
 
 function CommunityPosts(props) {
 
-    const { posts } = props;
+    const {posts} = props;
     if (posts.length === 0) {
         return (
-            <Grid item xs={12} md={12}>
-                <div>No result found</div>
-            </Grid>
+                <Box sx={{ width: '100%' }}>No Results Found</Box>
         )
-    }
-    else {
+    } else {
         return (
-            <Grid item xs={12} md={12}>
-                <div style={{ backgroundColor: "white", margin: 10 }}>
-                    {/*<Typography variant="h4" align="center" gutterBottom style={{fontWeight: 600}}>
-                    Posts
-                </Typography>*/}
+            <div>
+                <div style={{backgroundColor: "white", margin: 10}}>
 
                     <Card>
                         {posts.map((post) => (
@@ -38,7 +30,7 @@ function CommunityPosts(props) {
                         ))}
                     </Card>
                 </div>
-            </Grid>
+            </div>
         );
     }
 }
