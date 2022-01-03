@@ -1,37 +1,40 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
-import {Grid, Paper} from "@mui/material";
 import Post from "./Post";
-import FlipMove from "react-flip-move";
+import {Grid, Card, Paper} from "@mui/material";
 import CommunityPost from "./CommunityPost";
+import Box from "@mui/material/Box";
 
 function CommunityPosts(props) {
 
     const {posts} = props;
-    return (
-        <Grid item xs={12} md={8}>
-            <div style={{backgroundColor: "white", margin: 10}}>
-                {/*<Typography variant="h4" align="center" gutterBottom style={{fontWeight: 600}}>
-                    Posts
-                </Typography>*/}
+    if (posts.length === 0) {
+        return (
+                <Box sx={{ width: '100%' }}>No Results Found</Box>
+        )
+    } else {
+        return (
+            <div>
+                <div style={{backgroundColor: "white", margin: 10}}>
 
-                <FlipMove>
-                    {posts.map((post) => (
-                        <CommunityPost
-                            key={post.id}
-                            id={post.id}
-                            displayName={post.postedBy.username}
-                            username={post.postedBy.username}
-                            verified={true}
-                            text={post.postTitle}
-                            avatar={post.postedBy.pplink}
-                        />
-                    ))}
-                </FlipMove>
+                    <Card>
+                        {posts.map((post) => (
+                            <CommunityPost
+                                key={post.id}
+                                id={post.id}
+                                displayName={post.postedBy.username}
+                                username={post.postedBy.username}
+                                verified={true}
+                                text={post.postTitle}
+                                avatar={post.postedBy.pplink}
+                            />
+                        ))}
+                    </Card>
+                </div>
             </div>
-        </Grid>
-    );
+        );
+    }
 }
 
 CommunityPosts.propTypes = {

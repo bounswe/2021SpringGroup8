@@ -64,10 +64,12 @@ export default function CreateDataTypeFrom(props) {
         userCommunityService.createDataTypeForCommunity(communityId, json_object, typeName).then(response => {
             console.log(response)
             if (response.data['@success'] === "True") {
-                alert(JSON.stringify({"message": "successfully created data type"}, null, 2));
+                alert(JSON.stringify("successfully created data type", null, 2));
                 history.push('/community/' + communityId);
+            }else {
+                alert(JSON.stringify(response.data['@error'].toString(), null, 2));
             }
-            alert(JSON.stringify({"message": response.data['@error']}, null, 2));
+
         }).catch(error => {
             console.log(error)
         })
@@ -125,6 +127,7 @@ export default function CreateDataTypeFrom(props) {
                             >
                                 <MenuItem value={"str"}>String</MenuItem>
                                 <MenuItem value={"int"}>Integer</MenuItem>
+                                <MenuItem value={"bool"}>Boolean</MenuItem>
                                 <MenuItem value={"location"}>Location</MenuItem>
                             </Select>
 

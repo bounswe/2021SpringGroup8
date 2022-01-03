@@ -58,7 +58,7 @@ export default class PostView extends Component {
             if (!postObject[field]['@type']) {
                 rows.push(<column>
                     <h4>{field}</h4>
-                    <span style={{fontSize: 18}}>{postObject[field]}</span>
+                    <span style={{fontSize: 18}}>{(postObject[field]).toString()}</span>
                 </column>)
                 /*rows.push(<h3>{field} :{postObject[field]} </h3>)*/
             } else if (postObject[field]['@type'] === "Location.Object") {
