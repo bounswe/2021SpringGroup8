@@ -26,13 +26,12 @@
             <Button
                 android:id="@+id/showFields"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="41dp"
                 android:backgroundTint="@color/green"
                 android:enabled="true"
                 android:text="Show Fields"
                 android:textColor="#FFFFFF"
-                app:layout_constraintEnd_toEndOf="@+id/btnSubscribe"
-                app:layout_constraintStart_toStartOf="@+id/btnSubscribe"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnDeleteComm" />
 
             <View
@@ -92,8 +91,7 @@
             <Button
                 android:id="@+id/btnDeleteComm"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="41dp"
                 android:backgroundTint="@color/red"
                 android:enabled="true"
                 android:text="Delete Community"
@@ -173,37 +171,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="37dp"
-                android:layout_marginEnd="15dp"
                 android:backgroundTint="@color/white"
                 android:clickable="true"
                 android:focusable="true"
                 app:borderWidth="0dp"
                 app:elevation="0dp"
                 app:fabSize="mini"
-                app:layout_constraintEnd_toStartOf="@+id/createPost"
                 app:layout_constraintStart_toEndOf="@+id/btnRefresh"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/places_ic_search"
                 app:tint="@color/gray" />
 
 
-
             <TextView
                 android:id="@+id/textView31"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="132dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginBottom="8dp"
                 android:text="Search"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView11"
-                app:layout_constraintTop_toBottomOf="@+id/btnRefresh" />
+                app:layout_constraintStart_toEndOf="@+id/textView12"
+                app:layout_constraintTop_toBottomOf="@+id/btnSearch" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnRefresh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="55dp"
+                android:layout_marginStart="37dp"
                 android:backgroundTint="@color/white"
                 android:clickable="true"
                 android:focusable="true"
@@ -220,7 +215,7 @@
                 android:id="@+id/createPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
+                android:layout_marginStart="37dp"
                 android:backgroundTint="@color/white"
                 android:clickable="true"
                 android:focusable="true"
@@ -236,7 +231,7 @@
                 android:id="@+id/btnGoHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="25dp"
                 android:backgroundTint="@color/white"
                 android:clickable="true"
                 app:borderWidth="0dp"
@@ -251,13 +246,13 @@
                 android:id="@+id/btnLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="37dp"
                 android:backgroundTint="@color/white"
                 android:clickable="true"
                 app:borderWidth="0dp"
                 app:elevation="0dp"
                 app:fabSize="mini"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/createPost"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/logout"
                 app:tint="@color/gray" />
@@ -266,7 +261,7 @@
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginBottom="8dp"
                 android:text="Home"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -277,7 +272,7 @@
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="55dp"
+                android:layout_marginStart="35dp"
                 android:layout_marginBottom="8dp"
                 android:text="Refresh"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -294,21 +289,20 @@
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView31"
-                app:layout_constraintTop_toBottomOf="@+id/createPost"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/createPost" />
 
 
             <TextView
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="21dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginBottom="8dp"
                 android:text="Logout"
                 app:layout_anchor="@id/btnLogout"
                 app:layout_anchorGravity="bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView19"
                 app:layout_constraintTop_toBottomOf="@+id/btnLogout" />
 
 

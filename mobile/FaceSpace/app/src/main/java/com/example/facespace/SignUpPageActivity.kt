@@ -140,9 +140,15 @@ class SignUpPageActivity : AppCompatActivity() {
                             //Parse your api responce here
                             val jsonObject = JSONObject(response)
                             error = jsonObject
-                            val id = ((jsonObject["@return"]) as JSONObject)["id"]
+                            val returns = JSONObject(jsonObject["@return"].toString())
+                            val dob = (JSONObject(returns["birthdate"].toString()))["_isoformat"]
                             Data().setUsername(username)
                             Data().setToken((jsonObject["@usertoken"]).toString())
+                            Data().setAll(returns["username"].toString(), returns["email"].toString(),
+                                returns["name"].toString(), returns["surname"].toString(),
+                                dob.toString().substring(0,10), loc["locname"].toString(), returns["pplink"].toString(),
+                                loc["longitude"] as Double, loc["latitude"] as Double, returns["createdCommunities"].toString()
+                            )
                             Toast.makeText(this, "Signup successful. \n ${jsonObject.toString()}", Toast.LENGTH_LONG).show()
                             val intent = Intent(this, HomePageActivity::class.java)
                             intent.putExtra("username", username)
