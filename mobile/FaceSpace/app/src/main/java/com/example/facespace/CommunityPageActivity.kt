@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Response
@@ -32,6 +34,7 @@ class CommunityPageActivity : AppCompatActivity() {
     private var CommunitySubs: JSONArray? = null
     private var isSubscribed = isInComm(username)
     private var comm_obj = ""
+    var isShowed = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_page)
@@ -51,15 +54,9 @@ class CommunityPageActivity : AppCompatActivity() {
         val btnGoHome = findViewById<FloatingActionButton>(R.id.btnGoHome)
         val btnLogout = findViewById<FloatingActionButton>(R.id.btnLogout)
         val btnSubs = findViewById<Button>(R.id.btnSubscribe)
-        val btnDeleteComm = findViewById<Button>(R.id.btnDeleteComm)
 
-        if (Data().getUsername() == comm_creator) {
-            btnDeleteComm.visibility = View.VISIBLE
-            btnDeleteComm.bringToFront()
-        }
-        else {
-            btnDeleteComm.visibility = View.INVISIBLE
-        }
+
+        val upperLay = findViewById<ConstraintLayout>(R.id.upperTopPanel)
 
         isSubscribed = isInComm(username)
         if (isSubscribed) {
@@ -112,13 +109,49 @@ class CommunityPageActivity : AppCompatActivity() {
                 }
             }
         })
-
-        btnDeleteComm.setOnClickListener {
-            deleteComm(commId, res)
-            val intent = Intent(this, HomePageActivity::class.java)
-            intent.putExtra("username", username)
-            startActivity(intent)
+        val btnShow = findViewById<Button>(R.id.showFields)
+        val btnDeleteComm = findViewById<Button>(R.id.btnDeleteComm)
+        val params = btnShow.layoutParams as ConstraintLayout.LayoutParams
+        if(btnDeleteComm.parent != null) {
+            (btnDeleteComm.parent as ViewGroup).removeView(btnDeleteComm)
+            params.topToBottom = btnSubscribe.id
         }
+        if (Data().getUsername() == comm_creator) {
+
+            upperLay.addView(btnDeleteComm)
+            params.topToBottom = btnDeleteComm.id
+            btnDeleteComm.setOnClickListener {
+                deleteComm(commId, res)
+                val intent = Intent(this, HomePageActivity::class.java)
+                intent.putExtra("username", username)
+                startActivity(intent)
+            }
+            // btnDeleteComm.visibility = View.VISIBLE
+            // btnDeleteComm.bringToFront()
+
+
+        }
+        val dataTypes = JSONArray(res["dataTypes"].toString()) // res is Community object
+        val tvFields = findViewById<TextView>(R.id.tvFields)
+        upperLay.removeView(tvFields)
+        val fieldsJson = getFieldJson(dataTypes)
+
+        btnShow.setOnClickListener{
+            if(isShowed) {
+                btnShow.text = "Show Fields"
+                upperLay.removeView(tvFields)
+
+            } else {
+                btnShow.text = "Hide Fields"
+                upperLay.addView(tvFields)
+                tvFields.text = fieldsJson[result].toString()
+
+
+            }
+            isShowed=!isShowed
+        }
+
+
 
         val btnSearch = findViewById<FloatingActionButton>(R.id.btnSearch)
         btnSearch.bringToFront()
@@ -144,7 +177,7 @@ class CommunityPageActivity : AppCompatActivity() {
             getPost(post)
         }
 
-        val dataTypes = JSONArray(res["dataTypes"].toString())
+
         //Toast.makeText(this, dataTypes.toString(), Toast.LENGTH_LONG).show()
         val typeNames = types(dataTypes)
         //Toast.makeText(this, typeNames.toString(), Toast.LENGTH_SHORT).show()
@@ -157,7 +190,11 @@ class CommunityPageActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                result = typeNames[position].toString()
+                result = typeNames[position]
+                if(isShowed) {
+                    tvFields.text = fieldsJson[result].toString()
+
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -185,7 +222,9 @@ class CommunityPageActivity : AppCompatActivity() {
                 }
             }
             if(dataTypeFields == null) {
-                Toast.makeText(this, "There is no data type for this community! You must create a data type before you can create a post.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "There is no data type for this community! " +
+                        "You must create a data type before you can create a post.",
+                        Toast.LENGTH_LONG).show()
             }
             else {
                 val inte = Intent(this,CreatePostPage::class.java)
@@ -403,5 +442,18 @@ class CommunityPageActivity : AppCompatActivity() {
         val comm = Community(title, by, desc, comm_data["subscribers"] as JSONArray,
             comm_data["posts"] as JSONArray, comm_data["dataTypes"] as JSONArray, date, comm_id)
         commAdapter.deleteComm(comm)
+    }
+
+    private fun getFieldJson(dataTypes:JSONArray):JSONObject { // field of a community object
+        val fields = JSONObject()
+        for (i in 0 until dataTypes.length()) {
+            val currDT = dataTypes.getJSONObject(i)
+            val nameOfDT:String = currDT["name"].toString()
+            val fieldsJson:JSONObject = currDT["fields"] as JSONObject
+            val fieldNames:String =  fieldsJson.keys().asSequence().toList().toString()
+            fields.put(nameOfDT, fieldNames)
+        }
+
+        return fields
     }
 }
