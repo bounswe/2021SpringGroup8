@@ -116,6 +116,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
+            android:backgroundTint="#7987D6"
             android:text="add"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -126,6 +127,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="7dp"
             android:layout_marginEnd="16dp"
+            android:backgroundTint="#E10B0B"
             android:text="Reset"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/okAdd" />
