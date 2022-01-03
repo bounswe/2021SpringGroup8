@@ -99,17 +99,9 @@ class SignUpPageActivity : AppCompatActivity() {
             val date = dateTV.text.toString()
             val city = cityTV.text.toString()
 
-            // Toast.makeText(this, username, Toast.LENGTH_SHORT).show()
-
-
-
             val params: MutableMap<String, String> = HashMap()
 
             val url = Data().getUrl("signup")
-
-
-            // Post parameters
-            // Form fields and values
 
 
             if (checkBox.isChecked && password!="" && email!="" && username!="" && name!="" &&
@@ -149,7 +141,7 @@ class SignUpPageActivity : AppCompatActivity() {
                                 dob.toString().substring(0,10), loc["locname"].toString(), returns["pplink"].toString(),
                                 loc["longitude"] as Double, loc["latitude"] as Double, returns["createdCommunities"].toString()
                             )
-                            Toast.makeText(this, "Signup successful. \n ${jsonObject.toString()}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Signup successful.", Toast.LENGTH_LONG).show()
                             val intent = Intent(this, HomePageActivity::class.java)
                             intent.putExtra("username", username)
                             startActivity(intent)
@@ -171,8 +163,7 @@ class SignUpPageActivity : AppCompatActivity() {
                 requestQueue.add(stringRequest)
 
             } else {
-                Toast.makeText(this, "Please fill all inputs and read & accept terms. $username" +
-                        "$password $email $name $surname $date $city", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill all inputs and read & accept terms.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -183,7 +174,7 @@ class SignUpPageActivity : AppCompatActivity() {
             val city: String = data?.getStringExtra("city").toString()
             lon = data?.getDoubleExtra("lon", 0.0)!!
             lat = data.getDoubleExtra("lat", 0.0)
-            Toast.makeText(this, city,Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, city,Toast.LENGTH_SHORT).show()
             val cityTV = findViewById<TextView>(R.id.City)
             cityTV.text = city
         }

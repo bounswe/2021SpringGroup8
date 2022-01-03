@@ -111,15 +111,15 @@
 
 
 
-        <Button
-            android:id="@+id/btnForgot"
+        <TextView
+            android:id="@+id/tvAccount"
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:gravity="center"
             android:backgroundTint="@color/white"
             android:textSize="14sp"
             android:textColor="@color/pink"
-            android:text="@string/forgot"
+            android:text="Don't have an account?"
             android:fontFamily="@font/cairo_semibold"
             android:textAllCaps="false"
             android:shadowColor="@color/white"

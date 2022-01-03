@@ -18,10 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         btnSignIn.setOnClickListener {
 
-            // val deneme = "deneme" // to send parameters to another activity
-
             val intent = Intent(this, LoginPageActivity::class.java)
-            // intent.putExtra("key", deneme) // to send parameter to another activity
             startActivity(intent)
 
         }
@@ -29,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         btnGoSignUp.setOnClickListener {
             val intent = Intent(this, SignUpPageActivity::class.java)
             startActivity(intent)
-
 
         }
 

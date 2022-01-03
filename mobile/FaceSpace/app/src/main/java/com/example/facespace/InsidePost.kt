@@ -52,10 +52,7 @@ class InsidePost : AppCompatActivity() {
         val comm_creator = JSONObject(comm_data["createdBy"].toString())["username"].toString()
         val postId = post_data["id"].toString()
 
-        val btnAdd = findViewById<FloatingActionButton>(R.id.btnAddP)
-        val btnRefresh = findViewById<FloatingActionButton>(R.id.btnRefreshP)
-        val btnGoHome = findViewById<FloatingActionButton>(R.id.btnGoHomeP)
-        val btnLogout = findViewById<FloatingActionButton>(R.id.btnLogoutP)
+
         val btnDeletePost = findViewById<Button>(R.id.btnDeletePost)
         val valLoc = findViewById<Button>(R.id.valLoc)
 
@@ -90,10 +87,7 @@ class InsidePost : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        btnRefresh.bringToFront()
-        btnAdd.bringToFront()
-        btnGoHome.bringToFront()
-        btnLogout.bringToFront()
+
 
         if (Data().getUsername() == post_creator || Data().getUsername() == comm_creator) {
             btnDeletePost.visibility = View.VISIBLE
@@ -103,24 +97,7 @@ class InsidePost : AppCompatActivity() {
             btnDeletePost.visibility = View.INVISIBLE
         }
 
-        btnRefresh.setOnClickListener {
-            Toast.makeText(baseContext, "This feature is under construction!", Toast.LENGTH_LONG).show()
-        }
 
-        btnGoHome.setOnClickListener {
-            val intent = Intent(this, HomePageActivity::class.java)
-            intent.putExtra("username", Data().getUsername())
-            startActivity(intent)
-        }
-
-        btnAdd.setOnClickListener {
-            Toast.makeText(baseContext, "This feature is under construction!", Toast.LENGTH_LONG).show()
-        }
-
-        btnLogout.setOnClickListener {
-            val intent = Intent(this, LoginPageActivity::class.java)
-            startActivity(intent)
-        }
 
         btnDeletePost.setOnClickListener {
             deletePost(postId, post_data, comm_data.toString())
