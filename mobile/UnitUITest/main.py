@@ -1,3 +1,4 @@
+import sys
 import time
 # Appium-Python-Client should be installed. PyCharms automatically installs for project-specific environment.
 # But it can also be installed with "pip install Appium-Python-Client" through terminal.
