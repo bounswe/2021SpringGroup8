@@ -93,7 +93,7 @@ class CreatePostPage : AppCompatActivity() {
                         Toast.makeText(this, "You must choose a location on the map!", Toast.LENGTH_SHORT).show()
                     }
                     else {
-                        Toast.makeText(this, "Location is: " + loc.toString(), Toast.LENGTH_SHORT).show()
+                        // Toast.makeText(this, "Location is: " + loc.toString(), Toast.LENGTH_SHORT).show()
                         dataTypeFieldAdapter.addDataTypeField(dataTypeField)
                         options_var.remove(result)
                         option.adapter =
