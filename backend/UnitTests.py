@@ -76,7 +76,8 @@ class BackendTest(unittest.TestCase):
         }
         postreq = requests.post(f"http://127.0.0.1:8080/subscribetocommunity", data = dict)
         res = json.loads(postreq.text)
-        self.assertEqual(res["@success"], 'True', "Can't sub!")
+        self.assertEqual(res["@success"], 'False', "Error sub!")
+        self.assertEqual(res["@error"], 'Already subscribed!', "Error sub!")
     
     
     def test4_createdatatype(self):
