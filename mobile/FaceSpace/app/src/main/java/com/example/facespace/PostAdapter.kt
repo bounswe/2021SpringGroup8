@@ -24,7 +24,7 @@ import java.io.Serializable
 
 class PostAdapter (
 
-    private val posts: MutableList<Post>
+    private var posts: MutableList<Post>
 
 ) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
@@ -43,6 +43,14 @@ class PostAdapter (
             )
 
         )
+    }
+    fun dummy() {
+        val copy: MutableList<Post> = ArrayList()
+        copy.addAll(posts)
+        posts.clear()
+        posts.addAll(copy)
+        notifyDataSetChanged()
+
     }
 
     fun deleteAll() {

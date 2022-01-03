@@ -74,7 +74,8 @@
             app:fabSize="mini"
             app:layout_constraintStart_toEndOf="@+id/btnRefreshM"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_search"
+            app:srcCompat="@drawable/places_ic_search"
+
             app:tint="@color/gray" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
