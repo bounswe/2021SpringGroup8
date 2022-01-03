@@ -78,7 +78,9 @@ class Profilebar extends Component {
                                 {/*    </Link>*/}
                                 {/*</li>*/}
                                 <li className="nav-item">
-                                    <Link to={"/profile"} className="nav-link">
+                                    <Link to={"/profile"}
+                                          className="nav-link"
+                                          data-testid={"profile-link"}  >
                                         {currentUser.username}
                                     </Link>
                                 </li>
