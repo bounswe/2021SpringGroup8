@@ -11,14 +11,14 @@ function CommunityPosts(props) {
     const { posts } = props;
     if (posts.length === 0) {
         return (
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={12}>
                 <div>No result found</div>
             </Grid>
         )
     }
     else {
         return (
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={12}>
                 <div style={{ backgroundColor: "white", margin: 10 }}>
                     {/*<Typography variant="h4" align="center" gutterBottom style={{fontWeight: 600}}>
                     Posts
