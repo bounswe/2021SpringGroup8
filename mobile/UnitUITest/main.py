@@ -113,7 +113,7 @@ class MobileUITests(unittest.TestCase):
             self.driver.find_element(by=AppiumBy.ID, value="com.example.signin_signup:id/textView24")
             self.assertEqual("", "a", "This is myCommunities page, not All Communities")
         except:
-            self.assertEqual("", "")
+            self.assertEqual(" ", " ")
 
         time.sleep(0.5)
 
