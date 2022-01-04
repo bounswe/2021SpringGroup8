@@ -166,25 +166,35 @@ class ProfileService {
 
     }
 
-    updateCity(city) {
-        // console.log("name is ")
-        // console.log(surname)
+    updateCity(city, latitude, longitude) {
+        console.log("city is ")
+        console.log(city)
+        // latitude= -0.37319183349609375;
+        // longitude=-0.37319183349609375;
+        let loc= {
+            locname:city,
+            longitude:longitude,
+            latitude:latitude,
+
+        }
+        const something = JSON.stringify(loc).toString()
+        console.log("somthign")
+        console.log(something)
         const user = authService.getCurrentUser()
         const token = this.getUserToken()
         if (user) {
-            let paramStr =  'city='+city+'&@usertoken='+token ;
+            let paramStr =  'loc='+something+'&@usertoken='+token ;
             let searchParams = new URLSearchParams(paramStr);
             console.log("param str is")
             console.log(paramStr)
-            // console.log(querystring.stringify({
-            //     "@usertoken": this.getUserToken(),
-            //     email:email,
-            // }))
+
+
+
             return axios.post(`http://3.145.120.66:8080/updateprofile`,
                 searchParams,
-                // querystring.
-                // stringify({"@usertoken":token, communityTitle:communityTitle, description:description}),
-                // paramStr,
+
+
+
                 {
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
@@ -196,24 +206,30 @@ class ProfileService {
 
     }
     updateBirthdate(birthdate) {
-        // console.log("name is ")
-        // console.log(surname)
+
+
         const user = authService.getCurrentUser()
         const token = this.getUserToken()
         if (user) {
-            let paramStr =  'birthdate='+birthdate+'&@usertoken='+token ;
+            console.log(birthdate)
+            let birth= {
+                _isoformat:birthdate,
+
+            }
+            const something = JSON.stringify(birth).toString()
+            console.log("somthign")
+            console.log(something)
+            const mod_birthdate = birthdate.substring(0, birthdate.length-1)
+            console.log(mod_birthdate)
+            let paramStr =  'birthdate='+mod_birthdate+'&@usertoken='+token ;
             let searchParams = new URLSearchParams(paramStr);
             console.log("param str is")
             console.log(paramStr)
-            // console.log(querystring.stringify({
-            //     "@usertoken": this.getUserToken(),
-            //     email:email,
-            // }))
+
             return axios.post(`http://3.145.120.66:8080/updateprofile`,
                 searchParams,
-                // querystring.
-                // stringify({"@usertoken":token, communityTitle:communityTitle, description:description}),
-                // paramStr,
+
+
                 {
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
