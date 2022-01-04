@@ -45,6 +45,8 @@ export default function CreatePostForm(props) {
             const field_type = dataTypes[i].fields[field]
             if (field_type === "str" || field_type === "int") {
                 initialValues[field] = ''
+            }else if(field_type === "bool"){
+                initialValues["bool"] = ''
             } else {
                 initialValues['locname'] = ''
                 initialValues['longitude'] = ''
@@ -57,6 +59,7 @@ export default function CreatePostForm(props) {
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values, actions) => {
+            console.log(values)
             let request_json = {}
             const title = values.title
             if (dataTypes.length > 0) {
@@ -65,7 +68,14 @@ export default function CreatePostForm(props) {
                     const field_type = dataTypes[i].fields[field]
                     if (field_type === "str" || field_type === "int") {
                         request_json[field] = values[field]
-                    } else {
+                    } else if(field_type === "bool"){
+                        if(values.bool === 'true'){
+                            request_json[field] = true;
+                        }else {
+                            request_json[field] = false;
+                        }
+
+                    }else {
                         request_json[field] = {
                             locname: values.locname,
                             longitude: values.longitude,
@@ -74,6 +84,7 @@ export default function CreatePostForm(props) {
                     }
 
                 });
+                console.log(request_json)
                 PostService.submitPost(communityId, title, datatypename, request_json).then(response => {
                     console.log(response)
                     if (response.data.success === "True") {
@@ -96,8 +107,10 @@ export default function CreatePostForm(props) {
         if (dataTypes.length > 0) {
             Object.keys(dataTypes[i].fields).map(field => {
                 const field_type = dataTypes[i].fields[field]
-                if (field_type === "str" || field_type === "int" || field_type === "bool") {
+                if (field_type === "str" || field_type === "int" ) {
                     initialValues[field] = ''
+                }else if( field_type === "bool"){
+                    initialValues["bool"] = ''
                 } else {
                     initialValues['locname'] = ''
                     initialValues['longitude'] = ''
@@ -163,9 +176,9 @@ export default function CreatePostForm(props) {
                         } else if (field_type === "bool") {
                             return <div>
                                 <label htmlFor={field}>{field}</label>
-                                <Field as="select" name="dataType" onChange={formik.handleChange} fullWidth>
-                                    <option value="true"> True</option>
-                                    <option value="false"> False</option>
+                                <Field as="select" name="bool" value={formik.values.bool} onChange={formik.handleChange} fullWidth>
+                                    <option value={'true'}> True</option>
+                                    <option value={'false'}> False</option>
                                 </Field>
                             </div>
                         } else if (field_type === "location") {
