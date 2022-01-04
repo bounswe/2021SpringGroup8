@@ -1,19 +1,16 @@
-import React, { Component } from "react";
-import {Redirect, withRouter} from 'react-router-dom';
-import { connect } from "react-redux";
+import React, {Component} from "react";
+import {Redirect} from 'react-router-dom';
+import {connect} from "react-redux";
 import Profilebar from "../components/profilebar";
-import querystring from "querystring";
-import Navbar from "../public-content/Components/navbar";
+
 import Footer from "../public-content/Components/footer/footer";
 import UserCommunityService from "../services/user-community.service";
 import ProfileService from "../services/profile.service";
 
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import "../App.css";
-import userCommunityService from "../services/user-community.service";
 
 
 class Profile extends Component {
@@ -45,34 +42,35 @@ class Profile extends Component {
         this.setActiveCityEditFalse = this.setActiveCityEditFalse.bind(this);
         this.setActiveBirthdateEdit = this.setActiveBirthdateEdit.bind(this);
         this.setActiveBirthdateEditFalse = this.setActiveBirthdateEditFalse.bind(this);
-        this.setSeeSubsCommsActive=this.setSeeSubsCommsActive.bind(this);
-        this.setSeeSubsCommsActiveFalse=this.setSeeSubsCommsActiveFalse.bind(this);
-        this.unsubToComm= this.unsubToComm.bind(this);
+        this.setSeeSubsCommsActive = this.setSeeSubsCommsActive.bind(this);
+        this.setSeeSubsCommsActiveFalse = this.setSeeSubsCommsActiveFalse.bind(this);
+        this.unsubToComm = this.unsubToComm.bind(this);
 
-        this.deleteComm=this.deleteComm.bind(this);
-        this.setSeeSubsCommsActive2=this.setSeeSubsCommsActive2.bind(this);
-        this.setSeeSubsCommsActiveFalse2=this.setSeeSubsCommsActiveFalse2.bind(this);
+        this.deleteComm = this.deleteComm.bind(this);
+        this.setSeeSubsCommsActive2 = this.setSeeSubsCommsActive2.bind(this);
+        this.setSeeSubsCommsActiveFalse2 = this.setSeeSubsCommsActiveFalse2.bind(this);
         this.state = {
             communityTitle: "",
             description: "",
             loading: false,
             communityCreationReq: true,
-            emailEdit : true,
-            nameEdit : true,
-            surnameEdit : true,
-            cityEdit : true,
-            birthdateEdit : true,
-            email:"",
-            name:"",
-            surname:"",
-            city:"",
-            birthdate:"",
-            seeSubsComms:true,
-            seeSubsComms2:true,
-            currCommId:null,
+            emailEdit: true,
+            nameEdit: true,
+            surnameEdit: true,
+            cityEdit: true,
+            birthdateEdit: true,
+            email: "",
+            name: "",
+            surname: "",
+            city: "",
+            birthdate: "",
+            seeSubsComms: true,
+            seeSubsComms2: true,
+            currCommId: null,
         };
     }
-    unsubToComm(id){
+
+    unsubToComm(id) {
         console.log("id")
         console.log(id)
         console.log("this.state")
@@ -81,7 +79,6 @@ class Profile extends Component {
         console.log(this.props.match.params)
         UserCommunityService.unsubscribeCommunity(
             id
-
         )
             .then(
                 response => {
@@ -108,7 +105,6 @@ class Profile extends Component {
         UserCommunityService
             .deleteCommunity(
                 id
-
             )
             .then(
                 response => {
@@ -128,16 +124,14 @@ class Profile extends Component {
     }
 
 
-
-
     setSeeSubsCommsActive() {
         this.setState({
             seeSubsComms: true,
-            //seeMyComms: true,
         });
         window.location.reload(false);
 
     }
+
     setSeeSubsCommsActiveFalse() {
 
         ProfileService.getMyProfile().then(
@@ -168,6 +162,7 @@ class Profile extends Component {
         window.location.reload(false);
 
     }
+
     setSeeSubsCommsActiveFalse2() {
 
         ProfileService.getMyProfile().then(
@@ -196,54 +191,63 @@ class Profile extends Component {
 
         });
     }
+
     setActiveEmailEditFalse() {
         this.setState({
             emailEdit: false,
 
         });
     }
+
     setActiveNameEdit() {
         this.setState({
             nameEdit: true,
 
         });
     }
+
     setActiveNameEditFalse() {
         this.setState({
             nameEdit: false,
 
         });
     }
+
     setActiveSurnameEditFalse() {
         this.setState({
             surnameEdit: false,
 
         });
     }
+
     setActiveSurnameEdit() {
         this.setState({
             surnameEdit: true,
 
         });
     }
+
     setActiveCityEditFalse() {
         this.setState({
             cityEdit: false,
 
         });
     }
+
     setActiveCityEdit() {
         this.setState({
             cityEdit: true,
 
         });
     }
+
     setActiveBirthdateEditFalse() {
         this.setState({
             birthdateEdit: false,
 
         });
     }
+
     setActiveBirthdateEdit() {
         this.setState({
             birthdateEdit: true,
@@ -257,37 +261,44 @@ class Profile extends Component {
 
         });
     }
+
     setActiveCreationReqNonActive() {
         this.setState({
             communityCreationReq: true,
 
         });
     }
+
     onChangeCommunityTitle(e) {
         this.setState({
             communityTitle: e.target.value,
         });
     }
+
     onChangeEmail(e) {
         this.setState({
             email: e.target.value,
         });
     }
+
     onChangeName(e) {
         this.setState({
             name: e.target.value,
         });
     }
+
     onChangeSurname(e) {
         this.setState({
             surname: e.target.value,
         });
     }
+
     onChangeCity(e) {
         this.setState({
             city: e.target.value,
         });
     }
+
     onChangeBirthdate(e) {
         this.setState({
             birthdate: e.target.value,
@@ -308,42 +319,40 @@ class Profile extends Component {
         });
 
 
+        const {history} = this.props;
 
 
-        const { history} = this.props;
-
-
-            console.log("Desc is ")
-            console.log(this.description)
-            UserCommunityService
-                .createCommunity(
-                    this.state.communityTitle,
-                    this.state.description,
-                )
-                .then(
-                    response => {
-                        if (response.data['@success'] !== 'False') {
-                            console.log(response.data['@return']);
-                            history.push('/communities');
-                        } else {
-                            console.log(response.data['@error']);
-                            alert(response.data['@error']);
-                            this.setState({
-                                loading: false,
-                            });
-                        }
-                    })
-                .catch(
-                    error => {
-                        const resMessage =
-                            (error.response &&
-                                error.response.data &&
-                                error.response.data.message) ||
-                            error.message ||
-                            error.toString();
-                        console.log(resMessage);
+        console.log("Desc is ")
+        console.log(this.description)
+        UserCommunityService
+            .createCommunity(
+                this.state.communityTitle,
+                this.state.description,
+            )
+            .then(
+                response => {
+                    if (response.data['@success'] !== 'False') {
+                        console.log(response.data['@return']);
+                        history.push('/communities');
+                    } else {
+                        console.log(response.data['@error']);
+                        alert(response.data['@error']);
+                        this.setState({
+                            loading: false,
+                        });
                     }
-                );
+                })
+            .catch(
+                error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                    console.log(resMessage);
+                }
+            );
 
     }
 
@@ -356,14 +365,10 @@ class Profile extends Component {
 
         this.form.validateAll();
 
-
-        const { history} = this.props;
-
         if (this.checkBtn.context._errors.length === 0) {
             ProfileService
                 .updateEmail(
                     this.state.email,
-
                 )
                 .then(
                     response => {
@@ -391,83 +396,83 @@ class Profile extends Component {
         this.setState({
             loading: true,
         });
-            ProfileService
-                .updateName(
-                    this.state.name,
+        ProfileService
+            .updateName(
+                this.state.name,
+            )
+            .then(
+                response => {
+                    if (response.data['@success'] !== 'False') {
+                        localStorage.removeItem("user");
+                        localStorage.setItem("user", JSON.stringify(response.data['@return']));
 
-                )
-                .then(
-                    response => {
-                        if (response.data['@success'] !== 'False') {
-                            localStorage.removeItem("user");
-                            localStorage.setItem("user", JSON.stringify(response.data['@return']));
-
-                            window.location.reload(false);
-                        } else {
-                            console.log(response.data['@error']);
-                            this.setState({
-                                loading: false,
-                            });
-                            alert(response.data['@error']);
-                        }
-                    })
-                .catch();
+                        window.location.reload(false);
+                    } else {
+                        console.log(response.data['@error']);
+                        this.setState({
+                            loading: false,
+                        });
+                        alert(response.data['@error']);
+                    }
+                })
+            .catch();
 
     }
+
     editSurname(e) {
         e.preventDefault();
         this.setState({
             loading: true,
         });
-            ProfileService
-                .updateSurname(
-                    this.state.surname,
-                )
-                .then(
-                    response => {
-                        if (response.data['@success'] !== 'False') {
-                            localStorage.removeItem("user");
-                            localStorage.setItem("user", JSON.stringify(response.data['@return']));
-                            window.location.reload(false);
-                        } else {
-                            this.setState({
-                                loading: false,
-                            });
-                            console.log(response.data['@error']);
-                            alert(response.data['@error']);
-                        }
-                    });
-
+        ProfileService
+            .updateSurname(
+                this.state.surname,
+            )
+            .then(
+                response => {
+                    if (response.data['@success'] !== 'False') {
+                        localStorage.removeItem("user");
+                        localStorage.setItem("user", JSON.stringify(response.data['@return']));
+                        window.location.reload(false);
+                    } else {
+                        this.setState({
+                            loading: false,
+                        });
+                        console.log(response.data['@error']);
+                        alert(response.data['@error']);
+                    }
+                });
 
 
     }
+
     editCity(e) {
         e.preventDefault();
         this.setState({
             loading: true,
         });
-            ProfileService
-                .updateSurname(
-                    this.state.surname,
-                )
-                .then(
-                    response => {
-                        if (response.data['@success'] !== 'False') {
-                            localStorage.removeItem("user");
-                            localStorage.setItem("user", JSON.stringify(response.data['@return']));
-                            window.location.reload(false);
-                        } else {
-                            this.setState({
-                                loading: false,
-                            });
-                            console.log(response.data['@error']);
-                            alert(response.data['@error']);
-                        }
-                    });
-
+        ProfileService
+            .updateSurname(
+                this.state.surname,
+            )
+            .then(
+                response => {
+                    if (response.data['@success'] !== 'False') {
+                        localStorage.removeItem("user");
+                        localStorage.setItem("user", JSON.stringify(response.data['@return']));
+                        window.location.reload(false);
+                    } else {
+                        this.setState({
+                            loading: false,
+                        });
+                        console.log(response.data['@error']);
+                        alert(response.data['@error']);
+                    }
+                });
 
 
     }
+
     editBirthdate(e) {
         e.preventDefault();
         this.setState({
@@ -498,14 +503,13 @@ class Profile extends Component {
     }
 
 
-
     render() {
-        const {communityCreationReq : communityCreationReq , emailEdit: emailEdit, seeSubsComms: seeSubsComms,
-            seeSubsComms2: seeSubsComms2 , nameEdit:nameEdit, surnameEdit:surnameEdit,
-            cityEdit:cityEdit, birthdateEdit:birthdateEdit} = this.state;
-        const { user: currentUser } = this.props;
-        const { usertoken: currentToken } = this.props;
-        const {message} = this.props;
+        const {
+            communityCreationReq: communityCreationReq, emailEdit: emailEdit, seeSubsComms: seeSubsComms,
+            seeSubsComms2: seeSubsComms2, nameEdit: nameEdit, surnameEdit: surnameEdit,
+            cityEdit: cityEdit, birthdateEdit: birthdateEdit
+        } = this.state;
+        const {user: currentUser} = this.props;
 
         if (!currentUser) {
             return <Redirect to="/login"/>;
@@ -524,52 +528,54 @@ class Profile extends Component {
                     {/*    <strong>Id:</strong> {currentUser.id}*/}
                     {/*</p>*/}
                     <p>
-                            {emailEdit?(
-                                <p>
+                        {emailEdit ? (
+                            <p>
                                 <strong>Email:</strong> {currentUser.email}
                                 <button
-                                onClick={this.setActiveEmailEditFalse}
-                                className="badge badge-warning"
+                                    onClick={this.setActiveEmailEditFalse}
+                                    className="badge badge-warning"
                                 >
-                                Edit
+                                    Edit
                                 </button>
-                                </p>) : (
-                                    <p> <div className="col-md-4">
-                                <Form
-                                    onSubmit={this.editEmail}
-                                >
-                                    <div className="form-group">
-                                        <label htmlFor="email">Email</label>
-                                        <Input
-                                            type="text"
-                                            className="form-control"
-                                            name="email"
-                                            value={this.state.email}
-                                            onChange={this.onChangeEmail}
+                            </p>) : (
+                            <p>
+                                <div className="col-md-4">
+                                    <Form
+                                        onSubmit={this.editEmail}
+                                    >
+                                        <div className="form-group">
+                                            <label htmlFor="email">Email</label>
+                                            <Input
+                                                type="text"
+                                                className="form-control"
+                                                name="email"
+                                                value={this.state.email}
+                                                onChange={this.onChangeEmail}
 
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <button
-                                            className="btn btn-outline-secondary btn-group-toggle"
-                                            disabled={this.state.loading}
-                                        >
-                                            {this.state.loading && (
-                                                <span className="spinner-border spinner-border-sm"></span>
-                                            )}
-                                            <span>Update Email</span>
-                                        </button>
-                                    </div>
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <button
+                                                className="btn btn-outline-secondary btn-group-toggle"
+                                                disabled={this.state.loading}
+                                            >
+                                                {this.state.loading && (
+                                                    <span className="spinner-border spinner-border-sm"></span>
+                                                )}
+                                                <span>Update Email</span>
+                                            </button>
+                                        </div>
                                         <button
                                             className="m-3 btn btn-sm btn-danger"
                                             onClick={this.setActiveEmailEdit}
                                         >
                                             Abort
                                         </button>
-                                </Form></div></p> ) }
+                                    </Form></div>
+                            </p>)}
                     </p>
                     <p>
-                        {nameEdit?(
+                        {nameEdit ? (
                             <p>
                                 <strong>Name:</strong> {currentUser.name}
                                 <button
@@ -579,37 +585,39 @@ class Profile extends Component {
                                     Edit
                                 </button>
                             </p>) : (
-                            <p> <div className="col-md-4">
-                                <Form
-                                    onSubmit={this.editName}
-                                >
-                                    <div className="form-group">
-                                        <label htmlFor="name">Name</label>
-                                        <Input
-                                            type="text"
-                                            className="form-control"
-                                            name="name"
-                                            value={this.state.name}
-                                            onChange={this.onChangeName} />
-                                    </div>
-                                    <div className="form-group">
-                                        <button
-                                            className="btn btn-outline-secondary btn-group-toggle"
-                                            disabled={this.state.loading}
-                                        >
-                                            {this.state.loading && (
-                                                <span className="spinner-border spinner-border-sm"></span>
-                                            )}
-                                            <span>Update Name</span>
-                                        </button>
-                                    </div>
-                                    <button
-                                        className="m-3 btn btn-sm btn-danger"
-                                        onClick={this.setActiveNameEdit}
+                            <p>
+                                <div className="col-md-4">
+                                    <Form
+                                        onSubmit={this.editName}
                                     >
-                                        Abort
-                                    </button>
-                                </Form></div></p> ) }
+                                        <div className="form-group">
+                                            <label htmlFor="name">Name</label>
+                                            <Input
+                                                type="text"
+                                                className="form-control"
+                                                name="name"
+                                                value={this.state.name}
+                                                onChange={this.onChangeName}/>
+                                        </div>
+                                        <div className="form-group">
+                                            <button
+                                                className="btn btn-outline-secondary btn-group-toggle"
+                                                disabled={this.state.loading}
+                                            >
+                                                {this.state.loading && (
+                                                    <span className="spinner-border spinner-border-sm"></span>
+                                                )}
+                                                <span>Update Name</span>
+                                            </button>
+                                        </div>
+                                        <button
+                                            className="m-3 btn btn-sm btn-danger"
+                                            onClick={this.setActiveNameEdit}
+                                        >
+                                            Abort
+                                        </button>
+                                    </Form></div>
+                            </p>)}
                         {/*<strong>Name:</strong> {currentUser.name}*/}
                         {/*<Link*/}
                         {/*    to={"/blank/"}*/}
@@ -621,7 +629,7 @@ class Profile extends Component {
                     </p>
                     <p>
 
-                        {surnameEdit?(
+                        {surnameEdit ? (
                             <p>
                                 <strong>Surname:</strong> {currentUser.surname}
                                 <button
@@ -631,45 +639,45 @@ class Profile extends Component {
                                     Edit
                                 </button>
                             </p>) : (
-                            <p> <div className="col-md-4">
-                                <Form
-                                    onSubmit={this.editSurname}
-                                >
-                                    <div className="form-group">
-                                        <label htmlFor="surname">Surname</label>
-                                        <Input
-                                            type="text"
-                                            className="form-control"
-                                            name="surname"
-                                            value={this.state.surname}
-                                            onChange={this.onChangeSurname} />
-                                    </div>
-                                    <div className="form-group">
-                                        <button
-                                            className="btn btn-outline-secondary btn-group-toggle"
-                                            disabled={this.state.loading}
-                                        >
-                                            {this.state.loading && (
-                                                <span className="spinner-border spinner-border-sm"></span>
-                                            )}
-                                            <span>Update Surname</span>
-                                        </button>
-                                    </div>
-                                    <button
-                                        className="m-3 btn btn-sm btn-danger"
-                                        onClick={this.setActiveSurnameEdit}
+                            <p>
+                                <div className="col-md-4">
+                                    <Form
+                                        onSubmit={this.editSurname}
                                     >
-                                        Abort
-                                    </button>
-                                </Form></div></p> ) }
-
-
+                                        <div className="form-group">
+                                            <label htmlFor="surname">Surname</label>
+                                            <Input
+                                                type="text"
+                                                className="form-control"
+                                                name="surname"
+                                                value={this.state.surname}
+                                                onChange={this.onChangeSurname}/>
+                                        </div>
+                                        <div className="form-group">
+                                            <button
+                                                className="btn btn-outline-secondary btn-group-toggle"
+                                                disabled={this.state.loading}
+                                            >
+                                                {this.state.loading && (
+                                                    <span className="spinner-border spinner-border-sm"></span>
+                                                )}
+                                                <span>Update Surname</span>
+                                            </button>
+                                        </div>
+                                        <button
+                                            className="m-3 btn btn-sm btn-danger"
+                                            onClick={this.setActiveSurnameEdit}
+                                        >
+                                            Abort
+                                        </button>
+                                    </Form></div>
+                            </p>)}
 
 
                     </p>
                     <p>
 
-                        {cityEdit?(
+                        {cityEdit ? (
                             <p>
                                 <strong>City:</strong> {currentUser.city}
                                 <button
@@ -679,46 +687,46 @@ class Profile extends Component {
                                     Edit
                                 </button>
                             </p>) : (
-                            <p> <div className="col-md-4">
-                                <Form
-                                    onSubmit={this.editCity}
-                                >
-                                    <div className="form-group">
-                                        <label htmlFor="name">City</label>
-                                        <Input
-                                            type="text"
-                                            className="form-control"
-                                            name="name"
-                                            value={this.state.city}
-                                            onChange={this.onChangeCity} />
-                                    </div>
-                                    <div className="form-group">
-                                        <button
-                                            className="btn btn-outline-secondary btn-group-toggle"
-                                            disabled={this.state.loading}
-                                        >
-                                            {this.state.loading && (
-                                                <span className="spinner-border spinner-border-sm"></span>
-                                            )}
-                                            <span>Update City</span>
-                                        </button>
-                                    </div>
-                                    <button
-                                        className="m-3 btn btn-sm btn-danger"
-                                        onClick={this.setActiveCityEdit}
+                            <p>
+                                <div className="col-md-4">
+                                    <Form
+                                        onSubmit={this.editCity}
                                     >
-                                        Abort
-                                    </button>
-                                </Form></div></p> ) }
-
-
+                                        <div className="form-group">
+                                            <label htmlFor="name">City</label>
+                                            <Input
+                                                type="text"
+                                                className="form-control"
+                                                name="name"
+                                                value={this.state.city}
+                                                onChange={this.onChangeCity}/>
+                                        </div>
+                                        <div className="form-group">
+                                            <button
+                                                className="btn btn-outline-secondary btn-group-toggle"
+                                                disabled={this.state.loading}
+                                            >
+                                                {this.state.loading && (
+                                                    <span className="spinner-border spinner-border-sm"></span>
+                                                )}
+                                                <span>Update City</span>
+                                            </button>
+                                        </div>
+                                        <button
+                                            className="m-3 btn btn-sm btn-danger"
+                                            onClick={this.setActiveCityEdit}
+                                        >
+                                            Abort
+                                        </button>
+                                    </Form></div>
+                            </p>)}
 
 
                     </p>
 
                     <p>
 
-                        {birthdateEdit?(
+                        {birthdateEdit ? (
                             <p>
                                 <strong>Birthdate:</strong> {currentUser.birthdate ? new Date(currentUser.birthdate._isoformat).toLocaleDateString() : ""}
                                 <button
@@ -728,42 +736,43 @@ class Profile extends Component {
                                     Edit
                                 </button>
                             </p>) : (
-                            <p> <div className="col-md-4">
-                                <Form
-                                    onSubmit={this.editName}
-                                >
-                                    <div className="form-group">
-                                        <label htmlFor="birthdate">Birthdate</label>
-                                        <Input
-                                            type="text"
-                                            className="form-control"
-                                            name="birthdate"
-                                            value={this.state.birthdate}
-                                            onChange={this.onChangeBirthdate} />
-                                    </div>
-                                    <div className="form-group">
-                                        <button
-                                            className="btn btn-outline-secondary btn-group-toggle"
-                                            disabled={this.state.loading}
-                                        >
-                                            {this.state.loading && (
-                                                <span className="spinner-border spinner-border-sm"></span>
-                                            )}
-                                            <span>Update Birthdate</span>
-                                        </button>
-                                    </div>
-                                    <button
-                                        className="m-3 btn btn-sm btn-danger"
-                                        onClick={this.setActiveBirthdateEdit}
+                            <p>
+                                <div className="col-md-4">
+                                    <Form
+                                        onSubmit={this.editName}
                                     >
-                                        Abort
-                                    </button>
-                                </Form></div></p> ) }
-
+                                        <div className="form-group">
+                                            <label htmlFor="birthdate">Birthdate</label>
+                                            <Input
+                                                type="text"
+                                                className="form-control"
+                                                name="birthdate"
+                                                value={this.state.birthdate}
+                                                onChange={this.onChangeBirthdate}/>
+                                        </div>
+                                        <div className="form-group">
+                                            <button
+                                                className="btn btn-outline-secondary btn-group-toggle"
+                                                disabled={this.state.loading}
+                                            >
+                                                {this.state.loading && (
+                                                    <span className="spinner-border spinner-border-sm"></span>
+                                                )}
+                                                <span>Update Birthdate</span>
+                                            </button>
+                                        </div>
+                                        <button
+                                            className="m-3 btn btn-sm btn-danger"
+                                            onClick={this.setActiveBirthdateEdit}
+                                        >
+                                            Abort
+                                        </button>
+                                    </Form></div>
+                            </p>)}
 
 
                     </p>
-                    { seeSubsComms?(
+                    {seeSubsComms ? (
                         <p>
                             <strong>Subscribed Communities :</strong>
                             <button
@@ -788,15 +797,17 @@ class Profile extends Component {
                                 🔄
                             </button>
                             {currentUser.subscribes.map(function (subcom) {
-                                return  <div className="list row">
+                                return <div className="list row">
                                     <div className="col-md-12">
                                         <div className="input-group mb-1">
                                             <div className="input-group-append">
 
                                                 <Link
-                                                    to={"/community/"+subcom.id}
+                                                    to={"/community/" + subcom.id}
                                                     className="badge badge-info mb-1 col-md-12"
-                                                ><div className="my-cls"> <h5 className="my-cls"><strong>{subcom.CommunityTitle}</strong></h5> </div>
+                                                >
+                                                    <div className="my-cls"><h5 className="my-cls">
+                                                        <strong>{subcom.CommunityTitle}</strong></h5></div>
                                                     <h6 className="my-cls">{subcom.description}</h6>
 
                                                 </Link>
@@ -815,13 +826,10 @@ class Profile extends Component {
                             }, this)
                             }
                         </>
-                         ) }
+                    )}
 
 
-
-
-
-                    { seeSubsComms2?(
+                    {seeSubsComms2 ? (
                         <p>
                             <strong>My Communities :</strong>
                             <button
@@ -846,15 +854,17 @@ class Profile extends Component {
                                 🔄
                             </button>
                             {currentUser.createdCommunities.map(function (subcom) {
-                                return  <div className="list row">
+                                return <div className="list row">
                                     <div className="col-md-12">
                                         <div className="input-group mb-1">
                                             <div className="input-group-append">
 
                                                 <Link
-                                                    to={"/community/"+subcom.id}
+                                                    to={"/community/" + subcom.id}
                                                     className="badge badge-info mb-1 col-md-12"
-                                                ><div className="my-cls"> <h5 className="my-cls"><strong>{subcom.CommunityTitle}</strong></h5> </div>
+                                                >
+                                                    <div className="my-cls"><h5 className="my-cls">
+                                                        <strong>{subcom.CommunityTitle}</strong></h5></div>
                                                     <h6 className="my-cls">{subcom.description}</h6>
 
                                                 </Link>
@@ -872,10 +882,7 @@ class Profile extends Component {
                             }, this)
                             }
                         </>
-                    ) }
-
-
-
+                    )}
 
 
                     {/*{ seeMyComms ? (*/}
@@ -924,13 +931,11 @@ class Profile extends Component {
                     {/*) }*/}
 
 
-
-
                     {/*<p>*/}
                     {/*    <strong>Token:</strong> {currentToken}*/}
                     {/*</p>*/}
                     <div className="col-md-6">
-                        { communityCreationReq ?(<h4></h4>) : (
+                        {communityCreationReq ? (<h4></h4>) : (
                             <Form
                                 onSubmit={this.createCommunity}
                             >
@@ -969,9 +974,9 @@ class Profile extends Component {
                                         <span>Create Community</span>
                                     </button>
                                 </div>
-                            </Form> ) }
+                            </Form>)}
                     </div>
-                    { communityCreationReq ? (
+                    {communityCreationReq ? (
                         <button
                             className="badge badge-dark"
                             onClick={this.setActiveCreationReq}
@@ -983,7 +988,7 @@ class Profile extends Component {
                             className="m-3 btn btn-sm btn-danger"
                             onClick={this.setActiveCreationReqNonActive}
                         >
-                             Abort
+                            Abort
                         </button>)
                     }
                 </div>
@@ -994,7 +999,7 @@ class Profile extends Component {
 }
 
 function mapStateToProps(state) {
-    const { user, usertoken } = state.reg;
+    const {user, usertoken} = state.reg;
     return {
         user, usertoken
     };

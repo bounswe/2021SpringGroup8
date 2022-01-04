@@ -1,8 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@mui/material/Typography';
-import Post from "./Post";
-import {Grid, Card, Paper} from "@mui/material";
+import {Grid, Card} from "@mui/material";
+
 import CommunityPost from "./CommunityPost";
 import Box from "@mui/material/Box";
 

@@ -7,6 +7,7 @@ import DataObjectIcon from '@mui/icons-material/DataObject';
 
 import CreateIcon from '@mui/icons-material/Create';
 import {useHistory} from "react-router-dom";
+
 const user_actions = [
     {icon: <CreateIcon/>, name: 'Share Post', operation: "post"},
 ];
@@ -18,18 +19,17 @@ const owner_actions = [
 
 export default function BasicSpeedDial(props) {
     const {owner, communityId} = props;
-    console.log(communityId)
     const history = useHistory()
     const actions = owner ? owner_actions : user_actions;
 
     function handleClick(event, operation) {
         event.preventDefault();
 
-        if(operation === 'type'){
+        if (operation === 'type') {
             console.log(operation)
             history.push('/createDataType/' + communityId)
             return
-        }else if(operation === 'post'){
+        } else if (operation === 'post') {
             history.push('/createPost/' + communityId)
             return
         }
@@ -59,7 +59,7 @@ export default function BasicSpeedDial(props) {
                             icon={action.icon}
                             tooltipTitle={action.name}
                             onClick={(e) => {
-                                handleClick(e,action.operation)
+                                handleClick(e, action.operation)
                             }}
                         />
                     )

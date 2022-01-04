@@ -1,15 +1,12 @@
 import './App.css';
 import React, {Component} from "react";
-import {Router, Switch, Route, withRouter} from "react-router-dom";
+import {Router, Switch, Route} from "react-router-dom";
 import {connect} from "react-redux";
 import Login from "./public-content/pages/login";
 import Register from "./public-content/pages/Register";
-import Post from "./components/post"
 import PostListComponent from "./components/posts";
-import HomePage from "./public-content/pages/HomePage";
 import Profile from "./pages/profile";
 
-import Welcome from "./public-content/pages/welcome";
 import Communities from "./public-content/pages/Communities";
 import Community from "./public-content/pages/Community";
 import home from "./public-content/pages/home";

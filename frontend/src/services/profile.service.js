@@ -2,7 +2,6 @@ import authService from "./auth.service";
 import axios from "axios";
 import querystring from "querystring";
 
-const API_URL =  "http://3.145.120.66:8080/";
 class ProfileService {
 
 

@@ -41,8 +41,6 @@ class Community extends Component {
             isLoaded: false,
         };
         this.subscribe = this.subscribe.bind(this);
-
-
     }
 
     componentDidMount() {
@@ -78,8 +76,6 @@ class Community extends Component {
     checkSubscribeStatus() {
         const myUser = AuthService.getCurrentUser();
         if (this.state.subscribers.some((user) => user.id === myUser.id)) {
-            /* vendors contains the element we're looking for */
-            console.log("subscribed");
             this.setState({
                 subscribed: true,
                 variant: "outlined",
@@ -96,12 +92,10 @@ class Community extends Component {
     }
 
     subscribe() {
-        console.log(this.state);
         if (this.state.subscribed) {
             userCommunityService
                 .unsubscribeCommunity(this.props.match.params.id)
                 .then((response) => {
-                    console.log(response);
                     if (response.data["@success"] === "True") {
                         this.setState({
                             subscribed: false,

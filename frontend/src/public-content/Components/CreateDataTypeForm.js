@@ -109,7 +109,7 @@ export default function CreateDataTypeFrom(props) {
                 {inputFields.map((inputField, index) => (
                     <div key={index} className={classes.fieldGroup}>
                         <TextField
-                            data-testid={index +'#fieldName'}
+                            data-testid={index + '#fieldName'}
                             name="fieldName"
                             label="Field Name"
                             variant="outlined"
@@ -132,11 +132,11 @@ export default function CreateDataTypeFrom(props) {
                             </Select>
 
                         </row>
-                        <IconButton data-testid={index+'#removeFieldGroup'} onClick={() => handleRemoveFields(index)}>
+                        <IconButton data-testid={index + '#removeFieldGroup'} onClick={() => handleRemoveFields(index)}>
                             <RemoveIcon/>
                         </IconButton>
 
-                        <IconButton data-testid={index+'#addFieldGroup'} onClick={() => handleAddFields()}>
+                        <IconButton data-testid={index + '#addFieldGroup'} onClick={() => handleAddFields()}>
                             <AddIcon/>
                         </IconButton>
                     </div>

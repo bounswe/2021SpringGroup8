@@ -8,7 +8,6 @@ import Header from "../Components/header/header";
 
 import {FcAdvance, FcIdea} from "react-icons/fc";
 import {Gi3DStairs} from "react-icons/gi";
-import logo from "../images/logo_t.png";
 import logo2 from "../images/facespace_2.png";
 
 

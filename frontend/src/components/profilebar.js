@@ -1,10 +1,10 @@
-import { history } from "../helpers/history";
+import {history} from "../helpers/history";
 
 import EventBus from "../common/EventBus";
-import { logout } from "../actions/register";
-import { Link, Route, Router, Switch } from "react-router-dom";
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import {logout} from "../actions/register";
+import {Link, Router} from "react-router-dom";
+import React, {Component} from "react";
+import {connect} from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
@@ -52,7 +52,7 @@ class Profilebar extends Component {
     }
 
     render() {
-        const { currentUser } = this.state;
+        const {currentUser} = this.state;
 
         return (
             <Router history={history}>
@@ -60,9 +60,8 @@ class Profilebar extends Component {
                     <nav className="navbar navbar-expand navbar-light">
                         <Link to={"/"} className="navbar-brand">
                             <img src={logo} width="50"
-                                height="35" />
+                                 height="35" alt={""}/>
                         </Link>
-
 
 
                         {currentUser ? (
@@ -113,7 +112,7 @@ class Profilebar extends Component {
 }
 
 function mapStateToProps(state) {
-    const { user } = state.reg;
+    const {user} = state.reg;
     return {
         user,
     };

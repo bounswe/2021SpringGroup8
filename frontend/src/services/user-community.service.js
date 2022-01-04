@@ -1,8 +1,6 @@
 import authService from "./auth.service";
 import axios from "axios";
-import querystring from "querystring";
 
-const API_URL =  "http://3.145.120.66:8080/";
 class UserCommunityService {
 
     getCommunities() {
@@ -72,16 +70,7 @@ class UserCommunityService {
         const user = authService.getCurrentUser()
         if (user) {
             const something = JSON.stringify(fields).toString()
-            console.log(querystring.stringify({
-                "@usertoken": this.getUserToken(),
-                communityId: community_id,
-                datatypename: name,
-                datatypefields: something
-            }))
             let paramStr = 'communityId=' + community_id + '&@usertoken=' + token + "&datatypename=" + name + "&datatypefields=" + something;
-            let searchParams = new URLSearchParams(paramStr);
-            console.log("param str is")
-            console.log(paramStr)
             return axios.post(`http://3.145.120.66:8080/createdatatype`, paramStr,
                 {
                     headers: {
@@ -104,14 +93,6 @@ class UserCommunityService {
         if (user) {
             let paramStr =  'description='+description+'&@usertoken='+token +'&communityTitle='+communityTitle;
             let searchParams = new URLSearchParams(paramStr);
-            console.log("param str is")
-            console.log(paramStr)
-            console.log(querystring.stringify({
-                "@usertoken": this.getUserToken(),
-                communityTitle:communityTitle,
-                description:description
-
-            }))
             return axios.post(`http://3.145.120.66:8080/createcommunity`,
                 searchParams,
 
@@ -137,14 +118,6 @@ class UserCommunityService {
         if (user) {
             let paramStr =  '@usertoken='+token +'&communityId='+commId;
             let searchParams = new URLSearchParams(paramStr);
-            console.log("param str is")
-            console.log(paramStr)
-            console.log(querystring.stringify({
-                "@usertoken": this.getUserToken(),
-                commId:commId,
-
-
-            }))
             return axios.post(`http://3.145.120.66:8080/deletecommunity`,
                 searchParams,
 

@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 
 import UserPostService from "../services/user-post.service";
-export default class Post extends Component{
+
+export default class Post extends Component {
     constructor(props) {
         super(props);
         this.onChangeTopic = this.onChangeTopic.bind(this);
@@ -9,13 +10,13 @@ export default class Post extends Component{
         this.getPosts = this.getPosts.bind(this);
         this.getPost = this.getPost.bind(this);
 
-        this.state= {
-            currentPost:{
+        this.state = {
+            currentPost: {
                 postid: null,
-                topic : "",
-                body : "",
-                sender_username:"",
-                new : true,
+                topic: "",
+                body: "",
+                sender_username: "",
+                new: true,
             },
             post: ""
         };
@@ -24,17 +25,19 @@ export default class Post extends Component{
     componentDidMount() {
         this.getPost(this.props.match.params.messageid);
     }
-    onChangeTopic(e){
+
+    onChangeTopic(e) {
         const topic = e.target.value;
-        this.setState(function (prevState){
+        this.setState(function (prevState) {
             return {
                 currentMessage: {
                     ...prevState.currentMessage,
-                    topic : topic,
+                    topic: topic,
                 }
             };
         });
     }
+
     onChangeBody(e) {
         const body = e.target.value;
 
