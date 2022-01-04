@@ -99,6 +99,7 @@ class Communities extends Component {
                             {community.CommunityTitle}
                         </Card.Title>
                         <Card.Subtitle
+                            class="card-subtitle mb-2 text-muted"
                             onClick={this.goProfile.bind(
                                 this,
                                 community.createdBy.id
