@@ -36,6 +36,30 @@ class ProfileService {
         }
 
     }
+    getProfilePreview(id){
+
+        const user = authService.getCurrentUser()
+        const token = this.getUserToken()
+        if (user) {
+            let paramStr =  'userid='+id ;
+            let searchParams = new URLSearchParams(paramStr);
+            console.log("param str is")
+            console.log(paramStr)
+
+            return axios.post(`http://3.145.120.66:8080/getuserpreview`,
+                querystring.stringify({
+                    userid: id,
+                }),
+                {
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                });
+        } else {
+            return {"response": false, "message": "Needs to be login to use this functionality"};
+        }
+
+    }
 
 
 

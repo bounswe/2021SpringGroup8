@@ -1,16 +1,24 @@
 import React, {Component} from "react";
 import Navbar from "../Components/navbar";
-import {withRouter} from "react-router-dom";
+import {useHistory, withRouter} from "react-router-dom";
 import UserCommunityService from "../../services/user-community.service";
 import CreatePostForm from "../Components/CreatePostForm";
+import Profilebar from "../../components/profilebar";
 
 class CreatePost extends Component {
+
     constructor(props) {
         super(props);
+        this.goBack = this.goBack.bind(this);
         this.state = {
             communityId: '',
             dataTypes: []
         }
+    }
+
+    goBack(){
+
+        this.props.history.go(-1)
     }
 
     componentDidMount() {
@@ -36,9 +44,12 @@ class CreatePost extends Component {
     render() {
         const {communityId, dataTypes} = this.state
         return (<>
-            <Navbar/>
+            <Profilebar/>
+            <button
+            onClick={this.goBack}>
+                🔙
+            </button>
             <CreatePostForm communityId={communityId} dataTypes={dataTypes} />
-
         </>)
     }
 }
