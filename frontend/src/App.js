@@ -18,6 +18,7 @@ import CreateDataType from "./public-content/pages/CreateDataType";
 import CreatePost from "./public-content/pages/CreatePost";
 import {history} from './helpers/history';
 import AdvancedSearch from "./public-content/pages/AdvancedSearch";
+import ProfileView from "./public-content/pages/ProfileView";
 
 class App extends Component {
     constructor(props) {
@@ -47,7 +48,7 @@ class App extends Component {
                             <Route exact path={"/"} component={home}/>
                             {/*<Route exact path={"/home"} component={HomePage}/>*/}
                             <Route exact path={"/profile"} component={Profile}/>
-
+                            <Route exact path="/profile/:id" component={ProfileView}/>
                             <Route exact path={"/posts"} component={PostListComponent}/>
                             <Route exact path="/post/:id" component={PostView}/>
                             <Route exact path="/login" component={Login}/>

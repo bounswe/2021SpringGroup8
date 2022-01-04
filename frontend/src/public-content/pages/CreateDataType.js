@@ -3,13 +3,17 @@ import Navbar from "../Components/navbar";
 import {withRouter} from "react-router-dom";
 import DataTypeForm from "../Components/DataTypeForm"
 import CreateDataTypeForm from "../Components/CreateDataTypeForm";
+import Profilebar from "../../components/profilebar";
 
 class CreateDataType extends Component {
+
     constructor(props) {
         super(props);
+        this.goBack = this.goBack.bind(this);
         this.state = {
             communityId: '',
         }
+
     }
 
     componentDidMount() {
@@ -19,10 +23,20 @@ class CreateDataType extends Component {
         console.log(this.props.match.params.id);
     }
 
+    goBack(){
+
+        this.props.history.go(-1)
+    }
+
     render() {
         const {communityId} = this.state
         return (<>
-            <Navbar/>
+            <Profilebar/>
+            <button
+                variant="contained" color="primary"
+                onClick={this.goBack}>
+                🔙
+            </button>
             <CreateDataTypeForm communityId={communityId}/>
         </>)
     }
