@@ -267,7 +267,7 @@ class Community extends Component {
                             <CommunityAbout
                                 description={description}
                                 moderators={creator}
-                                tags="soccer football "
+                                tags={communityTitle}
                             />
                         </Grid>
 
