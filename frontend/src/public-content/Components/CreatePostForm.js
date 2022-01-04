@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useFormik, Field, Form, Formik, FormikProps, FormikProvider} from 'formik';
+import {useFormik, Field, FormikProvider} from 'formik';
 import PostService from '../../services/post.service'
 import {useHistory} from "react-router-dom";
 import {GoogleMap, Marker, useJsApiLoader} from '@react-google-maps/api';
@@ -78,10 +78,10 @@ export default function CreatePostForm(props) {
                     console.log(response)
                     if (response.data.success === "True") {
                         actions.setSubmitting(false);
-                        alert(JSON.stringify({"message": "successfully created post"}, null, 2));
+                        alert(JSON.stringify("successfully created post"));
                         return history.push('/community/' + communityId);
                     }
-                    alert(JSON.stringify({"message": response.data['@error']}, null, 2));
+                    alert(JSON.stringify(response.data['@error']));
                     actions.setSubmitting(false)
 
                 }).catch(error => {
@@ -96,7 +96,7 @@ export default function CreatePostForm(props) {
         if (dataTypes.length > 0) {
             Object.keys(dataTypes[i].fields).map(field => {
                 const field_type = dataTypes[i].fields[field]
-                if (field_type === "str" || field_type === "int") {
+                if (field_type === "str" || field_type === "int" || field_type === "bool") {
                     initialValues[field] = ''
                 } else {
                     initialValues['locname'] = ''
@@ -159,6 +159,14 @@ export default function CreatePostForm(props) {
                                     onChange={formik.handleChange}
                                     value={formik.values.name}
                                 />
+                            </div>
+                        } else if (field_type === "bool") {
+                            return <div>
+                                <label htmlFor={field}>{field}</label>
+                                <Field as="select" name="dataType" onChange={formik.handleChange} fullWidth>
+                                    <option value="true"> True</option>
+                                    <option value="false"> False</option>
+                                </Field>
                             </div>
                         } else if (field_type === "location") {
                             return (<div style={{marginTop: 10}}>

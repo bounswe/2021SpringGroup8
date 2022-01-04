@@ -70,7 +70,7 @@ class CreateCommunity : DialogFragment() {
                     val jsonObject = JSONObject(response)
                     error = jsonObject
                     val id = JSONObject((jsonObject["@return"]).toString())["id"]
-                    Toast.makeText(context, "Community with id $id crated successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Community crated successfully", Toast.LENGTH_SHORT).show()
                 } catch (e: JSONException) {
                     e.printStackTrace()
                     Toast.makeText(context, (error?.get("@error")) as String, Toast.LENGTH_SHORT).show()

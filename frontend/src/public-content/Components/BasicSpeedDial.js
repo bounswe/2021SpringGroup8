@@ -3,17 +3,18 @@ import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import PrintIcon from '@mui/icons-material/Print';
-import ShareIcon from '@mui/icons-material/Share';
+import DataObjectIcon from '@mui/icons-material/DataObject';
+
+import CreateIcon from '@mui/icons-material/Create';
 import {useHistory} from "react-router-dom";
 
 const user_actions = [
-    {icon: <ShareIcon/>, name: 'Share Post', operation: "post"},
+    {icon: <CreateIcon/>, name: 'Share Post', operation: "post"},
 ];
 
 const owner_actions = [
-    {icon: <PrintIcon/>, name: 'Create Data Type', operation: "type"},
-    {icon: <ShareIcon/>, name: 'Share Post', operation: "post"},
+    {icon: <DataObjectIcon/>, name: 'Create Data Type', operation: "type"},
+    {icon: <CreateIcon/>, name: 'Share Post', operation: "post"},
 ];
 
 export default function BasicSpeedDial(props) {

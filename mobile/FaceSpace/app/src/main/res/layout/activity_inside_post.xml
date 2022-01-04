@@ -2,31 +2,26 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainConstraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".InsidePost">
 
-    <Button
-        android:id="@+id/btnSeeLoc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@android:color/holo_green_dark"
-        android:drawableStart="@android:drawable/ic_dialog_map"
-        android:drawablePadding="5dp"
-        android:text="See Location"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="17sp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFieldObjects"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descPostP" />
+        app:layout_constraintTop_toBottomOf="@+id/datePostP"
+        tools:layout_constraintBottom_toTopOf="@+id/bottomPanel" />
 
     <Button
         android:id="@+id/btnDeletePost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
         android:backgroundTint="@color/red"
         android:drawablePadding="5dp"
         android:text="Delete Post"
@@ -34,16 +29,14 @@
         android:textColor="@color/white"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateFieldP" />
+        app:layout_constraintTop_toBottomOf="@+id/titlePostP" />
 
     <TextView
         android:id="@+id/titlePostP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/roboto"
         android:text="Soccer Community"
         android:textSize="20sp"
@@ -52,29 +45,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/descPostP"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/roboto"
-        android:text="We talk about messi here"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titlePostP" />
-
-    <TextView
         android:id="@+id/byPostP"
         android:layout_width="0dp"
         android:layout_height="25dp"
-        android:layout_marginTop="36dp"
         android:gravity="center|start"
         android:text="by mss"
         android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView29"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/textView29" />
 
     <View
         android:id="@+id/viewPost2"
@@ -92,162 +70,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp"
         android:text="date"
         app:layout_constraintStart_toEndOf="@+id/datePostP"
-        app:layout_constraintTop_toBottomOf="@+id/btnSeeLoc" />
+        app:layout_constraintTop_toBottomOf="@+id/byPostP" />
 
     <TextView
         android:id="@+id/datePostP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
-        android:text="Date:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSeeLoc" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bottomPanel"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnRefreshP"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
-            android:backgroundTint="@color/white"
-            android:clickable="true"
-            android:focusable="true"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            app:borderWidth="0dp"
-            app:elevation="0dp"
-            app:fabSize="mini"
-            app:layout_constraintStart_toEndOf="@+id/btnGoHomeP"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_popup_sync"
-            app:tint="@color/gray" />
+        android:text="Posted at:"
+        app:layout_constraintStart_toStartOf="@+id/textView29"
+        app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnAddP"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="65dp"
-            android:backgroundTint="@color/white"
-            android:clickable="true"
-            android:focusable="true"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            app:borderWidth="0dp"
-            app:elevation="0dp"
-            app:fabSize="mini"
-            app:layout_constraintStart_toEndOf="@+id/btnRefreshP"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_input_add"
-            app:tint="@color/gray" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnGoHomeP"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:backgroundTint="@color/white"
-            android:clickable="true"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            app:borderWidth="0dp"
-            app:elevation="0dp"
-            app:fabSize="mini"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/home"
-            app:tint="@color/gray" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnLogoutP"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="45dp"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="@color/white"
-            android:clickable="true"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            app:borderWidth="0dp"
-            app:elevation="0dp"
-            app:fabSize="mini"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView19"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logout"
-            app:tint="@color/gray" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="8dp"
-            android:text="Home"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnGoHomeP" />
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
-            android:layout_marginBottom="8dp"
-            android:text="Refresh"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView11"
-            app:layout_constraintTop_toBottomOf="@+id/btnRefreshP" />
-
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginBottom="8dp"
-            android:text="Create\nNew Post"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView12"
-            app:layout_constraintTop_toBottomOf="@+id/btnAddP" />
-
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="53dp"
-            android:layout_marginBottom="8dp"
-            android:text="Logout"
-            app:layout_anchor="@id/btnLogoutP"
-            app:layout_anchorGravity="bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView19"
-            app:layout_constraintTop_toBottomOf="@+id/btnLogoutP" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textView29"
         android:layout_width="82dp"
         android:layout_height="25dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
         android:gravity="center|start"
         android:text="Posted by:"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/titlePostP"
-        app:layout_constraintTop_toTopOf="@+id/titlePostP" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titlePostP" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

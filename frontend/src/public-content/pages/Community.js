@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-
+import CloseIcon from '@mui/icons-material/Close';
 import UserCommunityService from "../../services/user-community.service";
 import UserService from "../../services/user.service";
 import AuthService from "../../services/auth.service";
@@ -15,7 +15,10 @@ import BasicSpeedDial from "../Components/BasicSpeedDial";
 import Profilebar from "../../components/profilebar";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+
 import InputBase from "@mui/material/InputBase";
+import AdvancedSearchInCommunity from "../Components/AdvancedSearchInCommunity";
 
 class Community extends Component {
     constructor(props) {
@@ -28,7 +31,9 @@ class Community extends Component {
             creator: "example-creator",
             subscribers: [],
             subscribed: false,
+            dataTypes: [],
             variant: "contained",
+            advancedSearchOpen: false,
             text: "Subscribe",
             owner: false,
             id: "",
@@ -130,6 +135,7 @@ class Community extends Component {
     retrieveCommunity(id) {
         UserCommunityService.getCommunityById(id)
             .then((response) => {
+                console.log(response)
                 this.setState({
                     communityTitle: response.data["@return"]["communityTitle"],
                     description: response.data["@return"]["description"],
@@ -137,6 +143,7 @@ class Community extends Component {
                     subscribers: response.data["@return"]["subscribers"],
                     posts: response.data["@return"]["posts"],
                     id: id,
+                    dataTypes: response.data["@return"]["dataTypes"],
                     isLoaded: true,
                 });
                 this.checkSubscribeStatus();
@@ -151,6 +158,14 @@ class Community extends Component {
             });
     }
 
+    openAdvancedSearch() {
+        if (this.state.advancedSearchOpen) {
+            this.setState({advancedSearchOpen: false})
+        } else {
+            this.setState({advancedSearchOpen: true})
+        }
+
+    }
 
     render() {
         const {
@@ -161,9 +176,13 @@ class Community extends Component {
             communityTitle,
             variant,
             text,
+            advancedSearchOpen,
             searchValue,
             isLoaded,
+            id,
+            dataTypes
         } = this.state;
+        console.log(advancedSearchOpen)
 
         const filterPosts = posts.filter((item) => item.postTitle.toLowerCase().includes(searchValue.toLowerCase()) ||
             item.dataTypeName.toLowerCase().includes(searchValue.toLowerCase()) ||
@@ -173,7 +192,7 @@ class Community extends Component {
         return (
             <>
                 <Profilebar/>
-                <Container maxWidth="md">
+                {isLoaded ? (<Container maxWidth="md">
                     <Toolbar
                         sx={{height: "100px", borderBottom: 1, borderColor: "divider"}}
                     >
@@ -214,25 +233,46 @@ class Community extends Component {
                     >
                         <SearchIcon/>
                     </IconButton>
+
+                    <IconButton
+                        onClick={this.openAdvancedSearch.bind(this)}
+                        aria-label="advanced search"
+                        aria-valuetext="advanced search"
+                    >
+                        {advancedSearchOpen ? (<CloseIcon/>) : (<ManageSearchIcon/>)}
+                    </IconButton>
+
                     <Grid container direction="row">
+                        <Grid item xs={8}>
+                            {isLoaded ? (
+                                <div>
+                                    {advancedSearchOpen ? (
+                                        <AdvancedSearchInCommunity communityID={id} dataTypes={dataTypes}/>
+                                    ) : (
+                                        <CommunityPosts description="something" posts={filterPosts}/>
+                                    )}
+                                </div>
 
-                        {isLoaded ? (<CommunityPosts description="something" posts={filterPosts}/>) : (
-
-                            <Grid item xs={12} md={8}>
+                            ) : (
                                 <div>Loading...</div>
-                            </Grid>
-                        )}
-                        <CommunityAbout
-                            description={description}
-                            moderators={creator}
-                            tags="soccer football "
-                        />
+                            )}
+                        </Grid>
+                        <Grid item xs={4}>
+                            <CommunityAbout
+                                description={description}
+                                moderators={creator}
+                                tags="soccer football "
+                            />
+                        </Grid>
+
                     </Grid>
                     <BasicSpeedDial
                         owner={owner}
                         communityId={this.props.match.params.id}
                     />
-                </Container>
+                </Container>) : (<Grid item xs={12} md={8}>
+                    <div>Loading...</div>
+                </Grid>)}
             </>
         );
     }

@@ -13,30 +13,61 @@
         tools:context=".SignUpPageActivity"
         >
 
-        <TextView
-            android:id="@+id/textView41"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Search Posts"
-            android:textColor="@color/red"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/button"
+            android:padding="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView41"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Search Posts"
+                android:textColor="@color/red"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="70dp"
+                android:layout_height="43dp"
+                android:text="Hide Search"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView41"
+                app:layout_constraintEnd_toStartOf="@+id/btnReset"
+                app:layout_constraintStart_toEndOf="@+id/textView41"
+                app:layout_constraintTop_toTopOf="@+id/textView41" />
+
+            <Button
+                android:id="@+id/btnReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/red"
+                android:drawableLeft="@drawable/places_ic_clear"
+                android:text="Reset\nFilters"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView41"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button"
+                app:layout_constraintTop_toTopOf="@+id/textView41" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout1"
             android:layout_width="409dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:padding="20dp"
+            android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button">
+            app:layout_constraintTop_toBottomOf="@+id/layoutTitle">
 
             <Spinner
                 android:id="@+id/spinnerFields"
@@ -96,13 +127,12 @@
                 android:layout_marginTop="16dp"
                 android:gravity="end"
                 app:layout_constraintStart_toEndOf="@+id/textView40"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerFields" />
+                app:layout_constraintTop_toBottomOf="@+id/spinnerDataTypes" />
 
             <TextView
                 android:id="@+id/textView40"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
                 android:gravity="center"
                 android:text="Choose Filter Type"
                 app:layout_constraintBottom_toBottomOf="@+id/spinnerFilters"
@@ -148,32 +178,11 @@
             android:id="@+id/results"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout1" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="70dp"
-            android:layout_height="43dp"
-            android:text="Hide Search"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toStartOf="@+id/btnReset"
-            app:layout_constraintStart_toEndOf="@+id/textView41"
-            app:layout_constraintTop_toTopOf="@+id/textView41" />
 
-        <Button
-            android:id="@+id/btnReset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/places_ic_clear"
-            android:text="Reset\nFilters"
-            android:backgroundTint="@color/red"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button"
-            app:layout_constraintTop_toTopOf="@+id/textView41" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

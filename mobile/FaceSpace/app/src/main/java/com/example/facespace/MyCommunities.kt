@@ -168,7 +168,8 @@ class MyCommunities : AppCompatActivity() {
                 null,null, time.substring(0,10), id.toString())
             if(query=="") {
                 commAdapter.addComm(comm)
-            } else if(title.toString().contains(query, ignoreCase = true)) {
+            } else if(title.toString().contains(query, ignoreCase = true) ||
+                desc.toString().contains(query, ignoreCase = true)) {
                 commAdapter.addComm(comm)
             }
 

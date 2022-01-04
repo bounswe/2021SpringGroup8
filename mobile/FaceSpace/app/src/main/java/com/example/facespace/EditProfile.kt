@@ -118,7 +118,7 @@ class EditProfile : DialogFragment() {
             val city: String = data?.getStringExtra("city").toString()
             lon = data?.getDoubleExtra("lon", 0.0)!!
             lat = data.getDoubleExtra("lat", 0.0)
-            Toast.makeText(context, city,Toast.LENGTH_SHORT).show()
+            // Toast.makeText(context, city,Toast.LENGTH_SHORT).show()
             newCity.text = city
         }
     }
@@ -146,7 +146,7 @@ class EditProfile : DialogFragment() {
         params["loc"] = loc.toString()
 
 
-        Toast.makeText(context, params.toString(),Toast.LENGTH_SHORT).show()
+        // Toast.makeText(context, params.toString(),Toast.LENGTH_SHORT).show()
 
         var error: JSONObject? = null
 

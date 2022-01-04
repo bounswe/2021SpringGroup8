@@ -23,25 +23,10 @@ class LoginPageActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_login_page)
 
-
-        /*
-
-        // To take parameters from another view
-
-        val extras = intent.extras
-        var value = extras?.get("key")
-        val faceText = findViewById<TextView>(R.id.face)
-        faceText.text = (value?:"FaceSpace") as String?
-         */
-
-
-
-
         Data().resetAll()
 
         val btnSignIn = findViewById<Button>(R.id.btnSignIn)
         val btnGoSignUp = findViewById<Button>(R.id.btnGoSignUpPage)
-        val btnForgot =  findViewById<Button>(R.id.btnForgot)
         btnSignIn.setOnClickListener {
             val userEdit = findViewById<EditText>(R.id.inputUsername)
             val passEdit = findViewById<EditText>(R.id.inputPassword)
@@ -58,16 +43,12 @@ class LoginPageActivity : AppCompatActivity() {
             val url = Data().getUrl("login")
 
 
-            // Post parameters
-            // Form fields and values
-
-
             var error: JSONObject? = null
 
             val stringRequest: StringRequest = object : StringRequest( Method.POST, url,
                 Response.Listener { response ->
-                    userEdit.text.clear()
-                    passEdit.text.clear()
+                    // userEdit.text.clear()
+                    // passEdit.text.clear()
                     try {
                         //Parse your api responce here
                         val jsonObject = JSONObject(response)
@@ -76,7 +57,7 @@ class LoginPageActivity : AppCompatActivity() {
                         val returns = JSONObject(jsonObject["@return"].toString())
                         val dob = (JSONObject(returns["birthdate"].toString()))["_isoformat"]
                         val loc = JSONObject(returns["loc"].toString())
-                        Toast.makeText(this, "$url login successful. Your Token is : $token", Toast.LENGTH_SHORT).show()
+                        // Toast.makeText(this, "$url Login successful. Your Token is : $token", Toast.LENGTH_SHORT).show()
                         Data().setToken(token as String)
                         Data().setAll(returns["username"].toString(), returns["email"].toString(),
                             returns["name"].toString(), returns["surname"].toString(),
@@ -107,12 +88,6 @@ class LoginPageActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnForgot.setOnClickListener {
 
-            val toast = Toast.makeText(this, "This feature is under construction!", Toast.LENGTH_SHORT)
-            toast.show()
-
-
-        }
     }
 }

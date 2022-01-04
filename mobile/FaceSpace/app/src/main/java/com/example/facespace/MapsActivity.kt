@@ -77,7 +77,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        //Toast.makeText(this, "on map readye geldi elime", Toast.LENGTH_SHORT).show()
         mMap = googleMap
         mMap!!.uiSettings.isZoomControlsEnabled = true
 
@@ -247,16 +246,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,LocationListener,
         mCurrLocationMarker?.title = "New Location"
         mCurrLocationMarker?.showInfoWindow()
         mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latlong, 15f))
-        Toast.makeText(this, "$snippet", Toast.LENGTH_LONG).show()
+        // Toast.makeText(this, "$snippet", Toast.LENGTH_LONG).show()
 
         // mMap?.addMarker(markerOption)
     }
 
     private fun getAddress(lat:Double, lon:Double):String? {
         val geoCoder = Geocoder(this)
-        val addresses = geoCoder.getFromLocation(lat, lon, 1)
-        city = addresses[0].adminArea
-        return addresses[0].thoroughfare + "/" + addresses[0].subAdminArea + "/" + addresses[0].adminArea
+        // Toast.makeText(this, "$lat and $lon", Toast.LENGTH_SHORT).show()
+        val addresses:List<Address>? = geoCoder.getFromLocation(lat, lon, 1)
+        // Toast.makeText(this, addresses?.get(0).toString(), Toast.LENGTH_SHORT).show()
+        city = addresses?.get(0)?.adminArea ?: "nullCity"
+        return (addresses?.get(0)?.thoroughfare ?: "null neighborhood") + "/" + (addresses?.get(0)?.subAdminArea
+            ?: "null district") + "/" + (addresses?.get(0)?.adminArea ?: "null city")
 
     }
 

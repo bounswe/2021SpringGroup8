@@ -18,35 +18,76 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import android.R.attr.data
+import kotlinx.android.synthetic.main.activity_profile_page.*
+import kotlinx.android.synthetic.main.activity_profile_page.view.*
+import androidx.constraintlayout.widget.ConstraintSet
+
+import android.widget.ImageView
+
+import androidx.constraintlayout.widget.ConstraintLayout
+import kotlinx.android.synthetic.main.activity_inside_post.*
+
 
 class InsidePost : AppCompatActivity() {
     private lateinit var postAdapter: PostAdapter
+    private lateinit var fieldObjectAdapter: FieldObjectAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inside_post)
         supportActionBar?.hide()
 
         postAdapter = PostAdapter(mutableListOf())
+        fieldObjectAdapter = FieldObjectAdapter(mutableListOf())
+
+        val rvFieldObjects = findViewById<RecyclerView>(R.id.rvFieldObjects)
+        rvFieldObjects.adapter = fieldObjectAdapter
+        rvFieldObjects.layoutManager = LinearLayoutManager(this)
 
         val intent1 = intent
         val post_data = JSONObject(intent1.getStringExtra("result").toString())
+        val dt_name = post_data["dataTypeName"].toString()
         val comm_data = JSONObject(intent1.getStringExtra("comm_obj").toString())
+        val comm_data_types = comm_data["dataTypes"] as JSONArray
         val post_creator = JSONObject(post_data["postedBy"].toString())["username"].toString()
         val comm_creator = JSONObject(comm_data["createdBy"].toString())["username"].toString()
         val postId = post_data["id"].toString()
 
-        val btnAdd = findViewById<FloatingActionButton>(R.id.btnAddP)
-        val btnRefresh = findViewById<FloatingActionButton>(R.id.btnRefreshP)
-        val btnGoHome = findViewById<FloatingActionButton>(R.id.btnGoHomeP)
-        val btnLogout = findViewById<FloatingActionButton>(R.id.btnLogoutP)
-        val btnMaps = findViewById<Button>(R.id.btnSeeLoc)
-        val btnDeletePost = findViewById<Button>(R.id.btnDeletePost)
 
-        btnRefresh.bringToFront()
-        btnAdd.bringToFront()
-        btnGoHome.bringToFront()
-        btnLogout.bringToFront()
-        btnMaps.bringToFront()
+        val btnDeletePost = findViewById<Button>(R.id.btnDeletePost)
+        val valLoc = findViewById<Button>(R.id.valLoc)
+
+        val titleTV = findViewById<TextView>(R.id.titlePostP)
+        val byTV = findViewById<TextView>(R.id.byPostP)
+        val dateTV = findViewById<TextView>(R.id.dateFieldP)
+
+        titleTV.text = post_data["postTitle"].toString()
+        byTV.text = JSONObject(post_data["postedBy"].toString())["username"].toString()
+        dateTV.text = JSONObject(post_data["creationTime"].toString())["_isoformat"].toString().substring(0,10)
+
+        val fields = JSONObject(post_data["fieldValues"].toString())
+        var dt_fields = JSONObject()
+
+        for (i in 0 until comm_data_types.length()) {
+            val data_type = comm_data_types.getJSONObject(i)
+            val data_type_name = data_type["name"].toString()
+            if (data_type_name == dt_name) {
+                dt_fields = JSONObject(data_type["fields"].toString())
+            }
+        }
+
+        try {
+            val temp: Iterator<String> = fields.keys()
+            while (temp.hasNext()) {
+                val key = temp.next()
+                val value: Any = fields.get(key)
+                val f_obj = FieldObject(key, dt_fields[key].toString(), value.toString(), this)
+                fieldObjectAdapter.addFieldObject(f_obj)
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+
 
         if (Data().getUsername() == post_creator || Data().getUsername() == comm_creator) {
             btnDeletePost.visibility = View.VISIBLE
@@ -56,29 +97,7 @@ class InsidePost : AppCompatActivity() {
             btnDeletePost.visibility = View.INVISIBLE
         }
 
-        btnRefresh.setOnClickListener {
-            Toast.makeText(baseContext, "This feature is under construction!", Toast.LENGTH_LONG).show()
-        }
 
-        btnGoHome.setOnClickListener {
-            val intent = Intent(this, HomePageActivity::class.java)
-            intent.putExtra("username", Data().getUsername())
-            startActivity(intent)
-        }
-
-        btnAdd.setOnClickListener {
-            Toast.makeText(baseContext, "This feature is under construction!", Toast.LENGTH_LONG).show()
-        }
-
-        btnLogout.setOnClickListener {
-            val intent = Intent(this, LoginPageActivity::class.java)
-            startActivity(intent)
-        }
-
-        btnMaps.setOnClickListener {
-            val intent = Intent(this, MapsActivity::class.java)
-            startActivity(intent)
-        }
 
         btnDeletePost.setOnClickListener {
             deletePost(postId, post_data, comm_data.toString())
@@ -111,34 +130,6 @@ class InsidePost : AppCompatActivity() {
             val intent: Intent = Intent(this, CommunityPageActivity::class.java)
             intent.putExtra("result", comm_data_new.toString())
             startActivity(intent)
-        }
-
-        val intent = intent
-        val res = intent.getStringExtra("result").toString()
-        val resJson = JSONObject(res)
-
-        val titleTV = findViewById<TextView>(R.id.titlePostP)
-        val byTV = findViewById<TextView>(R.id.byPostP)
-        val dateTV = findViewById<TextView>(R.id.dateFieldP)
-        val descTV = findViewById<TextView>(R.id.descPostP)
-
-        titleTV.text = resJson["postTitle"].toString()
-        byTV.text = JSONObject(resJson["postedBy"].toString())["username"].toString()
-        dateTV.text = JSONObject(resJson["creationTime"].toString())["_isoformat"].toString().substring(0,10)
-        descTV.text = ""
-
-        val fields = JSONObject(resJson["fieldValues"].toString())
-
-        try {
-            val temp: Iterator<String> = fields.keys()
-            while (temp.hasNext()) {
-                val key = temp.next()
-                val value: Any = fields.get(key)
-                val temp = descTV.text as String + key.toString() + " : " + value.toString() + "," + "\n"
-                descTV.text = temp
-            }
-        } catch (e: JSONException) {
-            e.printStackTrace()
         }
     }
 

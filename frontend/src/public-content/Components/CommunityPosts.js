@@ -1,24 +1,21 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import {Grid, Card} from "@mui/material";
+
 import CommunityPost from "./CommunityPost";
+import Box from "@mui/material/Box";
 
 function CommunityPosts(props) {
 
     const {posts} = props;
     if (posts.length === 0) {
         return (
-            <Grid item xs={12} md={8}>
-                <div>No result found</div>
-            </Grid>
+                <Box sx={{ width: '100%' }}>No Results Found</Box>
         )
     } else {
         return (
-            <Grid item xs={12} md={8}>
+            <div>
                 <div style={{backgroundColor: "white", margin: 10}}>
-                    {/*<Typography variant="h4" align="center" gutterBottom style={{fontWeight: 600}}>
-                    Posts
-                </Typography>*/}
 
                     <Card>
                         {posts.map((post) => (
@@ -34,7 +31,7 @@ function CommunityPosts(props) {
                         ))}
                     </Card>
                 </div>
-            </Grid>
+            </div>
         );
     }
 }

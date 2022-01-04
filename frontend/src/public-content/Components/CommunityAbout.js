@@ -8,7 +8,9 @@ function CommunityAbout(props) {
     const {description, moderators, tags} = props;
 
     return (
-        <Grid item xs={12} md={4}>
+        <div>
+
+
             <div style={{backgroundColor: "#e6ecf0", borderRadius: 10, margin: 10}}>
                 <Typography variant="h6" style={{
                     fontWeight: 600,
@@ -22,7 +24,11 @@ function CommunityAbout(props) {
                     About
                 </Typography>
                 <div>
-                    <Typography paragraph style={{paddingTop: 10, paddingBottom: 10, paddingInline: 10}}>{description} </Typography>
+                    <Typography paragraph style={{
+                        paddingTop: 10,
+                        paddingBottom: 10,
+                        paddingInline: 10
+                    }}>{description} </Typography>
                 </div>
 
             </div>
@@ -39,7 +45,8 @@ function CommunityAbout(props) {
                 }}>
                     Tags
                 </Typography>
-                <Typography paragraph style={{paddingTop: 10, paddingBottom: 10, paddingInline: 10}}>{tags} </Typography>
+                <Typography paragraph
+                            style={{paddingTop: 10, paddingBottom: 10, paddingInline: 10}}>{tags} </Typography>
             </div>
 
 
@@ -55,9 +62,13 @@ function CommunityAbout(props) {
                 }}>
                     Moderators
                 </Typography>
-                <Typography paragraph style={{paddingTop: 10, paddingBottom: 10, paddingInline: 10}}>{moderators} </Typography>
+                <Typography paragraph style={{
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    paddingInline: 10
+                }}>{moderators} </Typography>
             </div>
-        </Grid>
+        </div>
     );
 }
 
