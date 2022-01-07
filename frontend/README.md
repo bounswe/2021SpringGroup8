@@ -17,7 +17,7 @@ To build and run the app simply run
 ``` 
 docker-compose up
 ```
-By default docker-compose.yml file sets the port as 80. After above command container will be build and run. To see the app simply go to http://localhost or http://serveraddress/ where serveraddress is the ip of the deployment server. 
+By default docker-compose.yml file sets the port as 80 but one can change it by modifying the post fields in ```docker-compose.yml``` file. After above command container will be build and run. To see the app simply go to http://localhost or http://serveraddress/ where serveraddress is the ip of the deployment server. 
 
 #### With docker build and run
 First we need to build the docker image by below command:
