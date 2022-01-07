@@ -18,4 +18,4 @@ services:
         # in this case  map port 80 exposed by nginx to port 3000 on the outside
         # to be used to access the container from the outside
     ports:
-      - "3000:80"
+      - "80:80"
