@@ -24,7 +24,7 @@ First we need to build the docker image by below command:
 ``` 
 docker build -t nameOfDockerImage .
 ```
-This will give a container with the size 20.9MB.
+This will give a container with the size 21.6MB.
 Then we will run the docker image 
  ```
  docker run -p 80:80 -d -it nameOfDockerImage
